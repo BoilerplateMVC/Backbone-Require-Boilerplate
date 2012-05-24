@@ -15,7 +15,7 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 
 index.html
 ----------
-   Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a JavaScript mobile browser detection script (inspired from [detectmobilebrowsers.com](http://detectmobilebrowsers.com/) to determine if a user is using a mobile or desktop browser.  If a mobile browser is found, then require.js is included within the HTML page, and the HTML5 data attribute, data-main, is set to `mobile` (this tells require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then require.js included within the HTML page, and the HTML5 data attribute, data-main, is set to `desktop` (this tells require.js to look for a desktop.js file in the js folder).
+   Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a JavaScript mobile browser detection script (inspired from [detectmobilebrowsers.com](http://detectmobilebrowsers.com/) to determine if a user is using a mobile or desktop browser.  If a mobile browser is found, then require.js is included within the HTML page, and the HTML5 data attribute, `data-main`, is set to `mobile` (this tells require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then require.js is included within the HTML page, and the HTML5 data attribute, `data-main`, is set to `desktop` (this tells require.js to look for a desktop.js file in the js folder).
 
 mobile.js
 ---------
