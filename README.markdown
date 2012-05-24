@@ -17,6 +17,8 @@ index.html
 ----------
    Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a JavaScript mobile browser detection script (inspired from [detectmobilebrowsers.com](http://detectmobilebrowsers.com/) to determine if a user is using a mobile or desktop browser.  If a mobile browser is found, then require.js is included within the HTML page, and the HTML5 data attribute, `data-main`, is set to `mobile` (this tells require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then require.js is included within the HTML page, and the HTML5 data attribute, `data-main`, is set to `desktop` (this tells require.js to look for a desktop.js file in the js folder).
 
+   **Note**: You do not need to use the mobile detection script for your application.  I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
+
 mobile.js
 ---------
    Is only used if a mobile browser is detected.  This is where your mobile application's require.js configurations will be.  If we look at the require.js configurations, we will see the first thing being configured are the file paths.  Setting paths allow you to define an alias name and file path for any file that you like.  Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Use.js configuration.
