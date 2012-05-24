@@ -18,14 +18,12 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 
 **mobile.js** -
     Is only used if a mobile browser is detected.  This is where your mobile application's require.js configurations will be.  If we look at the require.js configurations, we will see the first thing being configured are the file paths.  Setting paths allow you to define an alias name and file path for any file that you like.  Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Use.js configuration.
-
     [Use.js](https://github.com/tbranyen/use.js/) is a library written by [Tim Branyen](http://tbranyen.com/) that allows you to easily include non-AMD compatible JavaScript files with Require.js.  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  Use.js is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.  Require.js creator [James Burke](http://tagneto.blogspot.com/) actively maintains an AMD compatible fork of both Backbone.js and Underscore.js because of this exact reason.  If you are confused by any of the Use.js configurations (there are only two: Backbone and Underscore), then feel free to post a question in the [issues tracker](https://github.com/gfranko/Backbone-Require-Boilerplate/issues) or contact Tim Branyen yourself.
 
     After require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (Modernizr, jQuery, Backbone, mobileRouter) into the page.  You will notice that the string `use!` is included before backbone.  This tells require.js that there is a Use.js configuration for backbone.  Keep in mind that the standard for require.js plugins is to list the name of the plugin followed by an exclamation point before a dependency (eg. text!someFile).  After all of those files are included on the page, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
 
 **desktop.js** -
-    Is only used if a desktop browser is detected.  This is where your desktop application's require.js configurations will be.  
-
+    Is only used if a desktop browser is detected.  This is where your desktop application's require.js configurations will be.
     This file is the exact same as mobile.js, except it includes desktopRouter.js in the page instead of mobileRouter.js.
 
 **mobileRouter.js** -
@@ -72,26 +70,26 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 
 #FAQ
 
-    *What libraries have you included?*
-        -Backbone, Require, jQuery, Lodash, and Modernizr
+*What libraries have you included?*
+-Backbone, Require, jQuery, Lodash, and Modernizr
 
-    *What Require.js plugins are you using?*
-        -Use.js and text.js
+*What Require.js plugins are you using?*
+-Use.js and text.js
 
-    *Why are you not using the Require.js Internationalization plugin?*
-        -I found that when I built using the Require.js Optimizer, only one lang-locale could be included per optimized file.  That would mean, that if you had to support 10 different langs/locales, you would need 20 different optimized builds (Desktop and Mobile).  If I am mistaken about this, please let me know, and I will update the Boilerplate with the Internationalization plugin.
+*Why are you not using the Require.js Internationalization plugin?*
+-I found that when I built using the Require.js Optimizer, only one lang-locale could be included per optimized file.  That would mean, that if you had to support 10 different langs/locales, you would need 20 different optimized builds (Desktop and Mobile).  If I am mistaken about this, please let me know, and I will update the Boilerplate with the Internationalization plugin.
 
-    *Why haven't you included a unit testing framework with this boilerplate?*
-        -Because I am lazy.  I will eventually get around to it.  My current favorite framework is Jasmine, so I will most likely be including that.
+*Why haven't you included a unit testing framework with this boilerplate?*
+-Because I am lazy.  I will eventually get around to it.  My current favorite framework is Jasmine, so I will most likely be including that.
 
-    *You're not using Grunt for your build process?  Are you some sort of newb?*
-        -Yes.  If someone could show me how to integrate the Require.js optimizer with Grunt I would be very appreciative.
+*You're not using Grunt for your build process?  Are you some sort of newb?*
+-Yes.  If someone could show me how to integrate the Require.js optimizer with Grunt I would be very appreciative.
 
-    *Do I have to use everything the boilerplate gives me?*
-        -No!  Feel free to update the boilerplate to fit the needs of your application.  Certain things that you might not want/need include templates, mobile and desktop versions, Modernizr, etc.
+*Do I have to use everything the boilerplate gives me?*
+-No!  Feel free to update the boilerplate to fit the needs of your application.  Certain things that you might not want/need include templates, mobile and desktop versions, Modernizr, etc.
 
-    *Can I contribute to this project?*
-        -Please do!  I am learning just like you.
+*Can I contribute to this project?*
+-Please do!  I am learning just like you.
 
  
 		
