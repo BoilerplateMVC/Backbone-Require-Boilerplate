@@ -6,7 +6,7 @@ define(['jquery', 'use!backbone'], function($, Backbone) {
         // Model Constructor
         initialize: function() {
 
-        	//Storing the model context
+            //Storing the model context
             self = this;
         },
 
