@@ -37,13 +37,13 @@ mobileRouter.js
 ---------------
    This is where you can include mobile specific scripts that you do not want to include in your desktop application.  This file starts with a define method that lists jquery, backbone, and view.js as dependencies.  Keep in mind that jquery and backbone had already been previously loaded in mobile.js, but require.js is smart enough not to load dependencies more than once.  It is best practice to list out all of your dependencies for every file, regardless of whether or not they expose global objects and are already included in the page.  This is also especially important for the Require.js optimizer (which needs to determine which files depend on which other files).  
 
-   *Note*: If your dependencies do not expose global objects, then it is absolutely mandatory to list it as a dependency, since Require.js does not allow global variables (meaning your private modules cannot be accessed within another module without explicitly listing them as dependencies).
+   **Note**: If your dependencies do not expose global objects, then it is absolutely mandatory to list it as a dependency, since Require.js does not allow global variables (meaning your private modules cannot be accessed within another module without explicitly listing them as dependencies).
 
    The rest of the file is a pretty standard Backbone.js Router class:
 
    There is currently only one route listed (which gets called if there is no hash tag on the url), but feel free to create more for your application.  The only code worth noting in here is view.js's `render` method being called.  This will put the "Your Template says: You are now using Backbone, Require, Modernizr, and jQuery!" text on the screen.  To call the view's `render` method, view.js is listed as a dependency and included on the page.  View.js is where the next logic is based.
 
-   *Note*: You must keep the `Backbone.history.start()` method call, since this is what triggers Backbone to start reacting to hashchange events
+   **Note**: You must keep the `Backbone.history.start()` method call, since this is what triggers Backbone to start reacting to hashchange events
 
 desktopRouter.js
 ----------------
@@ -57,13 +57,13 @@ view.js
 		
    Backbone.js views have a one-to-one relationship with DOM elements, and the view's DOM element is listed in the `el` property.  After the `el` property is set, the view's model attribute is set to a new instance of the model returned by model.js.  The new model instance is also passed a message property ("You are now using Backbone, Require, Modernizr, and jQuery!"), which is eventually printed to the index.html page.  Next, the view's `template` property is set using [Underscore.js](https://github.com/documentcloud/underscore) `template` method.
 
-   *Note*: If you have read all of the documentation up until this point, you will most likely have already noticed that [lodash](https://github.com/bestiejs/lodash) is being used instead of Underscore.js.  Apart from having a bit better performance and cross-browser stability than Underscore.js, lodash also provides a custom build process.  Although I have provided a version of lodash that has all of the Underscore.js methods you would expect, you can download a custom build and swap that in.
+   **Note**: If you have read all of the documentation up until this point, you will most likely have already noticed that [lodash](https://github.com/bestiejs/lodash) is being used instead of Underscore.js.  Apart from having a bit better performance and cross-browser stability than Underscore.js, lodash also provides a custom build process.  Although I have provided a version of lodash that has all of the Underscore.js methods you would expect, you can download a custom build and swap that in.
 
    Next, you will find an `events` object with one property.  Here is where all of your View DOM event handlers should be stored.  Keep in mind that Backbone is using the jQuery `delegate` method, so it expects a selector that is inside of your View's `el` property.  The one event handler I listed binds a click event to the View `el` element (event delegation... important concept there) and gives it an id context of `example`.  I then provide a method to be called when the event is triggered (only provide the method name).  I am calling a method that initiates a standard window prompt when the text on the page is clicked.
 
    Finally, I am declaring a `render` method on my View.  Backbone expects you to override the `render` method with your own functionality, so that is what I did.  All my `render` method does is append the View's template to the page.
 
-   *Note*: You do not need to use Underscore.js templates.  In fact, you don't need to use templates at all.  I just included them so you would understand how to use them.
+   **Note**: You do not need to use Underscore.js templates.  In fact, you don't need to use templates at all.  I just included them so you would understand how to use them.
 
 main.html
 ---------
