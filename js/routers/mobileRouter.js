@@ -1,26 +1,26 @@
 define(['jquery','use!backbone','views/view'], function($, Backbone, mainView){
 
     var self,
-	    Router = Backbone.Router.extend({
+        Router = Backbone.Router.extend({
 
-		initialize: function(){
+        initialize: function(){
            
-			Backbone.history.start();
+        Backbone.history.start();
             self = this;
 
-		},
+        },
 
-		routes: {
+        routes: {
 
-			'': 'home'
-            
-		},
+            '': 'home'
 
-		'home': function(){
-			// Renders the mainView template
+        },
+
+        'home': function(){
+            // Renders the mainView template
             mainView.render();
-		}
-	});
-	
-	return Router;
+        }
+    });
+
+    return Router;
 });
