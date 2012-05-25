@@ -111,8 +111,17 @@ app.build.js
 
    -Please do!  I am learning just like you.
 
- 
-		
+##Change Log
+`0.1.0` - May 24, 2012
+
+- Initial Backbone-Require-Boilerplate release.  Added source code and documentation.
+
+##Contributors
+Greg Franko
+
+## License
+Copyright (c) 2012 Greg Franko  
+Licensed under the MIT license.		
 		  
 
 	
