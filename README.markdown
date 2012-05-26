@@ -15,27 +15,36 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 
 index.html
 ----------
-   Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a JavaScript mobile browser detection script (inspired from [detectmobilebrowsers.com](http://detectmobilebrowsers.com/) to determine if a user is using a mobile or desktop browser.  If a mobile browser is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `mobile` (this tells Require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `desktop` (this tells Require.js to look for a desktop.js file in the js folder).
+   Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a JavaScript mobile browser detection script (inspired from [detectmobilebrowsers.com](http://detectmobilebrowsers.com/)) to determine if a user is using a mobile or desktop browser.
+
+   If a mobile browser is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `mobile` (this tells Require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `desktop` (this tells Require.js to look for a desktop.js file in the js folder).
 
    **Note**: You do not need to use the mobile detection script for your application.  I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
 
 mobile.js
 ---------
-   Is only used if a mobile browser is detected.  This is where your mobile application's Require.js configurations will be.  If we look at the Require.js configurations, we will see the first thing being configured are the file paths.  Setting paths allow you to define an alias name and file path for any file that you like.  Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Use.js configuration.
+   Mobile.js is only used if a mobile browser is detected.  This is where your mobile application's Require.js configurations will be.
+
+   If we look at the Require.js configurations, we will see the first thing being configured are the file paths.  Setting paths allow you to define an alias name and file path for any file that you like.  Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Use.js configuration.
    
 
-   [Use.js](https://github.com/tbranyen/use.js/) is a library written by [Tim Branyen](http://tbranyen.com/) that allows you to easily include non-AMD compatible JavaScript files with Require.js.  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  Use.js is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.  Require.js creator [James Burke](http://tagneto.blogspot.com/) actively maintains an AMD compatible fork of both Backbone.js and Underscore.js because of this exact reason.  If you are confused by any of the Use.js configurations (there are only two: Backbone and Underscore), then feel free to post a question in the [issues tracker](https://github.com/gfranko/Backbone-Require-Boilerplate/issues) or contact Tim Branyen yourself.
+   [Use.js](https://github.com/tbranyen/use.js/) is a library written by [Tim Branyen](http://tbranyen.com/) that allows you to easily include non-AMD compatible JavaScript files with Require.js.  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  Use.js is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.
+
+   Require.js creator [James Burke](http://tagneto.blogspot.com/) actively maintains an AMD compatible fork of both Backbone.js and Underscore.js because of this exact reason.  If you are confused by any of the Use.js configurations (there are only two: Backbone and Underscore), then feel free to post a question in the [issues tracker](https://github.com/gfranko/Backbone-Require-Boilerplate/issues) or contact Tim Branyen yourself.
 
    After Require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (Modernizr, jQuery, Backbone, mobileRouter) into the page.  You will notice that the string `use!` is included before backbone.  This tells Require.js that there is a Use.js configuration for backbone.  Keep in mind that the standard for Require.js plugins is to list the name of the plugin followed by an exclamation point before a dependency (eg. text!someFile).  After all of those files are included on the page, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
 
 desktop.js
 ----------
-   Is only used if a desktop browser is detected.  This is where your desktop application's Require.js configurations will be.
+   Desktop.js is only used if a desktop browser is detected.  This is where your desktop application's Require.js configurations will be.
+
    This file is the exact same as mobile.js, except it includes desktopRouter.js in the page instead of mobileRouter.js.
 
 mobileRouter.js
 ---------------
-   This is where you can include mobile specific scripts that you do not want to include in your desktop application.  This file starts with a define method that lists jquery, backbone, and view.js as dependencies.  Keep in mind that jquery and backbone had already been previously loaded in mobile.js, but Require.js is smart enough not to load dependencies more than once.  It is best practice to list out all of your dependencies for every file, regardless of whether or not they expose global objects and are already included in the page.  This is also especially important for the Require.js optimizer (which needs to determine which files depend on which other files).  
+   mobileRouter.js is where you can include mobile specific scripts that you do not want to include in your desktop application.  This file starts with a define method that lists jquery, backbone, and view.js as dependencies.  Keep in mind that jquery and backbone had already been previously loaded in mobile.js, but Require.js is smart enough not to load dependencies more than once.
+
+   It is best practice to list out all of your dependencies for every file, regardless of whether or not they expose global objects and are already included in the page.  This is also especially important for the Require.js optimizer (which needs to determine which files depend on which other files).  
 
    **Note**: If your dependencies do not expose global objects, then it is absolutely mandatory to list it as a dependency, since Require.js does not allow global variables (meaning your private modules cannot be accessed within another module without explicitly listing them as dependencies).
 
@@ -47,11 +56,11 @@ mobileRouter.js
 
 desktopRouter.js
 ----------------
-   This file is the exact same as *mobileRouter.js*.  This is where you can include desktop specific scripts that you do not want to include in your mobile web application.
+   desktopRouter.js has the exact same code as *mobileRouter.js*.  The difference is this is where you can include desktop specific scripts that you do not want to include in your mobile web application.
 
 view.js
 -------
-   This file will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html (you can use the Require.js text plugin to dynamically include html files... very handy for including templates if you use them) as dependencies.
+   view.j  will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html (you can use the Require.js text plugin to dynamically include html files... very handy for including templates if you use them) as dependencies.
 
    The rest of the file is a pretty standard Backbone.js View class:
 		
@@ -71,7 +80,7 @@ main.html
 
 model.js
 --------
-   This file is used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery and backbone as dependencies.
+   model.js is used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery and backbone as dependencies.
 
    The rest of the file is a pretty standard Backbone.js Model class (with pretty much everything left up to you to complete), except...
 
