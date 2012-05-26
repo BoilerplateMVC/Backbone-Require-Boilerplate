@@ -8,7 +8,7 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 #Getting Started
    1. Clone this repository
    2. Download and install [Node.js](http://nodejs.org/#download)
-   3. Download, install, and start a local web server (eg. [XAMPP](http://www.apachefriends.org/en/xampp.html).  Make sure to put this repository in your local server's public folder (eg. htdocs).  This is required because Backbone-Require-Boilerplate dynamically pulls in an HTML dependency (a template), and IE and Chrome have local security restrictions that do not allow this action.  If you don't want to download and install a local web server, then you should be able to test the code locally with Firefox.
+   3. Download, install, and start a local web server (eg. [XAMPP](http://www.apachefriends.org/en/xampp.html)).  Make sure to put this repository in your local server's public folder (eg. htdocs).  This is required because Backbone-Require-Boilerplate dynamically pulls in an HTML dependency (a template), and IE and Chrome have local security restrictions that do not allow this action.  If you don't want to download and install a local web server, then you should be able to test the code locally with Firefox.
    4. Enjoy using Backbone.js, Require.js, Use.js, jQuery, and Modernizr (enjoyment optional)
 
 #Tour of the Boilerplate Files
