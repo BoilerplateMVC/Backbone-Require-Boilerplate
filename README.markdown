@@ -68,7 +68,7 @@ desktopRouter.js
 
 view.js
 -------
-   view.j  will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html (you can use the Require.js text plugin to dynamically include html files... very handy for including templates if you use them) as dependencies.
+   view.js will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html (you can use the Require.js text plugin to dynamically include html files... very handy for storing templates in separate files and then including them dynamically) as dependencies.
 
    The rest of the file is a pretty standard Backbone.js View class:
 		
