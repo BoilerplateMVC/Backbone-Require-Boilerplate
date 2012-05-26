@@ -40,7 +40,7 @@ mobile.js
 
    After all of those files are included on the page, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
 
-   **Note**: You don't need to instantiate a new router instance if you aren't using a Backbone Router class.  You probably already know this, but just making sure...
+   **Note**: You don't need to instantiate a new router instance if you aren't using a Backbone Router class.
 
 desktop.js
 ----------
