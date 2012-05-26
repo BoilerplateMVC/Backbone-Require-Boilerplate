@@ -25,22 +25,28 @@ index.html
 
 mobile.js
 ---------
-   Mobile.js is only used if a mobile browser is detected.  This is where your mobile application's Require.js configurations will be.
+   mobile.js is only used if a mobile browser is detected.  This file includes your mobile Require.js configurations.
 
-   If we look at the Require.js configurations, we will see the first thing being configured are the file paths.  Setting paths allow you to define an alias name and file path for any file that you like.  Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Use.js configuration.
+   If we look at the Require.js configurations, we will see the first thing being configured are the paths.  Setting paths allow you to define an alias name and file path for any file that you like.
+
+   Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Use.js configuration.
    
 
    [Use.js](https://github.com/tbranyen/use.js/) is a library written by [Tim Branyen](http://tbranyen.com/) that allows you to easily include non-AMD compatible JavaScript files with Require.js.  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  Use.js is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.
 
-   Require.js creator [James Burke](http://tagneto.blogspot.com/) actively maintains an AMD compatible fork of both Backbone.js and Underscore.js because of this exact reason.  If you are confused by any of the Use.js configurations (there are only two: Backbone and Underscore), then feel free to post a question in the [issues tracker](https://github.com/gfranko/Backbone-Require-Boilerplate/issues) or contact Tim Branyen yourself.
+   Require.js creator [James Burke](http://tagneto.blogspot.com/) actively maintains an AMD compatible fork of both Backbone.js and Underscore.js because of this exact reason.  If you are confused by any of the Use.js configurations (there are only two in this boilerplate: Backbone and Underscore), then feel free to post a question in the [issues tracker](https://github.com/gfranko/Backbone-Require-Boilerplate/issues) or contact Tim Branyen yourself.
 
-   After Require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (Modernizr, jQuery, Backbone, mobileRouter) into the page.  You will notice that the string `use!` is included before backbone.  This tells Require.js that there is a Use.js configuration for backbone.  Keep in mind that the standard for Require.js plugins is to list the name of the plugin followed by an exclamation point before a dependency (eg. text!someFile).  After all of those files are included on the page, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
+   After Require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (Modernizr, jQuery, Backbone, mobileRouter) into the page.  You will notice that the string `use!` is included before backbone.  This tells Require.js that there is a Use.js configuration for backbone.  Keep in mind that the standard for Require.js plugins is to list the name of the plugin followed by an exclamation point before a dependency (eg. `text!someFile` if we were using the Require.js text plugin).
+
+   After all of those files are included on the page, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
+
+   **Note**: You don't need to instantiate a new router instance if you aren't using a Backbone Router class.  You probably already know this, but just making sure...
 
 desktop.js
 ----------
-   Desktop.js is only used if a desktop browser is detected.  This is where your desktop application's Require.js configurations will be.
+   desktop.js is only used if a desktop browser is detected.  This is where your desktop Require.js configurations will be.
 
-   This file is the exact same as mobile.js, except it includes desktopRouter.js in the page instead of mobileRouter.js.
+   This file is the exact same as mobile.js, except it lists desktopRouter.js as a dependency instead of mobileRouter.js.
 
 mobileRouter.js
 ---------------
@@ -52,7 +58,7 @@ mobileRouter.js
 
    The rest of the file is a pretty standard Backbone.js Router class:
 
-   There is currently only one route listed (which gets called if there is no hash tag on the url), but feel free to create more for your application.  The only code worth noting in here is view.js's `render` method being called.  This will put the "Your Template says: You are now using Backbone, Require, Modernizr, and jQuery!" text on the screen.  To call the view's `render` method, view.js is listed as a dependency and included on the page.  View.js is where the next logic is based.
+   There is currently only one route listed (which gets called if there is no hash tag on the url), but feel free to create more for your application.  The only code worth noting in here is view.js's `render` method being called.  This will put the "Your Template says: You are now using Backbone, Require, Modernizr, and jQuery!" text on the screen.  To call the view's `render` method, view.js is listed as a dependency and included on the page.  view.js is where to look next.
 
    **Note**: You must keep the `Backbone.history.start()` method call, since this is what triggers Backbone to start reacting to hashchange events
 
@@ -66,11 +72,11 @@ view.js
 
    The rest of the file is a pretty standard Backbone.js View class:
 		
-   Backbone.js views have a one-to-one relationship with DOM elements, and the view's DOM element is listed in the `el` property.  After the `el` property is set, the view's model attribute is set to a new instance of the model returned by model.js.  The new model instance is also passed a message property ("You are now using Backbone, Require, Modernizr, and jQuery!"), which is eventually printed to the index.html page.  Next, the view's `template` property is set using [Underscore.js](https://github.com/documentcloud/underscore) `template` method.
+   Backbone.js views have a one-to-one relationship with DOM elements, and the view's DOM element is listed in the `el` property.  After the `el` property is set, the view's model attribute is set to a new instance of the model returned by model.js (which was listed at the top as a dependency).  The new model instance is also instantiated with a message property ("You are now using Backbone, Require, Modernizr, and jQuery!"), which is eventually printed to the `index.html` page.  Next, the view's `template` property is set using [Underscore.js](https://github.com/documentcloud/underscore) `template` method.
 
    **Note**: If you have read all of the documentation up until this point, you will most likely have already noticed that [lodash](https://github.com/bestiejs/lodash) is being used instead of Underscore.js.  Apart from having a bit better performance and cross-browser stability than Underscore.js, lodash also provides a custom build process.  Although I have provided a version of lodash that has all of the Underscore.js methods you would expect, you can download a custom build and swap that in.
 
-   Next, you will find an `events` object with one property.  Here is where all of your View DOM event handlers should be stored.  Keep in mind that Backbone is using the jQuery `delegate` method, so it expects a selector that is inside of your View's `el` property.  The one event handler I listed binds a click event to the View `el` element (event delegation... important concept there) and gives it an id context of `example`.  I then provide a method to be called when the event is triggered (only provide the method name).  I am calling a method that initiates a standard window prompt when the text on the page is clicked.
+   Next, you will find an `events` object with one property.  Here is where all of your View DOM event handlers associated with the HTML element referenced by your View's `el` property should be stored.  Keep in mind that Backbone is using the jQuery `delegate` method, so it expects a selector that is within your View's `el` property.  The one event handler I listed binds a click event to the View's `el` element (event delegation) and gives it an id context of `example`.  I then provide a method to be called when the event is triggered by providing the method name.
 
    Finally, I am declaring a `render` method on my View.  Backbone expects you to override the `render` method with your own functionality, so that is what I did.  All my `render` method does is append the View's template to the page.
 
