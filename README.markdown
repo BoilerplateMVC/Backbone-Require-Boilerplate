@@ -27,7 +27,7 @@ mobile.js
 ---------
    mobile.js is only used if a mobile browser is detected.  This file includes your mobile Require.js configurations.
 
-   If we look at the Require.js configurations, we will see the first thing being configured are the paths.  Setting paths allow you to define an alias name and file path for any file that you like.
+   If we look at the mobile Require.js configurations, we will see the first thing being configured are the paths.  Setting paths allow you to define an alias name and file path for any file that you like.
 
    Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Use.js configuration.
    
