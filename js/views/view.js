@@ -15,7 +15,7 @@ define(['jquery', 'use!backbone','models/model', 'text!templates/main.html'], fu
 
             //Setting the view's model property to the passed in model
             this.model = new Model({
-                message: "You are now using Backbone, Require, and jQuery! (Click Me)"
+                message: "You are now using Backbone, Require, Modernizr, and jQuery! (Click Me)"
             });
 
             this.template = _.template( template, { model: this.model.toJSON() } );

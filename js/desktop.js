@@ -7,7 +7,7 @@ require.config({
       // Core Libraries
       modernizr: "libs/modernizr-2.5.3.min",
       jquery: "libs/jquery-1.7.2.min",
-      underscore: "libs/lodash-0.2.0.min",
+      underscore: "libs/lodash-0.2.1.min",
       backbone: "libs/backbone-0.9.2.min",
 
       // Require.js Plugins
