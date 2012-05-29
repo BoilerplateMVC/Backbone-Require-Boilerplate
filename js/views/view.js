@@ -1,4 +1,4 @@
-define(['jquery', 'use!backbone','models/model', 'text!templates/main.html'], function($, Backbone, Model, template){
+define(['jquery', 'backbone','models/model', 'text!templates/main.html'], function($, Backbone, Model, template){
 
     var self,
 

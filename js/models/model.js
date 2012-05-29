@@ -1,4 +1,4 @@
-define(['jquery', 'use!backbone'], function($, Backbone) {
+define(['jquery', 'backbone'], function($, Backbone) {
 
     var self,
         model = Backbone.Model.extend({

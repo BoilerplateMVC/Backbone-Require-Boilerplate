@@ -11,29 +11,28 @@ require.config({
       backbone: "libs/backbone-0.9.2",
 
       // Require.js Plugins
-      use: "plugins/use-0.3.0",
       text: "plugins/text-2.0.0"
 
   },
 
-  // Sets the use.js configuration for your application
-  use: {
+  // Sets the configuration for your third party scripts that are AMD compatible
+  shim: {
 
-    backbone: {
-        deps: ["use!underscore", "jquery"],
-        attach: "Backbone"  //attaches "Backbone" to the window object
-    },
+      "backbone": {
+          deps: ["underscore", "jquery"],
+          exports: "Backbone"  //attaches "Backbone" to the window object
+      },
 
-    underscore: {
-        attach: "_" //attaches "_" to the window object
-    }
+      "underscore": {
+          exports: "_" //attaches "_" to the window object
+      }
 
-  } // end Use.js Configuration
+  } // end Shim Configuration
   
 });
 
 // Include Desktop Specific JavaScript files here (or inside of your Desktop router)
-require(['modernizr','jquery','use!backbone','routers/mobileRouter'], function(Modernizr, $, Backbone, Mobile) {
+require(['modernizr','jquery','backbone','routers/mobileRouter'], function(Modernizr, $, Backbone, Mobile) {
 
     // Instantiates a new Router
     this.router = new Mobile();

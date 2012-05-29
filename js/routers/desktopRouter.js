@@ -1,4 +1,4 @@
-define(['jquery','use!backbone','views/view'], function($, Backbone, mainView){
+define(['jquery','backbone','views/view'], function($, Backbone, mainView){
 
     var self,
         Router = Backbone.Router.extend({
