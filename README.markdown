@@ -104,7 +104,7 @@ app.build.js
 
 **What Require.js plugins are you using?**
 
-   -Use.js and text.js
+   -The text plugin.  I was previously using Use.js to load non-AMD compatible scripts, but Require.js 2.0 now provides this functionality.
 
 **Why are you not using the Require.js Internationalization plugin?**
 
