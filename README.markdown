@@ -29,14 +29,12 @@ mobile.js
 
    If we look at the mobile Require.js configurations, we will see the first thing being configured are the paths.  Setting paths allow you to define an alias name and file path for any file that you like.
 
-   Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Use.js configuration.
+   Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Shim configuration (Added in Require.js 2.0).
    
 
-   [Use.js](https://github.com/tbranyen/use.js/) is a library written by [Tim Branyen](http://tbranyen.com/) that allows you to easily include non-AMD compatible JavaScript files with Require.js.  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  Use.js is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.
+   The Shim configuration allows you to easily include non-AMD compatible JavaScript files with Require.js (a separate library such as [Use.js](https://github.com/tbranyen/use.js/) was previously needed for this).  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  This configuration is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.  Require.js creator [James Burke](http://tagneto.blogspot.com/) previously maintained AMD compatible forks of both Backbone.js and Underscore.js because of this exact reason.
 
-   Require.js creator [James Burke](http://tagneto.blogspot.com/) actively maintains an AMD compatible fork of both Backbone.js and Underscore.js because of this exact reason.  If you are confused by any of the Use.js configurations (there are only two in this boilerplate: Backbone and Underscore), then feel free to post a question in the [issues tracker](https://github.com/gfranko/Backbone-Require-Boilerplate/issues) or contact Tim Branyen yourself.
-
-   After Require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (Modernizr, jQuery, Backbone, mobileRouter) into the page.  You will notice that the string `use!` is included before backbone.  This tells Require.js that there is a Use.js configuration for backbone.  Keep in mind that the standard for Require.js plugins is to list the name of the plugin followed by an exclamation point before a dependency (eg. `text!someFile` if we were using the Require.js text plugin).
+   After Require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (Modernizr, jQuery, Backbone, mobileRouter) into the page.
 
    After all of those files are included on the page, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
 
@@ -68,7 +66,7 @@ desktopRouter.js
 
 view.js
 -------
-   view.js will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html (you can use the Require.js text plugin to dynamically include html files... very handy for storing templates in separate files and then including them dynamically) as dependencies.
+   view.js will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html.  You will notice that the string `text!` is included before main.html.  This tells Require.js that use the Require.js text plugin to dynamically include the html file (very handy for storing templates in separate files and then including them dynamically).  Keep in mind that the standard for Require.js plugins is to list the name of the plugin followed by an exclamation point before a dependency.
 
    The rest of the file is a pretty standard Backbone.js View class:
 		
@@ -133,6 +131,7 @@ app.build.js
 `0.2.0` - May 29, 2012
 
 - Upgraded to Require.js 2.0, text.js 2.0, and r.js 2.0.
+- Removed Use.js because Require.js 2.0 now includes this functionality (using the Shim configuration)
 - Replaced all the minified JavaScript files with unminified/documented JavaScript files (you can minify these files using the Require.js Optimizer script provided)
 
 `0.1.0` - May 24, 2012
