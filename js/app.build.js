@@ -8,14 +8,14 @@
   paths: {
 
     // Core Libraries
-    modernizr: "libs/modernizr-2.5.3.min",
-    jquery: "libs/jquery-1.7.2.min",
-    underscore: "libs/lodash-0.2.1.min",
-    backbone: "libs/backbone-0.9.2.min",
+    modernizr: "libs/modernizr-2.5.3",
+    jquery: "libs/jquery-1.7.2",
+    underscore: "libs/lodash-0.2.1",
+    backbone: "libs/backbone-0.9.2",
 
     // Require.js Plugins
-    use: "plugins/use-0.3.0.min",
-    text: "plugins/text-1.0.8.min"
+    use: "plugins/use-0.3.0",
+    text: "plugins/text-2.0.0"
 
   },
 

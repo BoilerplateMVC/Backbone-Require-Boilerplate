@@ -129,6 +129,12 @@ app.build.js
    -Please do!  I am learning just like you.
 
 ##Change Log
+
+`0.2.0` - May 29, 2012
+
+- Upgraded to Require.js 2.0, text.js 2.0, and r.js 2.0.
+- Replaced all the minified JavaScript files with unminified/documented JavaScript files (you can minify these files using the Require.js Optimizer script provided)
+
 `0.1.0` - May 24, 2012
 
 - Initial Backbone-Require-Boilerplate release.  Added source code and documentation.
