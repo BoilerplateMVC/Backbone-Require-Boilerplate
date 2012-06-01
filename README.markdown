@@ -34,6 +34,8 @@ mobile.js
 
    The Shim configuration allows you to easily include non-AMD compatible JavaScript files with Require.js (a separate library such as [Use.js](https://github.com/tbranyen/use.js/) was previously needed for this).  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  This configuration is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.  Require.js creator [James Burke](http://tagneto.blogspot.com/) previously maintained AMD compatible forks of both Backbone.js and Underscore.js because of this exact reason.
 
+   **Note**: You do not need a shim configuration for [lodash](https://github.com/bestiejs/lodash) because [lodash](https://github.com/bestiejs/lodash) is AMD compatible.
+
    After Require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (Modernizr, jQuery, Backbone, Lodash, mobileRouter) into the page.  Lodash is also included since it is listed as a dependency to Backbone in the Require.js Shim configuration.
 
    After all of those files are included on the page, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
@@ -131,6 +133,7 @@ app.build.js
 `0.3.0` - June 1, 2012
 
 - Upgraded to Lodash 0.2.2
+- Removed the Lodash Shim configuration (not needed because Lodash is AMD compatible)
 - Updated documentation
 
 `0.2.0` - May 29, 2012
