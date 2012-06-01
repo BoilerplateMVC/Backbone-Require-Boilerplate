@@ -84,7 +84,7 @@ view.js
 
 anotherView.js
 --------------
-	anotherView.js doesn't do much.  It is there to show you a pattern for extending Backbone View's.
+   anotherView.js doesn't do much.  It is there to show you a pattern for extending Backbone View's.  anotherView.js extends view.js.
 
 main.html
 ---------
