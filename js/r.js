@@ -1,5 +1,5 @@
 /**
- * @license r.js 2.0.0 Mon, 28 May 2012 19:47:45 GMT Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
+ * @license r.js 2.0.1 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/requirejs for details
  */
@@ -20,7 +20,7 @@ var requirejs, require, define;
 
     var fileName, env, fs, vm, path, exec, rhinoContext, dir, nodeRequire,
         nodeDefine, exists, reqMain, loadedOptimizedLib, existsForNode,
-        version = '2.0.0 Mon, 28 May 2012 19:47:45 GMT',
+        version = '2.0.1',
         jsSuffixRegExp = /\.js$/,
         commandOption = '',
         useLibLoaded = {},
@@ -105,7 +105,7 @@ var requirejs, require, define;
     }
 
     /** vim: et:ts=4:sw=4:sts=4
- * @license RequireJS 2.0.0 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
+ * @license RequireJS 2.0.1 Copyright (c) 2010-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/requirejs for details
  */
@@ -116,7 +116,7 @@ var requirejs, require, define;
 (function (global) {
     'use strict';
 
-    var version = '2.0.0',
+    var version = '2.0.1',
         commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
         cjsRequireRegExp = /require\s*\(\s*["']([^'"\s]+)["']\s*\)/g,
         jsSuffixRegExp = /\.js$/,
@@ -506,7 +506,8 @@ var requirejs, require, define;
                 parentName = parentModuleMap ? parentModuleMap.name : null,
                 originalName = name,
                 isDefine = true,
-                normalizedName, url, pluginModule, suffix;
+                normalizedName = '',
+                url, pluginModule, suffix;
 
             //If no name, then it means it is a require call, generate an
             //internal name.
@@ -522,12 +523,12 @@ var requirejs, require, define;
 
             if (prefix) {
                 prefix = normalize(prefix, parentName, applyMap);
+                pluginModule = defined[prefix];
             }
 
             //Account for relative paths if there is a base name.
             if (name) {
                 if (prefix) {
-                    pluginModule = defined[prefix];
                     if (pluginModule && pluginModule.normalize) {
                         //Plugin is loaded, use its normalize method.
                         normalizedName = pluginModule.normalize(name, function (name) {
@@ -575,7 +576,7 @@ var requirejs, require, define;
                 originalName: originalName,
                 isDefine: isDefine,
                 id: (prefix ?
-                    prefix + '!' + (normalizedName || '') :
+                    prefix + '!' + normalizedName :
                     normalizedName) + suffix
             };
         }
@@ -659,6 +660,7 @@ var requirejs, require, define;
                                                    enableBuildCallback);
 
             addRequireMethods(modRequire, context, relMap);
+            modRequire.isBrowser = isBrowser;
 
             return modRequire;
         }
@@ -1165,7 +1167,7 @@ var requirejs, require, define;
                         if (plugin.normalize) {
                             name = plugin.normalize(name, function (name) {
                                 return normalize(name, parentName, true);
-                            });
+                            }) || '';
                         }
 
                         normalizedMap = makeModuleMap(map.prefix + '!' + name);
@@ -14750,14 +14752,16 @@ function (lang,   logger,   envOptimize,        file,           parse,
  * This file patches require.js to communicate with the build system.
  */
 
-/*jslint nomen: true, plusplus: true, regexp: true */
+//Using sloppy since this uses eval for some code like plugins,
+//which may not be strict mode compliant. So if use strict is used
+//below they will have strict rules applied and may cause an error.
+/*jslint sloppy: true, nomen: true, plusplus: true, regexp: true */
 /*global require, define: true */
 
 //NOT asking for require as a dependency since the goal is to modify the
 //global require below
 define('requirePatch', [ 'env!env/file', 'pragma', 'parse', 'lang', 'logger'],
 function (file,           pragma,   parse,   lang,   logger) {
-    'use strict';
 
     var allowRun = true;
 
@@ -14937,7 +14941,10 @@ function (file,           pragma,   parse,   lang,   logger) {
                                     pluginBuilderMatch = pluginBuilderRegExp.exec(contents);
                                     if (pluginBuilderMatch) {
                                         //Load the plugin builder for the plugin contents.
-                                        builderName = context.normalize(pluginBuilderMatch[3], moduleName);
+                                        builderName = context.makeModuleMap(pluginBuilderMatch[3],
+                                                                            context.makeModuleMap(moduleName),
+                                                                            null,
+                                                                            true).id;
                                         contents = file.readFile(context.nameToUrl(builderName));
                                     }
                                 }
@@ -15387,7 +15394,7 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
     build = function (args) {
         var stackRegExp = /( {4}at[^\n]+)\n/,
             standardIndent = '  ',
-            buildFile, cmdConfig, errorMsg, stackMatch, errorTree,
+            buildFile, cmdConfig, errorMsg, errorStack, stackMatch, errorTree,
             i, j, errorMod;
 
         try {
@@ -15420,14 +15427,13 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
             stackMatch = stackRegExp.exec(errorMsg);
 
             if (stackMatch) {
-                errorMsg = errorMsg.substring(0, stackMatch.index + stackMatch[0].length + 1);
+                errorMsg += errorMsg.substring(0, stackMatch.index + stackMatch[0].length + 1);
             }
-            logger.error(errorMsg);
 
             //If a module tree that shows what module triggered the error,
             //print it out.
             if (errorTree && errorTree.length > 0) {
-                errorMsg = 'In module tree:\n';
+                errorMsg += '\nIn module tree:\n';
 
                 for (i = errorTree.length - 1; i > -1; i--) {
                     errorMod = errorTree[i];
@@ -15442,21 +15448,26 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
                 logger.error(errorMsg);
             }
 
-            errorMsg = e.stack;
+            errorStack = e.stack;
 
             if (typeof args === 'string' && args.indexOf('stacktrace=true') !== -1) {
-                logger.error(errorMsg);
+                errorMsg += '\n' + errorStack;
             } else {
-                if (!stackMatch && errorMsg) {
+                if (!stackMatch && errorStack) {
                     //Just trim out the first "at" in the stack.
-                    stackMatch = stackRegExp.exec(errorMsg);
+                    stackMatch = stackRegExp.exec(errorStack);
                     if (stackMatch) {
-                        logger.error(stackMatch[0] || '');
+                        errorMsg += '\n' + stackMatch[0] || '';
                     }
                 }
             }
 
-            quit(1);
+            if (logger.level > logger.ERROR) {
+                throw new Error(errorMsg);
+            } else {
+                logger.error(errorMsg);
+                quit(1);
+            }
         }
     };
 
@@ -16142,6 +16153,11 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
                             ' or baseUrl directories optimized.');
         }
 
+        if (config.insertRequire && !lang.isArray(config.insertRequire)) {
+            throw new Error('insertRequire should be a list of module IDs' +
+                            ' to insert in to a require([]) call.');
+        }
+
         if ((config.name || config.include) && !config.modules) {
             //Just need to build one file, but may be part of a whole appDir/
             //baseUrl copy, but specified on the command line, so cannot do
@@ -16380,7 +16396,7 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
             stubModulesByName = (config.stubModules && config.stubModules._byName) || {},
             context = layer.context,
             path, reqIndex, fileContents, currContents,
-            i, moduleName, shim,
+            i, moduleName, shim, packageConfig,
             parts, builder, writeApi;
 
         //Use override settings, particularly for pragmas
@@ -16408,6 +16424,14 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
         for (i = 0; i < layer.buildFilePaths.length; i++) {
             path = layer.buildFilePaths[i];
             moduleName = layer.buildFileToModule[path];
+
+            //If the moduleName is for a package main, then update it to the
+            //real main value.
+            packageConfig = layer.context.config.pkgs &&
+                            layer.context.config.pkgs[moduleName];
+            if (packageConfig) {
+                moduleName += '/' + packageConfig.main;
+            }
 
             //Figure out if the module is a result of a build plugin, and if so,
             //then delegate to that plugin.
@@ -16456,6 +16480,13 @@ function (lang,   logger,   file,          parse,    optimize,   pragma,
                 }
 
                 currContents = build.toTransport(namespace, moduleName, path, currContents, layer);
+
+                if (packageConfig) {
+                    currContents = addSemiColon(currContents) + '\n';
+                    currContents += namespaceWithDot + "define('" +
+                                    packageConfig.name + "', ['" + moduleName +
+                                    "'], function (main) { return main; });\n";
+                }
 
                 if (config.onBuildWrite) {
                     currContents = config.onBuildWrite(moduleName, path, currContents);

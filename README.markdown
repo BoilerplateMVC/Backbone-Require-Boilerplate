@@ -116,6 +116,10 @@ app.build.js
 
    -I found that when I built using the Require.js Optimizer, only one lang-locale could be included per optimized file.  That would mean, that if you had to support 10 different langs/locales, you would need 20 different optimized builds (Desktop and Mobile).  If I am mistaken about this, please let me know, and I will update the Boilerplate with the Internationalization plugin.  A solution for including localized text is in the roadmap and will be included in a future release of the project.
 
+**How do I use the Require.js Optimizer script for my project?**
+
+   -Make sure that you have node.js installed.  Next, navigate inside of the js folder and run the command "node r.js -o app.build.js".  After the Require.js Optimizer is done minifying and concatenating your Desktop and Mobile Projects, it will create a js-optimized folder at the same folder level as the js folder.  Inside of the js-optimized folder and look at both desktop.js and mobile.js (these files contain your entire projects).  Finally, inside of index.html, update the `data-main` attribute on the script tag that includes Require.js.  Make sure to reference the js-optimized folder instead of the js folder.  That's it!
+
 **Why haven't you included a unit testing framework with this boilerplate?**
 
    -Because I am lazy.  I will eventually get around to it.  My current favorite framework is Jasmine, so I will most likely be including that.
@@ -136,6 +140,7 @@ app.build.js
 
 `0.4.0` - June 1, 2012
 
+- Upgraded to Require.js 2.0.1 and r.js 2.0.1
 - Added anotherView.js to demonstrate how to extend Backbone.js Views/Classes
 - Updated documentation
 
