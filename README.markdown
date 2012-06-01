@@ -128,6 +128,11 @@ app.build.js
 
 ##Change Log
 
+`0.3.0` - June 1, 2012
+
+- Upgraded to Lodash 0.2.2
+- Updated documentation
+
 `0.2.0` - May 29, 2012
 
 - Upgraded to Require.js 2.0, text.js 2.0, and r.js 2.0.
