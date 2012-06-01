@@ -122,7 +122,7 @@ app.build.js
 
 **How do I use the Require.js Optimizer script for my project?**
 
-   -Make sure that you have node.js installed.  Next, navigate inside of the js folder and run the command "node r.js -o app.build.js".  After the Require.js Optimizer is done minifying and concatenating your Desktop and Mobile Projects, it will create a js-optimized folder at the same folder level as the js folder.  Inside of the js-optimized folder and look at both desktop.js and mobile.js (these files contain your entire projects).  Finally, inside of index.html, update the `data-main` attribute on the script tag that includes Require.js.  Make sure to reference the js-optimized folder instead of the js folder.  That's it!
+   -Make sure that you have node.js installed.  Next, navigate inside of the js folder and run the command "node r.js -o app.build.js".  After the Require.js Optimizer is done minifying and concatenating your Desktop and Mobile Projects, it will create a js-optimized folder at the same folder level as the js folder.  Navigate inside of the js-optimized folder and look at both desktop.js and mobile.js (these files contain your entire projects).  Finally, inside of index.html, update the `data-main` attribute on the script tag that includes Require.js.  Make sure to reference the js-optimized folder instead of the js folder.  That's it!
 
 **Why haven't you included a unit testing framework with this boilerplate?**
 
@@ -146,6 +146,7 @@ app.build.js
 
 - Upgraded to Require.js 2.0.1 and r.js 2.0.1
 - Added anotherView.js to demonstrate how to extend Backbone.js Views/Classes
+- Upgraded modle.js to now return a Model instance instead of a Model Class
 - Updated documentation
 
 `0.3.0` - June 1, 2012
