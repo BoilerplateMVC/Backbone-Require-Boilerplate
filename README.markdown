@@ -72,7 +72,7 @@ view.js
 
    The rest of the file is a pretty standard Backbone.js View class:
 		
-   Backbone.js View's have a one-to-one relationship with DOM elements, and a View's DOM element is listed in the `el` property.  After the `el` property is set, the View's model attribute is set to a new instance of the Model returned by model.js (which was listed at the top as a dependency).  The new Model instance is also instantiated with a message property ("You are now using Backbone, Lodash, Require, Modernizr, and jQuery!"), which is eventually printed to the `index.html` page.  Next, the View's `template` property is set using the [Underscore.js](https://github.com/documentcloud/underscore) `template` method ported to Lodash.
+   Backbone.js View's have a one-to-one relationship with DOM elements, and a View's DOM element is listed in the `el` property.  After the `el` property is set, the View's model attribute is set to a new instance of the Model returned by model.js (which was listed at the top as a dependency).  Next, the View's `template` property is set using the [Underscore.js](https://github.com/documentcloud/underscore) `template` method ported to Lodash.
 
    **Note**: If you have read all of the documentation up until this point, you will most likely have already noticed that [lodash](https://github.com/bestiejs/lodash) is being used instead of Underscore.js.  Apart from having a bit better cross-browser performance and stability than Underscore.js, lodash also provides a custom build process.  Although I have provided a version of lodash that has all of the Underscore.js methods you would expect, you can download a custom build and swap that in.
 
@@ -96,7 +96,11 @@ model.js
 
    The rest of the file is a pretty standard Backbone.js Model class (with pretty much everything left up to you to complete), except...
 
-   The Backbone.js `validate` method is provided for you.  This method is called any time an attribute of the model is set.  Keep in mind that all model attributes will be validated (once set), even if a different model attribute is being set/validated.  This does not make much sense to me, so feel free to create your own validation mechanism.
+   A default property, `message` with the string "You are now using Backbone, Lodash, Require, Modernizr, and jQuery!".  This will eventually be printed to the `index.html` page.
+
+   Also, The Backbone.js `validate` method is provided for you.  This method is called any time an attribute of the model is set.  Keep in mind that all model attributes will be validated (once set), even if a different model attribute is being set/validated.  This does not make much sense to me, so feel free to create your own validation mechanism.
+
+   Finally, a new Model instance is returned.
 
 app.build.js
 ------------

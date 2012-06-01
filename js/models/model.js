@@ -3,21 +3,26 @@ define(['jquery', 'backbone'], function($, Backbone) {
     var self,
         model = Backbone.Model.extend({
 
-        // Model Constructor
-        initialize: function() {
+            defaults: {
+	            message: "You are now using Backbone, Lodash, Require, Modernizr, and jQuery! (Click Me)"
+	        },
 
-            //Storing the model context
-            self = this;
-        },
+            // Model Constructor
+            initialize: function() {
 
-        // Any time a model attribute is set, this method is called
-        validate: function(attrs) {
+                //Storing the model context
+                self = this;
 
-        }
+            },
+
+            // Any time a model attribute is set, this method is called
+            validate: function(attrs) {
+
+            }
 
     });
 
     // Returns the entire model (allows you to use your model in a different module)
-    return model;
+    return new model();
 
 });

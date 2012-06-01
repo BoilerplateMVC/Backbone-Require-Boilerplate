@@ -14,16 +14,16 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
             self = this;
 
             //Setting the view's model property to the passed in model
-            this.model = new Model({
-                message: "You are now using Backbone, Lodash, Require, Modernizr, and jQuery! (Click Me)"
-            });
+            this.model = Model;
 
             this.template = _.template( template, { model: this.model.toJSON() } );
 
         },
 
         events: {
+
             "click #example": "promptUser"
+
 	    },
 
         render: function() {
@@ -33,7 +33,9 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
         },
 
         promptUser: function() {
+
             prompt("Isn't this amazing?", "Yes, yes it is");
+
         }
 
     });

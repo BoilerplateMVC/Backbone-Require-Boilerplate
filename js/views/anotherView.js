@@ -16,9 +16,7 @@ define(['jquery', 'backbone','models/model', 'views/view'], function($, Backbone
             self = this;
 
             //Setting the view's model property to the passed in model
-            this.model = new Model({
-                message: "You are now using Backbone, Lodash, Require, Modernizr, and jQuery! (Click Me)"
-            });
+            this.model = Model;
 
         },
 
