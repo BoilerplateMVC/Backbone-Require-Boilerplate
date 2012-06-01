@@ -21,10 +21,6 @@ require.config({
       "backbone": {
           deps: ["underscore", "jquery"],
           exports: "Backbone"  //attaches "Backbone" to the window object
-      },
-
-      "underscore": {
-          exports: "_" //attaches "_" to the window object
       }
 
   } // end Shim Configuration
