@@ -58,7 +58,7 @@ mobileRouter.js
 
    The rest of the file is a pretty standard Backbone.js Router class:
 
-   There is currently only one route listed (which gets called if there is no hash tag on the url), but feel free to create more for your application.  The only code worth noting in here is view.js's `render` method being called.  This will put the "Your Template says: You are now using Backbone, Lodash, Require, Modernizr, and jQuery!" text on the screen.  To call the view's `render` method, view.js is listed as a dependency and included on the page.  view.js is where to look next.
+   There is currently only one route listed (which gets called if there is no hash tag on the url), but feel free to create more for your application.  The only code worth noting in here is view.js's `render` method being called and anotherView.js's `promptUser` method is being called.  The render method will put the "Your Template says: You are now using Backbone, Lodash, Require, Modernizr, and jQuery!" text on the screen.  To call the view's `render` method, view.js is listed as a dependency and included on the page.  The promptUser method of the `anotherView` class will issue a text prompt immediately to the user.  You will not find a promptUser method inside of the `anotherView` class, but the method call will still work because the `anotherView` class extends view.js (which does have a promptUser method).
 
    **Note**: You must keep the `Backbone.history.start()` method call, since this is what triggers Backbone to start reacting to hashchange events
 
@@ -81,6 +81,10 @@ view.js
    Finally, I am declaring a `render` method on my View.  Backbone expects you to override the `render` method with your own functionality, so that is what I did.  All my `render` method does is append the View's template to the page.
 
    **Note**: You do not need to use Underscore.js templates.  In fact, you don't need to use templates at all.  I just included them so you would understand how to use them.
+
+anotherView.js
+--------------
+	anotherView.js doesn't do much.  It is there to show you a pattern for extending Backbone View's.
 
 main.html
 ---------
@@ -129,6 +133,11 @@ app.build.js
    -Please do!  I am learning just like you.
 
 ##Change Log
+
+`0.4.0` - June `, 2012
+
+- Added anotherView.js to demonstrate how to extend Backbone.js Views/Classes
+- Updated documentation
 
 `0.3.0` - June 1, 2012
 

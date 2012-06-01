@@ -38,6 +38,6 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
 
     });
 	
-    // Returns the entire view (allows you to use your view in a different module)
+    // Returns a new view instance
     return new view();
 });
