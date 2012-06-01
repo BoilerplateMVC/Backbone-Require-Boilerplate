@@ -146,7 +146,7 @@ app.build.js
 
 - Upgraded to Require.js 2.0.1 and r.js 2.0.1
 - Added anotherView.js to demonstrate how to extend Backbone.js Views/Classes
-- Upgraded modle.js to now return a Model instance instead of a Model Class
+- Upgraded `model.js` to now return a Model instance instead of a Model Class
 - Updated documentation
 
 `0.3.0` - June 1, 2012
