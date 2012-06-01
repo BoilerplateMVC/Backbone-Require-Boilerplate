@@ -1,5 +1,5 @@
 /*!
- * Lo-Dash v0.2.1 <http://lodash.com>
+ * Lo-Dash v0.2.2 <http://lodash.com>
  * Copyright 2012 John-David Dalton <http://allyoucanleet.com/>
  * Based on Underscore.js 1.3.3, copyright 2009-2012 Jeremy Ashkenas, DocumentCloud Inc.
  * <http://documentcloud.github.com/underscore>
@@ -271,7 +271,7 @@
       '  callback = identity\n' +
       '}\n' +
       'else if (thisArg) {\n' +
-      '  callback = bind(callback, thisArg)\n' +
+      '  callback = iteratorBind(callback, thisArg)\n' +
       '}',
     'inLoop': 'callback(collection[index], index, collection)'
   };
@@ -304,7 +304,7 @@
 
   /** Reusable iterator options for `find`  and `forEach` */
   var forEachIteratorOptions = {
-    'top': 'if (thisArg) callback = bind(callback, thisArg)'
+    'top': 'if (thisArg) callback = iteratorBind(callback, thisArg)'
   };
 
   /** Reusable iterator options for `map`, `pluck`, and `values` */
@@ -418,13 +418,13 @@
     }
     // create the function factory
     var factory = Function(
-        'arrayClass, bind, funcClass, hasOwnProperty, identity, objectTypes, ' +
+        'arrayClass, funcClass, hasOwnProperty, identity, iteratorBind, objectTypes, ' +
         'stringClass, toString, undefined',
       '"use strict"; return function(' + args + ') {\n' + iteratorTemplate(data) + '\n}'
     );
     // return the compiled function
     return factory(
-      arrayClass, bind, funcClass, hasOwnProperty, identity, objectTypes,
+      arrayClass, funcClass, hasOwnProperty, identity, iteratorBind, objectTypes,
       stringClass, toString
     );
   }
@@ -454,6 +454,21 @@
   }
 
   /**
+   * Creates a new function that, when called, invokes `func` with the `this`
+   * binding of `thisArg` and the arguments (value, index, object).
+   *
+   * @private
+   * @param {Function} func The function to bind.
+   * @param {Mixed} [thisArg] The `this` binding of `func`.
+   * @returns {Function} Returns the new bound function.
+   */
+  function iteratorBind(func, thisArg) {
+    return function(value, index, object) {
+      return func.call(thisArg, value, index, object);
+    };
+  }
+
+  /**
    * A no-operation function.
    *
    * @private
@@ -461,6 +476,21 @@
   function noop() {
     // no operation performed
   }
+
+  /**
+   * A shim implementation of `Object.keys` that produces an array of the given
+   * object's enumerable own property names.
+   *
+   * @private
+   * @param {Object} object The object to inspect.
+   * @returns {Array} Returns a new array of property names.
+   */
+  var shimKeys = createIterator({
+    'args': 'object',
+    'exit': 'if (!objectTypes[typeof object] || object === null) throw TypeError()',
+    'init': '[]',
+    'inLoop': 'result.push(index)'
+  });
 
   /**
    * Used by `template()` to replace "escape" template delimiters with tokens.
@@ -697,7 +727,7 @@
     'init': 'accumulator',
     'top':
       'var noaccum = arguments.length < 3;\n' +
-      'if (thisArg) callback = bind(callback, thisArg)',
+      'if (thisArg) callback = iteratorBind(callback, thisArg)',
     'beforeLoop': {
       'array': 'if (noaccum) result = collection[++index]'
     },
@@ -741,7 +771,7 @@
         noaccum = arguments.length < 3;
 
     if(thisArg) {
-      callback = bind(callback, thisArg);
+      callback = iteratorBind(callback, thisArg);
     }
     if (length === +length) {
       if (length && noaccum) {
@@ -1015,7 +1045,7 @@
         result = {};
 
     if (isFunc && thisArg) {
-      callback = bind(callback, thisArg);
+      callback = iteratorBind(callback, thisArg);
     }
     while (++index < length) {
       value = array[index];
@@ -1047,13 +1077,16 @@
    *
    * _.sortBy([1, 2, 3, 4, 5, 6], function(num) { return this.sin(num); }, Math);
    * // => [5, 4, 6, 3, 1, 2]
+   *
+   * _.sortBy(['larry', 'brendan', 'moe'], 'length');
+   * // => ['moe', 'larry', 'brendan']
    */
   function sortBy(array, callback, thisArg) {
     if (toString.call(callback) != funcClass) {
       var prop = callback;
       callback = function(array) { return array[prop]; };
     } else if (thisArg) {
-      callback = bind(callback, thisArg);
+      callback = iteratorBind(callback, thisArg);
     }
     return pluck(map(array, function(value, index) {
       return {
@@ -1084,23 +1117,33 @@
    * @category Arrays
    * @param {Array} array The array to search.
    * @param {Mixed} value The value to search for.
-   * @param {Boolean} [isSorted=false] A flag to indicate that the `array` is already sorted.
+   * @param {Boolean|Number} [fromIndex=0] The index to start searching from or
+   *  `true` to perform a binary search on a sorted `array`.
    * @returns {Number} Returns the index of the matched value or `-1`.
    * @example
    *
-   * _.indexOf([1, 2, 3], 2);
+   * _.indexOf([1, 2, 3, 1, 2, 3], 2);
    * // => 1
+   *
+   * _.indexOf([1, 2, 3, 1, 2, 3], 2, 3);
+   * // => 4
+   *
+   * _.indexOf([1, 1, 2, 2, 3, 3], 2, true);
+   * // => 2
    */
-  function indexOf(array, value, isSorted) {
-    var index, length;
-    if (!array) {
-      return -1;
+  function indexOf(array, value, fromIndex) {
+    var index = -1,
+        length = array.length;
+
+    if (fromIndex) {
+      if (fromIndex === +fromIndex) {
+        index = (fromIndex < 0 ? Math.max(0, length + fromIndex) : fromIndex) - 1;
+      } else {
+        index = sortedIndex(array, value);
+        return array[index] === value ? index : -1;
+      }
     }
-    if (isSorted) {
-      index = sortedIndex(array, value);
-      return array[index] === value ? index : -1;
-    }
-    for (index = 0, length = array.length; index < length; index++) {
+    while (++index < length) {
       if (array[index] === value) {
         return index;
       }
@@ -1220,17 +1263,21 @@
    * @category Arrays
    * @param {Array} array The array to search.
    * @param {Mixed} value The value to search for.
+   * @param {Number} [fromIndex=array.length-1] The index to start searching from.
    * @returns {Number} Returns the index of the matched value or `-1`.
    * @example
    *
    * _.lastIndexOf([1, 2, 3, 1, 2, 3], 2);
    * // => 4
+   *
+   * _.lastIndexOf([1, 2, 3, 1, 2, 3], 2, 3);
+   * // => 1
    */
-  function lastIndexOf(array, value) {
-    if (!array) {
-      return -1;
-    }
+  function lastIndexOf(array, value, fromIndex) {
     var index = array.length;
+    if (fromIndex && fromIndex === +fromIndex) {
+      index = (fromIndex < 0 ? Math.max(0, index + fromIndex) : Math.min(fromIndex, index - 1)) + 1;
+    }
     while (index--) {
       if (array[index] === value) {
         return index;
@@ -1279,7 +1326,7 @@
       return result;
     }
     if (thisArg) {
-      callback = bind(callback, thisArg);
+      callback = iteratorBind(callback, thisArg);
     }
     while (++index < length) {
       current = callback(array[index], index, array);
@@ -1325,7 +1372,7 @@
       return result;
     }
     if (thisArg) {
-      callback = bind(callback, thisArg);
+      callback = iteratorBind(callback, thisArg);
     }
     while (++index < length) {
       current = callback(array[index], index, array);
@@ -1435,10 +1482,10 @@
   }
 
   /**
-   * Uses a binary search to determine the smallest  index at which the `value`
-   * should be inserted into the `collection` in order to maintain the sort order
-   * of the `collection`. If `callback` is passed, it will be executed for each
-   * value in the `collection` to compute their sort ranking. The `callback` is
+   * Uses a binary search to determine the smallest index at which the `value`
+   * should be inserted into the `array` in order to maintain the sort order
+   * of the `array`. If `callback` is passed, it will be executed for each
+   * value in the `array` to compute their sort ranking. The `callback` is
    * invoked with 1 argument; (value).
    *
    * @static
@@ -1448,7 +1495,7 @@
    * @param {Mixed} value The value to evaluate.
    * @param {Function} [callback] The function called per iteration.
    * @returns {Number} Returns the index at which the value should be inserted
-   *  into the collection.
+   *  into the array.
    * @example
    *
    * _.sortedIndex([10, 20, 30, 40, 50], 35);
@@ -1640,7 +1687,7 @@
    * @memberOf _
    * @category Functions
    * @param {Function|Object} func The function to bind or the object the method belongs to.
-   * @param @param {Mixed} [thisArg] The `this` binding of `func` or the method name.
+   * @param {Mixed} [thisArg] The `this` binding of `func` or the method name.
    * @param {Mixed} [arg1, arg2, ...] Arguments to be partially applied.
    * @returns {Function} Returns the new bound function.
    * @example
@@ -2628,12 +2675,12 @@
    * _.keys({ 'one': 1, 'two': 2, 'three': 3 });
    * // => ['one', 'two', 'three']
    */
-  var keys = nativeKeys || createIterator({
-    'args': 'object',
-    'exit': 'if (!objectTypes[typeof object] || object === null) throw TypeError()',
-    'init': '[]',
-    'inLoop': 'result.push(index)'
-  });
+  var keys = !nativeKeys ? shimKeys : function(object) {
+    // avoid iterating over the `prototype` property
+    return typeof object == 'function'
+      ? shimKeys(object)
+      : nativeKeys(object);
+  };
 
   /**
    * Creates an object composed of the specified properties. Property names may
@@ -2987,13 +3034,21 @@
    * @example
    *
    * _.times(3, function() { genie.grantWish(); });
+   * // => calls `genie.grantWish()` 3 times
+   *
+   * _.times(3, function() { this.grantWish(); }, genie);
+   * // => also calls `genie.grantWish()` 3 times
    */
   function times(n, callback, thisArg) {
+    var index = -1;
     if (thisArg) {
-      callback = bind(callback, thisArg);
-    }
-    for (var index = 0; index < n; index++) {
-      callback(index);
+      while (++index < n) {
+        callback.call(thisArg, index);
+      }
+    } else {
+      while (++index < n) {
+        callback(index);
+      }
     }
   }
 
@@ -3089,7 +3144,7 @@
    * @memberOf _
    * @type String
    */
-  lodash.VERSION = '0.2.1';
+  lodash.VERSION = '0.2.2';
 
   // assign static methods
   lodash.after = after;
@@ -3194,6 +3249,7 @@
   // add pseudo privates used and removed during the build process
   lodash._createIterator = createIterator;
   lodash._iteratorTemplate = iteratorTemplate;
+  lodash._shimKeys = shimKeys;
 
   /*--------------------------------------------------------------------------*/
 
