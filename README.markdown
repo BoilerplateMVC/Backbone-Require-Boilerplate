@@ -134,7 +134,7 @@ app.build.js
 
 ##Change Log
 
-`0.4.0` - June `, 2012
+`0.4.0` - June 1, 2012
 
 - Added anotherView.js to demonstrate how to extend Backbone.js Views/Classes
 - Updated documentation
