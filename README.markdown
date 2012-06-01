@@ -122,7 +122,7 @@ app.build.js
 
 **How do I use the Require.js Optimizer script for my project?**
 
-   -Make sure that you have node.js installed.  Next, navigate inside of the js folder and run the command "node r.js -o app.build.js".  After the Require.js Optimizer is done minifying and concatenating your Desktop and Mobile Projects, it will create a js-optimized folder at the same folder level as the js folder.  Navigate inside of the js-optimized folder and look at both desktop.js and mobile.js (these files contain your entire projects).  Finally, inside of index.html, update the `data-main` attribute on the script tag that includes Require.js.  Make sure to reference the js-optimized folder instead of the js folder.  That's it!
+   -Make sure that you have node.js installed.  Next, navigate inside of the js folder and run the command "node r.js -o app.build.js".  After the Require.js Optimizer is done minifying and concatenating your Desktop and Mobile Projects, it will create a js-optimized folder at the same folder level as the js folder.  Navigate inside of the js-optimized folder and look at both desktop.js and mobile.js (these files contain your entire projects).  Finally, inside of index.html, update the `data-main` attribute on both of the script tags that includes Require.js and your desktop and mobile projects.  Make sure to reference the js-optimized folder instead of the js folder.  That's it!
 
 **Why haven't you included a unit testing framework with this boilerplate?**
 
