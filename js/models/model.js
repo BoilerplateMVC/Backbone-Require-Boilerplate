@@ -4,7 +4,7 @@ define(['jquery', 'backbone'], function($, Backbone) {
 
             defaults: {
 	            message: "You are now using Backbone, Lodash, Require, Modernizr, and jQuery! (Click Me)"
-	        },
+            },
 
             // Model Constructor
             initialize: function() {

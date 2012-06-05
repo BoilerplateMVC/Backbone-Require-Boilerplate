@@ -4,6 +4,7 @@
   // Creates a js-optimized folder at the same folder level as your "js" folder and places the optimized project there
   dir: "../js-optimized",
 
+  // Tells Require.js to look at desktop.js for all shim and path configurations
   mainConfigFile: 'desktop.js',
 
   // Modules to be optimized:

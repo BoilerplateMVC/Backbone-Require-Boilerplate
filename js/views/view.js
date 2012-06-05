@@ -8,9 +8,10 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
         // View constructor
         initialize: function() {
 
-            //Setting the view's model property to the passed in model
+            // Setting the view's model property to the passed in model
             this.model = new Model();
 
+            // Setting the view's template property
             this.template = _.template( template, { model: this.model.toJSON() } );
 
         },
