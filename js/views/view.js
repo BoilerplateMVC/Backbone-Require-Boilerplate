@@ -1,8 +1,6 @@
 define(['jquery', 'backbone','models/model', 'text!templates/main.html'], function($, Backbone, Model, template){
 
-    var self,
-
-	view = Backbone.View.extend({
+    var View = Backbone.View.extend({
 
         // Represents the actual DOM element that corresponds to your View (There is a one to one relationship between View Objects and DOM elements)
         el: 'body',
@@ -10,11 +8,8 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
         // View constructor
         initialize: function() {
 
-            //Storing the view context
-            self = this;
-
             //Setting the view's model property to the passed in model
-            this.model = Model;
+            this.model = new Model();
 
             this.template = _.template( template, { model: this.model.toJSON() } );
 
@@ -28,7 +23,7 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
 
         render: function() {
 
-            self.$el.find("#example").append(self.template);
+            this.$el.find("#example").append(this.template);
 
         },
 
@@ -41,5 +36,5 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
     });
 	
     // Returns a new view instance
-    return new view();
+    return View;
 });

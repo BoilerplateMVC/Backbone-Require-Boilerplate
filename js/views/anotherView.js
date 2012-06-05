@@ -2,18 +2,13 @@ define(['jquery', 'backbone','models/model', 'views/view'], function($, Backbone
 
     // This view class shows how you can extend another Backbone view (or any other Backbone class for that matter)
 
-    var self,
-
     //Extending
-    anotherView = view.constructor.extend({
+    var AnotherView = view.extend({
 
         el: "body",
 
         // View constructor
         initialize: function() {
-
-            //Storing the view context
-            self = this;
 
             //Setting the view's model property to the passed in model
             this.model = Model;
@@ -27,5 +22,5 @@ define(['jquery', 'backbone','models/model', 'views/view'], function($, Backbone
     });
 	
     // Returns a new view instance (allows you to use your view in a different module)
-    return new anotherView();
+    return AnotherView;
 });

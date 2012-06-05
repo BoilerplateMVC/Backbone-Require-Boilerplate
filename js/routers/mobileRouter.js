@@ -1,12 +1,10 @@
-define(['jquery','backbone','views/view', 'views/anotherView'], function($, Backbone, mainView, anotherView){
+define(['jquery','backbone','views/view', 'views/anotherView'], function($, Backbone, MainView, AnotherView){
 
-    var self,
-        Router = Backbone.Router.extend({
+    var Router = Backbone.Router.extend({
 
         initialize: function(){
            
         Backbone.history.start();
-            self = this;
 
         },
 
@@ -17,6 +15,10 @@ define(['jquery','backbone','views/view', 'views/anotherView'], function($, Back
         },
 
         'home': function(){
+
+            // Instantiating mainView and anotherView instances
+            var mainView = new MainView(),
+                anotherView = new AnotherView();
 
             // Renders the mainView template
             mainView.render();
