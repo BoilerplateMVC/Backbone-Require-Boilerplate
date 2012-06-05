@@ -25,6 +25,7 @@ define(['jquery','backbone','views/view', 'views/anotherView'], function($, Back
 
             // anotherView.js extends view.js.  anotherView.js does not have a promptUser method, so looks up the prototype chain and uses the view.js promptUser method instead.
             anotherView.promptUser();
+
         }
     });
 
