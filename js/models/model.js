@@ -18,7 +18,7 @@ define(['jquery', 'backbone'], function($, Backbone) {
 
     });
 
-    // Returns the entire model (allows you to use your model in a different module)
+    // Returns the Model class
     return Model;
 
 });

@@ -35,6 +35,6 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
 
     });
 	
-    // Returns a new view instance
+    // Returns the View class
     return View;
 });

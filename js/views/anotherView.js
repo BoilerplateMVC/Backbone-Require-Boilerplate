@@ -11,6 +11,6 @@ define(['jquery', 'backbone','models/model', 'views/view'], function($, Backbone
 
     });
 	
-    // Returns a new view instance (allows you to use your view in a different module)
+    // Returns the AnotherView Class
     return AnotherView;
 });

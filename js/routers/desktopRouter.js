@@ -29,5 +29,6 @@ define(['jquery','backbone','views/view', 'views/anotherView'], function($, Back
         }
     });
 
+    // Returns the Router class
     return Router;
 });
