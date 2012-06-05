@@ -3,13 +3,16 @@ define(['jquery','backbone','views/view', 'views/anotherView'], function($, Back
     var Router = Backbone.Router.extend({
 
         initialize: function(){
-           
-        Backbone.history.start();
+        
+            // Tells Backbone to start watching for hashchange events
+            Backbone.history.start();
 
         },
 
+        // All of your Backbone Routes (add more)
         routes: {
 
+            // When there is no hash bang on the url, the home method is called
             '': 'home'
 
         },
@@ -23,8 +26,9 @@ define(['jquery','backbone','views/view', 'views/anotherView'], function($, Back
             // Renders the mainView template
             mainView.render();
 
-            // anotherView.js extends view.js.  anotherView.js does not have a promptUser method, so looks up the prototype chain and uses the view.js promptUser method instead.
+            // anotherView.js extends view.js.  anotherView.js does not have a promptUser method, so JavaScript looks up the prototype chain and uses the view.js promptUser method instead.
             anotherView.promptUser();
+
         }
     });
 
