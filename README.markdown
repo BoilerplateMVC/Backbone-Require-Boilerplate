@@ -78,9 +78,11 @@ view.js
 
    Next, you will find an `events` object with one property.  Here is where all of your View DOM event handlers associated with the HTML element referenced by your View's `el` property should be stored.  Keep in mind that Backbone is using the jQuery `delegate` method, so it expects a selector that is within your View's `el` property.  The one event handler I listed binds a click event to the View's `el` element (event delegation) and gives it an id context of `example`.  I then provide a method to be called when the event is triggered (by providing the method name).
 
-   Finally, I am declaring a `render` method on my View.  Backbone expects you to override the `render` method with your own functionality, so that is what I did.  All my `render` method does is append the View's template to the page.
+   I am also declaring a `render` method on my View.  Backbone expects you to override the `render` method with your own functionality, so that is what I did.  All my `render` method does is append the View's template to the page.
 
    **Note**: You do not need to use Underscore.js templates.  In fact, you don't need to use templates at all.  I just included them so you would understand how to use them.
+
+   Finally, I am returning a View class.
 
 anotherView.js
 --------------
@@ -100,7 +102,7 @@ model.js
 
    Also, The Backbone.js `validate` method is provided for you.  This method is called any time an attribute of the model is set.  Keep in mind that all model attributes will be validated (once set), even if a different model attribute is being set/validated.  This does not make much sense to me, so feel free to create your own validation mechanism.
 
-   Finally, a new Model instance is returned.
+   Finally, a new Model class is returned.
 
 app.build.js
 ------------
@@ -141,6 +143,12 @@ app.build.js
    -Please do!  I am learning just like you.
 
 ##Change Log
+
+`0.5.0` - June 5, 2012
+
+- All modules now return a class instead of an instance
+- The self variable has been removed from all modules (scoping issue)
+- The Require.js Optimizer build file (app.build.js) has been simplified by adding a `mainConfigFile` option that points to the desktop main file.  Keep in mind that all of your mobile and desktop shims and paths need to be in desktop.js
 
 `0.4.0` - June 1, 2012
 
