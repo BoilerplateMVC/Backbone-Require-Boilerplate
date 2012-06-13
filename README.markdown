@@ -144,7 +144,7 @@ app.build.js
 
 ##Change Log
 
-`0.6.01 - June 13, 2012
+`0.6.01` - June 13, 2012
 
 - Upgraded to Require.js 2.0.2 and r.js 2.0.2 [documentation](http://tagneto.blogspot.ca/2012/06/requirejs-202-released.html)
 
