@@ -148,6 +148,8 @@ app.build.js
 
 - Upgraded to Require.js 2.0.2 and r.js 2.0.2 [documentation](http://tagneto.blogspot.ca/2012/06/requirejs-202-released.html)
 
+- Upgraded to Lodash 0.3.1
+
 `0.5.0` - June 5, 2012
 
 - All modules now return a class instead of an instance

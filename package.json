@@ -25,7 +25,7 @@
   "dependencies": {
     "jquery": "1.7.2",
     "backbone": "0.9.2",
-    "lodash": "0.2.2",
+    "lodash": "0.3.1",
     "require": "2.0.2",
     "text.js": "2.0.0",
     "modernizr": "2.5.3",
