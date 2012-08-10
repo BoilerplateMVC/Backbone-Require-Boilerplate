@@ -138,6 +138,32 @@ app.build.js
 
    -No!  Feel free to update the boilerplate to fit the needs of your application.  Certain things that you might not want/need include templates, mobile and desktop versions, Modernizr, etc.
 
+**Do I need a local web server to test the boilerplate?**
+
+   -Kind of.  The boilerplate works locally in Firefox, but both IE and Chrome complain about the Require.js text loader plugin, which dynamically pulls in a template.  If you are not able to use a local web server, such as XAMPP, [James Gibson](https://github.com/jamesgibson14) has provided the following instructions to test the boilerplate in IE9 and Chrome:
+
+   IE 9: Add this code
+      if (navigator.appName == 'Microsoft Internet Explorer' && location.toString().indexOf('file')==0) {
+
+         window.XMLHttpRequest = function() {
+   
+            try {
+   
+               //this sets the HttpRequest to use different version which does allow local file access.
+               return new ActiveXObject('MSXML2.XMLHTTP.3.0');
+            
+            }
+            catch (ex) {
+   
+               return null;
+   
+            }
+         }
+      }
+
+   Chrome: Make a shortcut to chrome with commanline args:
+      drive:\PathToChrome\Chrome.exe --allow-file-access-from-files
+
 **Can I contribute to this project?**
 
    -Please do!  I am learning just like you.
