@@ -144,6 +144,14 @@ app.build.js
 
 ##Change Log
 
+`0.7.0` - August 10, 2012
+
+- Upgraded to Require.js 2.0.5 and r.js 2.0.5 [documentation](http://tagneto.blogspot.com/2012/08/requirejs-205-released.html)
+
+- Upgraded to Lodash 0.4.2
+
+- Upgraded to jQuery 1.8.0 [documentation](http://blog.jquery.com/2012/08/09/jquery-1-8-released/)
+
 `0.6.0` - June 13, 2012
 
 - Upgraded to Require.js 2.0.2 and r.js 2.0.2 [documentation](http://tagneto.blogspot.ca/2012/06/requirejs-202-released.html)
