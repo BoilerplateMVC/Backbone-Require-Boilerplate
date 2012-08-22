@@ -8,7 +8,9 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 #Getting Started
    1. Clone this repository
    2. Download and install [Node.js](http://nodejs.org/#download) (this is used to run the Require.js Optimizer)
-   3. Enjoy using Backbone.js, Require.js, jQuery, Lodash, Modernizr, and Jasmine! (enjoyment optional)
+   3. Open index.html to view the demo page.
+   4. Open SpecRunner.html to view the test suite page.
+   5. Enjoy using Backbone.js, Require.js, jQuery, Lodash, Modernizr, and Jasmine! (enjoyment optional)
 
 #Tour of the Boilerplate Files
 
