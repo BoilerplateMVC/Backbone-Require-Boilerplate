@@ -107,7 +107,7 @@ app.build.js
 
 SpecRunner.html
 ---------------
-   This file sets up your Require.js/Backbone/Jasmine test configuration.  Since this file is in a different folder location than index.html, the Require.js path and baseUrl configurations are updated.  This page loads all third-party dependencies (jquery, backbone, etc), dynamically includes all of your specs (your tests) via spec.js, and then allows Jasmine to test your tests.  Fun!
+   This file sets up your Require.js/Backbone/Jasmine test configuration.  Since this file is in a different folder location than index.html, the Require.js path and baseUrl configurations are updated.  This page loads all third-party dependencies (jquery, backbone, etc) since they are listed as dependencies in spec.js, dynamically includes all of your specs (your tests) via spec.js, and then allows Jasmine to test your tests.  Fun!
 
 spec.js
 -------
