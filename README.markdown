@@ -8,10 +8,7 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 #Getting Started
    1. Clone this repository
    2. Download and install [Node.js](http://nodejs.org/#download) (this is used to run the Require.js Optimizer)
-   3. Download, install, and start a local web server (eg. [XAMPP](http://www.apachefriends.org/en/xampp.html)).  Make sure to put this repository in your local web server's public folder (eg. htdocs).
-
-   **Note**: A local web server is required because Backbone-Require-Boilerplate dynamically pulls in an HTML dependency (a template), and IE and Chrome have local security restrictions that do not allow this action.  If you don't want to download and install a local web server, then you should be able to test the code locally with Firefox.  Keep in mind that if you remove the template, the code will work fine locally in all browsers.
-   4. Enjoy using Backbone.js, Require.js, jQuery, Lodash, and Modernizr (enjoyment optional)
+   3. Enjoy using Backbone.js, Require.js, jQuery, Lodash, Modernizr, and Jasmine! (enjoyment optional)
 
 #Tour of the Boilerplate Files
 

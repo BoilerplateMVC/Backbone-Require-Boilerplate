@@ -22,7 +22,7 @@ define(['jquery','backbone','views/view','views/anotherView','models/model','jas
 
             it("should create an template property using the model's message property", function() {
 
-                expect(this.mainView.template).toEqual("<h1>Your Template says:</h1><h3 class='example'>You are now using Backbone, Lodash, Require, Modernizr, and jQuery! (Click Me)</h3>");
+                expect(this.mainView.template).toEqual("<h1>Your Template says:</h1><h3 class='example'>You are now using jQuery, Backbone, Lodash, Require, Modernizr, and Jasmine! (Click Me)</h3>");
 
             });
 
