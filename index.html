@@ -29,7 +29,7 @@
       	      setTimeout(function() {
       	          var script = d.createElement('script');
                   script.setAttribute("data-main", "js/mobile");
-                  script.src = "js/libs/require-2.0.5.js";
+                  script.src = "js/libs/require.js";
                   d.body.appendChild(script);
       	      }, 0);
           }
@@ -38,7 +38,7 @@
       	      setTimeout(function() {
       	          var script = d.createElement('script');
                   script.setAttribute("data-main", "js/desktop");
-                  script.src = "js/libs/require-2.0.5.js";
+                  script.src = "js/libs/require.js";
                   d.body.appendChild(script);
       	      }, 0);
          }
@@ -47,7 +47,11 @@
 
 </head>
 <body>
-  <div id="example"></div>
+    <script id='example' type='text/template'>
+        <h1>Your Template says:</h1>
+        <h3 class='example'><%= model.message %></h3>
+    </script>
+  
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->

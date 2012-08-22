@@ -1,5 +1,5 @@
-Backbone-Require-Boilerplate
-============================
+Backbone-Require-Boilerplate (BRB)
+==================================
 ![Example](http://backbonejs.org/docs/images/backbone.png) ![Example](http://requirejs.org/i/logo.png)
 
 #Description
@@ -20,6 +20,8 @@ index.html
    Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a JavaScript mobile browser detection script (inspired from [detectmobilebrowsers.com](http://detectmobilebrowsers.com/)) to determine if a user is using a mobile or desktop browser.
 
    If a mobile browser is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `mobile` (this tells Require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `desktop` (this tells Require.js to look for a desktop.js file in the js folder).
+
+   This file also includes an Underscore.js (via Lodash) template. Templates are typically a useful way for you to update your View (the DOM) if a Model attribute changes.  Templates are also useful when you have a lot of HTML and JavaScript that you need to fit together, and instead of concatenating HTML strings inside of your JavaScript, templates provide a cleaner solution.  Look at Underscore's documentation to read more about the syntax of Underscore.js templates.
 
    **Note**: You do not need to use the mobile detection script for your application.  I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
 
@@ -68,7 +70,7 @@ desktopRouter.js
 
 view.js
 -------
-   view.js will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html.  You will notice that the string `text!` is included before main.html.  This tells Require.js to use the Require.js text plugin to dynamically include the main.html file (very handy for storing templates in separate files and then including them dynamically).  Keep in mind that the standard for Require.js plugins is to list the name of the plugin followed by an exclamation point before a dependency.
+   view.js will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html.
 
    The rest of the file is a pretty standard Backbone.js View class:
 		
@@ -86,11 +88,7 @@ view.js
 
 anotherView.js
 --------------
-   anotherView.js doesn't do much.  It is there to show you a pattern for extending Backbone View's.  anotherView.js extends view.js.
-
-main.html
----------
-   Your Underscore.js template.  Templates are typically a useful way for you to update your View (the DOM) if a Model attribute changes.  Templates are also useful when you have a lot of HTML and JavaScript that you need to fit together, and instead of concatenating HTML strings inside of your JavaScript, templates provide a cleaner solution.  Look at Underscore's documentation to read more about the syntax of Underscore.js templates.
+   anotherView.js doesn't do much.  It is there to show you a pattern for extending Backbone View's.  anotherView.js extends view.js. 
 
 model.js
 --------
@@ -108,27 +106,38 @@ app.build.js
 ------------
    This file is ready made for you to have your entire project optimized using the Require.js Optimizer (r.js).  The file is commented with instructions on how to use it, so I am not going to list the directions here.  If you have any questions just ask.
 
+SpecRunner.html
+---------------
+   This file sets up your Require.js/Jasmine test configuration.  Since this file is in a different folder location than index.html, the Require.js path and baseUrl configurations are updated.  This page loads all third-party dependencies (jquery, backbone, etc), dynamically includes all of your specs (your tests) via spec.js, and then allows Jasmine to test your tests.  Fun!
+
+spec.js
+-------
+   This file contains all of your Jasmine unit tests.  Only four tests are provided, with two unit tests provided for Views and two unit tests provided for Models.  I'd write more, but why spoil your fun?
+
+   The entire file is wrapped in an AMD define method, with all external module (file) dependencies listed.  The Jasmine tests should be self explanatory (BDD tests are supposed to describe an app's functionality and make sense to non-techy folk as well), but if you have any questions, just file an issue and I'll respond as quickly as I can.
+
+
 #FAQ
 
 **What libraries have you included?**
 
-   -Backbone, Require, jQuery, Lodash, and Modernizr
+   -Backbone, Require, jQuery, Lodash, Modernizr, and Jasmine
 
 **What Require.js plugins are you using?**
 
-   -The text plugin.  I was previously using Use.js to load non-AMD compatible scripts, but Require.js 2.0 now provides this functionality.
+   -None.  I was previously using Use.js to load non-AMD compatible scripts, but Require.js 2.0 now provides this functionality.
 
 **Why are you not using the Require.js Internationalization plugin?**
 
    -I found that when I built using the Require.js Optimizer, only one lang-locale could be included per optimized file.  That would mean, that if you had to support 10 different langs/locales, you would need 20 different optimized builds (Desktop and Mobile).  If I am mistaken about this, please let me know, and I will update the Boilerplate with the Internationalization plugin.  A solution for including localized text is in the roadmap and will be included in a future release of the project.
 
+**Why are you no longer using the Require.js text plugin?**
+
+   -I found that the text plugin was causing problems when I created my Jasmine unit tests, so I opted to use nested templates inside of my HTML file instead.
+
 **How do I use the Require.js Optimizer script for my project?**
 
    -Make sure that you have node.js installed.  Next, navigate inside of the js folder and run the command "node r.js -o app.build.js".  After the Require.js Optimizer is done minifying and concatenating your Desktop and Mobile Projects, it will create a js-optimized folder at the same folder level as the js folder.  Navigate inside of the js-optimized folder and look at both desktop.js and mobile.js (these files contain your entire projects).  Finally, inside of index.html, update the `data-main` attribute on both of the script tags that includes Require.js and your desktop and mobile projects.  Make sure to reference the js-optimized folder instead of the js folder.  That's it!
-
-**Why haven't you included a unit testing framework with this boilerplate?**
-
-   -Because I am lazy.  I will eventually get around to it.  My current favorite framework is Jasmine, so I will most likely be including that.
 
 **You're not using Grunt for your build process?  Are you some sort of newb?**
 
@@ -138,39 +147,26 @@ app.build.js
 
    -No!  Feel free to update the boilerplate to fit the needs of your application.  Certain things that you might not want/need include templates, mobile and desktop versions, Modernizr, etc.
 
-**Do I need a local web server to test the boilerplate?**
+**Do I need a web server to test the boilerplate?**
 
-   -Kind of.  The boilerplate works locally in Firefox, but both IE and Chrome complain about the Require.js text loader plugin, which dynamically pulls in a template.  If you are not able to use a local web server, such as XAMPP, [James Gibson](https://github.com/jamesgibson14) has provided the following instructions to test the boilerplate in IE9 and Chrome:
-
-   IE 9: Add this code
-   
-      if (navigator.appName == 'Microsoft Internet Explorer' && location.toString().indexOf('file')==0) {
-
-         window.XMLHttpRequest = function() {
-   
-            try {
-   
-               //this sets the HttpRequest to use different version which does allow local file access.
-               return new ActiveXObject('MSXML2.XMLHTTP.3.0');
-            
-            }
-            catch (ex) {
-   
-               return null;
-   
-            }
-         }
-      }
-
-   Chrome: Make a shortcut to chrome with commanline args:
-
-       drive:\PathToChrome\Chrome.exe --allow-file-access-from-files
+   -Nope!
 
 **Can I contribute to this project?**
 
-   -Please do!  I am learning just like you.
+   -Please do!  I am learning just like you.  If you want to contribute, please send pull requests to the dev branch.
 
 ##Change Log
+
+`0.8.0` - August 22, 2012
+
+- Added Project Nickname: **BRB** - Seriously how did I not see that before.
+
+- Added Jasmine Unit Tests!  Two unit tests were added for both Views and Models.
+
+- **BREAKING CHANGE**: The Require.js text plugin was removed, and an inline html template was used instead.
+
+- Upgraded to Lodash 0.5.2
+
 
 `0.7.0` - August 10, 2012
 

@@ -1,4 +1,4 @@
-define(['jquery', 'backbone','models/model', 'text!templates/main.html'], function($, Backbone, Model, template){
+define(['jquery', 'backbone','models/model'], function($, Backbone, Model){
 
     var View = Backbone.View.extend({
 
@@ -12,19 +12,19 @@ define(['jquery', 'backbone','models/model', 'text!templates/main.html'], functi
             this.model = new Model();
 
             // Setting the view's template property
-            this.template = _.template( template, { model: this.model.toJSON() } );
+            this.template = _.template( $("#example").html(), { model: this.model.toJSON() } );
 
         },
 
         events: {
 
-            "click #example": "promptUser"
+            "click .example": "promptUser"
 
 	    },
 
         render: function() {
 
-            this.$el.find("#example").append(this.template);
+            this.$el.append(this.template);
 
         },
 

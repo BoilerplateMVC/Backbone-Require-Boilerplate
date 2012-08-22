@@ -5,13 +5,10 @@ require.config({
   paths: {
 
       // Core Libraries
-      modernizr: "libs/modernizr-2.5.3",
-      jquery: "libs/jquery-1.8.0",
-      underscore: "libs/lodash-0.4.2",
-      backbone: "libs/backbone-0.9.2",
-
-      // Require.js Plugins
-      text: "plugins/text-2.0.0"
+      modernizr: "libs/modernizr",
+      jquery: "libs/jquery",
+      underscore: "libs/lodash",
+      backbone: "libs/backbone"
 
   },
 
