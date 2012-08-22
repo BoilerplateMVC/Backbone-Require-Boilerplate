@@ -120,7 +120,7 @@ spec.js
 
 **What libraries have you included?**
 
-   -Backbone, Require, jQuery, Lodash, Modernizr, and Jasmine
+   -Backbone, Require, jQuery, Lodash, Modernizr, and Jasmine (w/the jasmine-jquery plugin)
 
 **What Require.js plugins are you using?**
 
