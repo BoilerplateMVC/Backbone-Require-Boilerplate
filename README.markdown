@@ -163,6 +163,8 @@ spec.js
 
 - Upgraded to Lodash 0.6.1
 
+- Upgraded to jQuery 1.8.1
+
 `0.8.0` - August 22, 2012
 
 - Added Project Nickname: **BRB** - Seriously how did I not see that before.
