@@ -10,6 +10,7 @@ define(['jquery', 'backbone','models/UserModel'], function($, Backbone, UserMode
             // Setting the view's template property
             this.template = _.template( $("#example").html(), { users: this.collection } );
 
+            // The render method is called when Models are added or removed to the Collection
             this.collection.on("add remove", this.render, this);
 
             // Twitter Bootstrap Modal Logic

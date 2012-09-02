@@ -82,7 +82,9 @@ UserView.js
 
    **Note**: If you have read all of the documentation up until this point, you will most likely have already noticed that [lodash](https://github.com/bestiejs/lodash) is being used instead of Underscore.js.  Apart from having a bit better cross-browser performance and stability than Underscore.js, lodash also provides a custom build process.  Although I have provided a version of lodash that has all of the Underscore.js methods you would expect, you can download a custom build and swap that in.
 
-   Next, you will find an `events` object with one property.  Here is where all of your View DOM event handlers associated with the HTML element referenced by your View's `el` property should be stored.  Keep in mind that Backbone is using the jQuery `delegate` method, so it expects a selector that is within your View's `el` property.  The one event handler I listed binds a click event to the View's `el` element (event delegation) and gives it an id context of `example`.  I then provide a method to be called when the event is triggered (by providing the method name).
+   Next, an event handler is set on the UserView's Collection property.  The event handler triggers the UserView's render method any time Models are added or removed to the Collection.
+
+   Next, you will find an `events` object.  Here is where all of your View DOM event handlers associated with the HTML element referenced by your View's `el` property should be stored.  Keep in mind that Backbone is using the jQuery `delegate` method, so it expects a selector that is within your View's `el` property.
 
    I am also declaring a `render` method on my View.  Backbone expects you to override the `render` method with your own functionality, so that is what I did.  All my `render` method does is append the View's template to the page.
 
