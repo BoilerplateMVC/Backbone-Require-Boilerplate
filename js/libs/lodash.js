@@ -1,5 +1,5 @@
 /*!
- * Lo-Dash v0.5.2 <http://lodash.com>
+ * Lo-Dash v0.6.1 <http://lodash.com>
  * Copyright 2012 John-David Dalton <http://allyoucanleet.com/>
  * Based on Underscore.js 1.3.3, copyright 2009-2012 Jeremy Ashkenas, DocumentCloud Inc.
  * <http://documentcloud.github.com/underscore>
@@ -47,11 +47,17 @@
   /** Used to generate unique IDs */
   var idCounter = 0;
 
+  /** Used by `cachedContains` as the default size when optimizations are enabled for large arrays */
+  var largeArraySize = 30;
+
   /** Used to restore the original `_` reference in `noConflict` */
   var oldDash = window._;
 
   /** Used to detect delimiter values that should be processed by `tokenizeEvaluate` */
   var reComplexDelimiter = /[-+=!~*%&^<>|{(\/]|\[\D|\b(?:delete|in|instanceof|new|typeof|void)\b/;
+
+  /** Used to match HTML entities */
+  var reEscapedHtml = /&(?:amp|lt|gt|quot|#x27);/g;
 
   /** Used to match empty string literals in compiled template source */
   var reEmptyStringLeading = /\b__p \+= '';/g,
@@ -71,11 +77,11 @@
       .replace(/valueOf|for [^\]]+/g, '.+?') + '$'
   );
 
-  /** Used to match tokens in template text */
+  /** Used to match internally used tokens in template text */
   var reToken = /__token__(\d+)/g;
 
-  /** Used to match unescaped characters in strings for inclusion in HTML */
-  var reUnescapedHtml = /[&<"']/g;
+  /** Used to match HTML characters */
+  var reUnescapedHtml = /[&<>"']/g;
 
   /** Used to match unescaped characters in compiled string literals */
   var reUnescapedString = /['\n\r\t\u2028\u2029\\]/g;
@@ -126,10 +132,23 @@
 
   /**
    * Detect the JScript [[DontEnum]] bug:
+   *
    * In IE < 9 an objects own properties, shadowing non-enumerable ones, are
    * made non-enumerable as well.
    */
   var hasDontEnumBug;
+
+  /**
+   * Detect if `Array#shift` and `Array#splice` augment array-like objects
+   * incorrectly:
+   *
+   * Firefox < 10, IE compatibility mode, and IE < 9 have buggy Array `shift()`
+   * and `splice()` functions that fail to remove the last element, `value[0]`,
+   * of array-like objects even though the `length` property is set to `0`.
+   * The `shift()` method is buggy in IE 8 compatibility mode, while `splice()`
+   * is buggy regardless of mode in IE < 9 and buggy in compatibility mode in IE 9.
+   */
+  var hasObjectSpliceBug;
 
   /** Detect if own properties are iterated after inherited properties (IE < 9) */
   var iteratesOwnLast;
@@ -138,13 +157,17 @@
   var noArgsEnum = true;
 
   (function() {
-    var props = [];
+    var object = { '0': 1, 'length': 1 },
+        props = [];
+
     function ctor() { this.x = 1; }
     ctor.prototype = { 'valueOf': 1, 'y': 1 };
     for (var prop in new ctor) { props.push(prop); }
     for (prop in arguments) { noArgsEnum = !prop; }
+
     hasDontEnumBug = (props + '').length < 4;
     iteratesOwnLast = props[0] != 'x';
+    hasObjectSpliceBug = (props.splice.call(object, 0, 1), object[0]);
   }(1));
 
   /** Detect if an `arguments` object's [[Class]] is unresolvable (Firefox < 4, IE < 9) */
@@ -155,6 +178,7 @@
 
   /**
    * Detect lack of support for accessing string characters by index:
+   *
    * IE < 8 can't access characters by index and IE 8 can only access
    * characters by index on string literals.
    */
@@ -175,17 +199,24 @@
   /* Detect if `Object.keys` exists and is inferred to be fast (IE, Opera, V8) */
   var isKeysFast = nativeKeys && /^.+$|true/.test(nativeKeys + !!window.attachEvent);
 
-  /** Detect if sourceURL syntax is usable without erroring */
+  /* Detect if strict mode, "use strict", is inferred to be fast (V8) */
+  var isStrictFast = !isBindFast;
+
+  /**
+   * Detect if sourceURL syntax is usable without erroring:
+   *
+   * The JS engine in Adobe products, like InDesign, will throw a syntax error
+   * when it encounters a single line comment beginning with the `@` symbol.
+   *
+   * The JS engine in Narwhal will generate the function `function anonymous(){//}`
+   * and throw a syntax error.
+   *
+   * Avoid comments beginning `@` symbols in IE because they are part of its
+   * non-standard conditional compilation support.
+   * http://msdn.microsoft.com/en-us/library/121hztk3(v=vs.94).aspx
+   */
   try {
-    // The JS engine in Adobe products, like InDesign, will throw a syntax error
-    // when it encounters a single line comment beginning with the `@` symbol.
-    // The JS engine in Narwhal will generate the function `function anonymous(){//}`
-    // and throw a syntax error. In IE, `@` symbols are part of its non-standard
-    // conditional compilation support. The `@cc_on` statement activates its support
-    // while the trailing ` !` induces a syntax error to exlude it. Compatibility
-    // modes in IE > 8 require a space before the `!` to induce a syntax error.
-    // See http://msdn.microsoft.com/en-us/library/121hztk3(v=vs.94).aspx
-    var useSourceURL = (Function('//@cc_on !')(), true);
+    var useSourceURL = (Function('//@')(), !window.attachEvent);
   } catch(e){ }
 
   /** Used to identify object classifications that are array-like */
@@ -202,16 +233,28 @@
   cloneableClasses[stringClass] = true;
 
   /**
-   * Used to escape characters for inclusion in HTML.
-   * The `>` and `/` characters don't require escaping in HTML and have no
-   * special meaning unless they're part of a tag or an unquoted attribute value
-   * http://mathiasbynens.be/notes/ambiguous-ampersands (semi-related fun fact)
+   * Used to convert characters to HTML entities:
+   *
+   * Though the `>` character is escaped for symmetry, characters like `>` and `/`
+   * don't require escaping in HTML and have no special meaning unless they're part
+   * of a tag or an unquoted attribute value.
+   * http://mathiasbynens.be/notes/ambiguous-ampersands (under "semi-related fun fact")
    */
   var htmlEscapes = {
     '&': '&amp;',
     '<': '&lt;',
+    '>': '&gt;',
     '"': '&quot;',
     "'": '&#x27;'
+  };
+
+  /** Used to convert HTML entities to characters */
+  var htmlUnescapes = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#x27;': "'"
   };
 
   /** Used to determine if values are of the language type Object */
@@ -371,6 +414,12 @@
     '  } else {' +
     '  <% } %>' +
 
+    // Firefox < 3.6, Opera > 9.50 - Opera < 11.60, and Safari < 5.1
+    // (if the prototype or a property on the prototype has been set)
+    // incorrectly sets a function's `prototype` property [[Enumerable]]
+    // value to `true`. Because of this Lo-Dash standardizes on skipping
+    // the the `prototype` property of functions regardless of its
+    // [[Enumerable]] value.
     '  <% if (!hasDontEnumBug) { %>\n' +
     '  var skipProto = typeof iteratee == \'function\' && \n' +
     '    propertyIsEnumerable.call(iteratee, \'prototype\');\n' +
@@ -394,25 +443,15 @@
     '  <% } else { %>\n' +
     '  <%= objectBranch.beforeLoop %>;\n' +
     '  for (index in iteratee) {' +
-    '    <% if (hasDontEnumBug) { %>\n' +
-    '    <%   if (useHas) { %>if (hasOwnProperty.call(iteratee, index)) {\n  <% } %>' +
+    '    <% if (!hasDontEnumBug || useHas) { %>\n    if (<%' +
+    '      if (!hasDontEnumBug) { %>!(skipProto && index == \'prototype\')<% }' +
+    '      if (!hasDontEnumBug && useHas) { %> && <% }' +
+    '      if (useHas) { %>hasOwnProperty.call(iteratee, index)<% }' +
+    '    %>) {' +
+    '    <% } %>\n' +
     '    value = iteratee[index];\n' +
     '    <%= objectBranch.inLoop %>;\n' +
-    '    <%   if (useHas) { %>}<% } %>' +
-
-    // Firefox < 3.6, Opera > 9.50 - Opera < 11.60, and Safari < 5.1
-    // (if the prototype or a property on the prototype has been set)
-    // incorrectly sets a function's `prototype` property [[Enumerable]]
-    // value to `true`. Because of this Lo-Dash standardizes on skipping
-    // the the `prototype` property of functions regardless of its
-    // [[Enumerable]] value.
-    '    <% } else { %>\n' +
-    '    if (!(skipProto && index == \'prototype\')<% if (useHas) { %> &&\n' +
-    '        hasOwnProperty.call(iteratee, index)<% } %>) {\n' +
-    '      value = iteratee[index];\n' +
-    '      <%= objectBranch.inLoop %>\n' +
-    '    }' +
-    '    <% } %>\n' +
+    '    <% if (!hasDontEnumBug || useHas) { %>}\n<% } %>' +
     '  }' +
     '  <% } %>' +
 
@@ -475,6 +514,25 @@
     'inLoop':
       'prop = callback(value, index, collection);\n' +
       '(hasOwnProperty.call(result, prop) ? result[prop]++ : result[prop] = 1)'
+  };
+
+  /** Reusable iterator options for `drop` and `pick` */
+  var dropIteratorOptions = {
+    'useHas': false,
+    'args': 'object, callback, thisArg',
+    'init': '{}',
+    'top':
+      'var isFunc = typeof callback == \'function\';\n' +
+      'if (!isFunc) {\n' +
+      '  var props = concat.apply(ArrayProto, arguments)\n' +
+      '} else if (thisArg) {\n' +
+      '  callback = iteratorBind(callback, thisArg)\n' +
+      '}',
+    'inLoop':
+      'if (isFunc\n' +
+      '  ? !callback(value, index, object)\n' +
+      '  : indexOf(props, index) < 0\n' +
+      ') result[index] = value'
   };
 
   /** Reusable iterator options for `every` and `some` */
@@ -545,7 +603,7 @@
     fromIndex || (fromIndex = 0);
 
     var length = array.length,
-        isLarge = (length - fromIndex) >= (largeSize || 30),
+        isLarge = (length - fromIndex) >= (largeSize || largeArraySize),
         cache = isLarge ? {} : array;
 
     if (isLarge) {
@@ -631,8 +689,8 @@
           if (typeof value == 'string') {
             value = { 'array': value, 'object': value };
           }
-          data.arrayBranch[prop] = value.array;
-          data.objectBranch[prop] = value.object;
+          data.arrayBranch[prop] = value.array || '';
+          data.objectBranch[prop] = value.object || '';
         } else {
           data[prop] = value;
         }
@@ -640,7 +698,8 @@
     }
     // set additional template `data` values
     var args = data.args,
-        firstArg = /^[^,]+/.exec(args)[0];
+        firstArg = /^[^,]+/.exec(args)[0],
+        useStrict = data.useStrict;
 
     data.firstArg = firstArg;
     data.hasDontEnumBug = hasDontEnumBug;
@@ -648,9 +707,9 @@
     data.noArgsEnum = noArgsEnum;
     data.shadowed = shadowed;
     data.useHas = data.useHas !== false;
-    data.useStrict = data.useStrict !== false;
+    data.useStrict = useStrict == null ? isStrictFast : useStrict;
 
-    if (!('noCharByIndex' in data)) {
+    if (data.noCharByIndex == null) {
       data.noCharByIndex = noCharByIndex;
     }
     if (!data.exit) {
@@ -729,7 +788,7 @@
   }
 
   /**
-   * Used by `escape` to escape characters for inclusion in HTML.
+   * Used by `escape` to convert characters to HTML entities.
    *
    * @private
    * @param {String} match The matched character to escape.
@@ -737,51 +796,6 @@
    */
   function escapeHtmlChar(match) {
     return htmlEscapes[match];
-  }
-
-  /**
-   * Checks if a given `value` is an object created by the `Object` constructor
-   * assuming objects created by the `Object` constructor have no inherited
-   * enumerable properties and that there are no `Object.prototype` extensions.
-   *
-   * @private
-   * @param {Mixed} value The value to check.
-   * @param {Boolean} [skipArgsCheck=false] Internally used to skip checks for
-   *  `arguments` objects.
-   * @returns {Boolean} Returns `true` if the `value` is a plain `Object` object,
-   *  else `false`.
-   */
-  function isPlainObject(value, skipArgsCheck) {
-    // avoid non-objects and false positives for `arguments` objects
-    var result = false;
-    if (!(value && typeof value == 'object') || (!skipArgsCheck && isArguments(value))) {
-      return result;
-    }
-    // IE < 9 presents DOM nodes as `Object` objects except they have `toString`
-    // methods that are `typeof` "string" and still can coerce nodes to strings.
-    // Also check that the constructor is `Object` (i.e. `Object instanceof Object`)
-    var ctor = value.constructor;
-    if ((!noNodeClass || !(typeof value.toString != 'function' && typeof (value + '') == 'string')) &&
-        (!isFunction(ctor) || ctor instanceof ctor)) {
-      // IE < 9 iterates inherited properties before own properties. If the first
-      // iterated property is an object's own property then there are no inherited
-      // enumerable properties.
-      if (iteratesOwnLast) {
-        forIn(value, function(objValue, objKey) {
-          result = !hasOwnProperty.call(value, objKey);
-          return false;
-        });
-        return result === false;
-      }
-      // In most environments an object's own properties are iterated before
-      // its inherited properties. If the last iterated property is an object's
-      // own property then there are no inherited enumerable properties.
-      forIn(value, function(objValue, objKey) {
-        result = objKey;
-      });
-      return result === false || hasOwnProperty.call(value, result);
-    }
-    return result;
   }
 
   /**
@@ -864,6 +878,17 @@
     return token + index;
   }
 
+  /**
+   * Used by `unescape` to convert HTML entities to characters.
+   *
+   * @private
+   * @param {String} match The matched character to unescape.
+   * @returns {String} Returns the unescaped character.
+   */
+  function unescapeHtmlChar(match) {
+    return htmlUnescapes[match];
+  }
+
   /*--------------------------------------------------------------------------*/
 
   /**
@@ -932,6 +957,59 @@
   if (isFunction(/x/)) {
     isFunction = function(value) {
       return toString.call(value) == funcClass;
+    };
+  }
+
+  /**
+   * Checks if a given `value` is an object created by the `Object` constructor
+   * assuming objects created by the `Object` constructor have no inherited
+   * enumerable properties and that there are no `Object.prototype` extensions.
+   *
+   * @private
+   * @param {Mixed} value The value to check.
+   * @param {Boolean} [skipArgsCheck=false] Internally used to skip checks for
+   *  `arguments` objects.
+   * @returns {Boolean} Returns `true` if the `value` is a plain `Object` object,
+   *  else `false`.
+   */
+  function isPlainObject(value, skipArgsCheck) {
+    return value
+      ? value == ObjectProto || (value.__proto__ == ObjectProto && (skipArgsCheck || !isArguments(value)))
+      : false;
+  }
+  // fallback for IE
+  if (!isPlainObject(objectTypes)) {
+    isPlainObject = function(value, skipArgsCheck) {
+      // avoid non-objects and false positives for `arguments` objects
+      var result = false;
+      if (!(value && typeof value == 'object') || (!skipArgsCheck && isArguments(value))) {
+        return result;
+      }
+      // IE < 9 presents DOM nodes as `Object` objects except they have `toString`
+      // methods that are `typeof` "string" and still can coerce nodes to strings.
+      // Also check that the constructor is `Object` (i.e. `Object instanceof Object`)
+      var ctor = value.constructor;
+      if ((!noNodeClass || !(typeof value.toString != 'function' && typeof (value + '') == 'string')) &&
+          (!isFunction(ctor) || ctor instanceof ctor)) {
+        // IE < 9 iterates inherited properties before own properties. If the first
+        // iterated property is an object's own property then there are no inherited
+        // enumerable properties.
+        if (iteratesOwnLast) {
+          forIn(value, function(objValue, objKey) {
+            result = !hasOwnProperty.call(value, objKey);
+            return false;
+          });
+          return result === false;
+        }
+        // In most environments an object's own properties are iterated before
+        // its inherited properties. If the last iterated property is an object's
+        // own property then there are no inherited enumerable properties.
+        forIn(value, function(objValue, objKey) {
+          result = objKey;
+        });
+        return result === false || hasOwnProperty.call(value, result);
+      }
+      return result;
     };
   }
 
@@ -1097,26 +1175,30 @@
   /**
    * Creates a shallow clone of `object` excluding the specified properties.
    * Property names may be specified as individual arguments or as arrays of
-   * property names.
+   * property names. If `callback` is passed, it will be executed for each property
+   * in the `object`, dropping the properties `callback` returns truthy for. The
+   * `callback` is bound to `thisArg` and invoked with 3 arguments; (value, key, object).
    *
    * @static
    * @memberOf _
+   * @alias omit
    * @category Objects
    * @param {Object} object The source object.
-   * @param {Object} [prop1, prop2, ...] The properties to drop.
+   * @param {Function|String} callback|[prop1, prop2, ...] The properties to drop
+   *  or the function called per iteration.
+   * @param {Mixed} [thisArg] The `this` binding for the callback.
    * @returns {Object} Returns an object without the dropped properties.
    * @example
    *
    * _.drop({ 'name': 'moe', 'age': 40, 'userid': 'moe1' }, 'userid');
    * // => { 'name': 'moe', 'age': 40 }
+   *
+   * _.drop({ 'name': 'moe', '_hint': 'knucklehead', '_seed': '96c4eb' }, function(value, key) {
+   *   return key.charAt(0) == '_';
+   * });
+   * // => { 'name': 'moe' }
    */
-  var drop = createIterator({
-    'useHas': false,
-    'args': 'object',
-    'init': '{}',
-    'top': 'var props = concat.apply(ArrayProto, arguments)',
-    'inLoop': 'if (indexOf(props, index) < 0) result[index] = value'
-  });
+  var drop = createIterator(dropIteratorOptions);
 
   /**
    * Assigns enumerable properties of the source object(s) to the `destination`
@@ -1755,45 +1837,50 @@
   /**
    * Creates a shallow clone of `object` composed of the specified properties.
    * Property names may be specified as individual arguments or as arrays of
-   * property names.
+   * property names. If `callback` is passed, it will be executed for each property
+   * in the `object`, picking the properties `callback` returns truthy for. The
+   * `callback` is bound to `thisArg` and invoked with 3 arguments; (value, key, object).
    *
    * @static
    * @memberOf _
    * @category Objects
    * @param {Object} object The source object.
-   * @param {Object} [prop1, prop2, ...] The properties to pick.
+   * @param {Function|String} callback|[prop1, prop2, ...] The properties to pick
+   *  or the function called per iteration.
+   * @param {Mixed} [thisArg] The `this` binding for the callback.
    * @returns {Object} Returns an object composed of the picked properties.
    * @example
    *
    * _.pick({ 'name': 'moe', 'age': 40, 'userid': 'moe1' }, 'name', 'age');
    * // => { 'name': 'moe', 'age': 40 }
+   *
+   * _.pick({ 'name': 'moe', '_hint': 'knucklehead', '_seed': '96c4eb' }, function(value, key) {
+   *   return key.charAt(0) != '_';
+   * });
+   * // => { 'name': 'moe' }
    */
-  function pick(object) {
-    var result = {};
-    if (!object) {
-      return result;
-    }
-    var prop,
-        index = 0,
-        props = concat.apply(ArrayProto, arguments),
-        length = props.length;
-
-    // start `index` at `1` to skip `object`
-    while (++index < length) {
-      prop = props[index];
-      if (prop in object) {
-        result[prop] = object[prop];
-      }
-    }
-    return result;
-  }
+  var pick = createIterator(dropIteratorOptions, {
+    'top':
+      'if (typeof callback != \'function\') {\n' +
+      '  var prop,\n' +
+      '      props = concat.apply(ArrayProto, arguments),\n' +
+      '      length = props.length;\n' +
+      '  for (index = 1; index < length; index++) {\n' +
+      '    prop = props[index];\n' +
+      '    if (prop in object) result[prop] = object[prop]\n' +
+      '  }\n' +
+      '} else {\n' +
+      '  if (thisArg) callback = iteratorBind(callback, thisArg)',
+    'inLoop':
+      'if (callback(value, index, object)) result[index] = value',
+    'bottom': '}'
+  });
 
   /**
    * Gets the size of `value` by returning `value.length` if `value` is an
    * array, string, or `arguments` object. If `value` is an object, size is
    * determined by returning the number of own enumerable properties it has.
    *
-   * @deprecated
    * @static
    * @memberOf _
    * @category Objects
@@ -1876,7 +1963,7 @@
     'init': 'false',
     'noCharByIndex': false,
     'beforeLoop': {
-      'array': 'if (toString.call(iteratee) == stringClass) return collection.indexOf(target) > -1'
+      'array': 'if (toString.call(collection) == stringClass) return collection.indexOf(target) > -1'
     },
     'inLoop': 'if (value === target) return true'
   });
@@ -1892,8 +1979,8 @@
    * @memberOf _
    * @category Collections
    * @param {Array|Object|String} collection The collection to iterate over.
-   * @param {Function|String} callback The function called per iteration or
-   *  property name to count by.
+   * @param {Function|String} callback|property The function called per iteration
+   *  or property name to count by.
    * @param {Mixed} [thisArg] The `this` binding for the callback.
    * @returns {Object} Returns the composed aggregate object.
    * @example
@@ -2008,8 +2095,8 @@
    * @memberOf _
    * @category Collections
    * @param {Array|Object|String} collection The collection to iterate over.
-   * @param {Function|String} callback The function called per iteration or
-   *  property name to group by.
+   * @param {Function|String} callback|property The function called per iteration
+   *  or property name to group by.
    * @param {Mixed} [thisArg] The `this` binding for the callback.
    * @returns {Object} Returns the composed aggregate object.
    * @example
@@ -2144,7 +2231,7 @@
       'var noaccum = arguments.length < 3;\n' +
       'if (thisArg) callback = iteratorBind(callback, thisArg)',
     'beforeLoop': {
-      'array': 'if (noaccum) result = collection[++index]'
+      'array': 'if (noaccum) result = iteratee[++index]'
     },
     'inLoop': {
       'array':
@@ -2268,8 +2355,8 @@
    * @memberOf _
    * @category Collections
    * @param {Array|Object|String} collection The collection to iterate over.
-   * @param {Function|String} callback The function called per iteration or
-   *  property name to sort by.
+   * @param {Function|String} callback|property The function called per iteration
+   *  or property name to sort by.
    * @param {Mixed} [thisArg] The `this` binding for the callback.
    * @returns {Array} Returns a new array of sorted elements.
    * @example
@@ -2360,15 +2447,15 @@
   var where = createIterator(filterIteratorOptions, {
     'args': 'collection, properties',
     'top':
-      'var pass, prop, propIndex, props = [];\n' +
+      'var props = [];\n' +
       'forIn(properties, function(value, prop) { props.push(prop) });\n' +
       'var propsLength = props.length',
     'inLoop':
-      'for (pass = true, propIndex = 0; propIndex < propsLength; propIndex++) {\n' +
+      'for (var prop, pass = true, propIndex = 0; propIndex < propsLength; propIndex++) {\n' +
       '  prop = props[propIndex];\n' +
       '  if (!(pass = value[prop] === properties[prop])) break\n' +
       '}\n' +
-      'if (pass) result.push(value)'
+      'pass && result.push(value)'
   });
 
   /*--------------------------------------------------------------------------*/
@@ -2592,17 +2679,19 @@
       return result;
     }
     var value,
+        argsLength = arguments.length,
+        cache = [],
         index = -1,
-        length = array.length,
-        others = slice.call(arguments, 1),
-        cache = [];
+        length = array.length;
 
-    while (++index < length) {
+    array: while (++index < length) {
       value = array[index];
-      if (indexOf(result, value) < 0 &&
-          every(others, function(other, index) {
-            return (cache[index] || (cache[index] = cachedContains(other)))(value);
-          })) {
+      if (indexOf(result, value) < 0) {
+        for (var argsIndex = 1; argsIndex < argsLength; argsIndex++) {
+          if (!(cache[argsIndex] || (cache[argsIndex] = cachedContains(arguments[argsIndex])))(value)) {
+            continue array;
+          }
+        }
         result.push(value);
       }
     }
@@ -3592,8 +3681,8 @@
   /*--------------------------------------------------------------------------*/
 
   /**
-   * Escapes a string for inclusion in HTML, replacing `&`, `<`, `"`, and `'`
-   * characters.
+   * Converts the characters `&`, `<`, `>`, `"`, and `'` in `string` to their
+   * corresponding HTML entities.
    *
    * @static
    * @memberOf _
@@ -3943,6 +4032,24 @@
   }
 
   /**
+   * Converts the HTML entities `&amp;`, `&lt;`, `&gt;`, `&quot;`, and `&#x27;`
+   * in `string` to their corresponding characters.
+   *
+   * @static
+   * @memberOf _
+   * @category Utilities
+   * @param {String} string The string to unescape.
+   * @returns {String} Returns the unescaped string.
+   * @example
+   *
+   * _.unescape('Moe, Larry &amp; Curly');
+   * // => "Moe, Larry & Curly"
+   */
+  function unescape(string) {
+    return string == null ? '' : (string + '').replace(reEscapedHtml, unescapeHtmlChar);
+  }
+
+  /**
    * Generates a unique id. If `prefix` is passed, the id will be appended to it.
    *
    * @static
@@ -4061,7 +4168,7 @@
    * @memberOf _
    * @type String
    */
-  lodash.VERSION = '0.5.2';
+  lodash.VERSION = '0.6.1';
 
   // assign static methods
   lodash.after = after;
@@ -4143,6 +4250,7 @@
   lodash.throttle = throttle;
   lodash.times = times;
   lodash.toArray = toArray;
+  lodash.unescape = unescape;
   lodash.union = union;
   lodash.uniq = uniq;
   lodash.uniqueId = uniqueId;
@@ -4165,6 +4273,7 @@
   lodash.include = contains;
   lodash.inject = reduce;
   lodash.methods = functions;
+  lodash.omit = drop;
   lodash.select = filter;
   lodash.tail = rest;
   lodash.take = first;
@@ -4195,13 +4304,9 @@
       var value = this._wrapped;
       func.apply(value, arguments);
 
-      // Firefox < 10, IE compatibility mode, and IE < 9 have buggy Array
-      // `shift()` and `splice()` functions that fail to remove the last element,
-      // `value[0]`, of array-like objects even though the `length` property is
-      // set to `0`. The `shift()` method is buggy in IE 8 compatibility mode,
-      // while `splice()` is buggy regardless of mode in IE < 9 and buggy in
-      // compatibility mode in IE 9.
-      if (value.length === 0) {
+      // avoid array-like object bugs with `Array#shift` and `Array#splice` in
+      // Firefox < 10 and IE < 9
+      if (hasObjectSpliceBug && value.length === 0) {
         delete value[0];
       }
       if (this._chain) {

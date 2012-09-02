@@ -1,36 +1,42 @@
-define(['jquery','backbone','views/view','views/anotherView','models/model','jasminejquery'], function($, Backbone, MainView, AnotherView, Model) {
+define(["jquery","backbone","views/UserView","models/UserModel","collections/UsersCollection","jasminejquery"], function($, Backbone, UserView, UserModel, UsersCollection) {
 
     // First Test Suite that contains all of the app's tests
-    describe('Backbone-Require-Boilerplate (BRB)', function () {
+    describe("Backbone-Require-Boilerplate (BRB)", function() {
+
+        // Runs before every View spec
+        beforeEach(function() {
+
+            // Creates a new Model instance and sets default values
+            user = new UserModel().set({ "firstname": "Greg", "lastname": "Franko", "email": "example@gmail.com", "phone": "703-243-7371" }),
+
+            // Creates a new Collection instance (Adds the previous Model instance to the Collection)
+            users = new UsersCollection([user]),
+
+            // Instantiating the mainView instance
+            mainView = new UserView({
+
+                // Declares the View's collection instance property
+                collection: users
+
+            });
+
+        });
 
         // Backbone Views Suite: contains all tests related to views
     	describe("Backbone Views", function() {
 
-            // Runs before every View spec
-    	    beforeEach(function() {
+            it("should have a collection property that is an instance of the users collection", function() {
 
-                // Puts the app's template in the DOM
-    		    setFixtures("<script id='example' type='text/template'><h1>Your Template says:</h1><h3 class='example'><%= model.message %></h3></script>");
+                expect(mainView.collection instanceof UsersCollection).toBe(true);
 
-                // Creates a new MainView instance
-                this.mainView = new MainView();
+            })
 
-                // Creates a new AnotherView instance
-                this.anotherView = new AnotherView();
+            it("should have four event handlers", function() {
 
-    	    });
-
-            it("should create an template property using the model's message property", function() {
-
-                expect(this.mainView.template).toEqual("<h1>Your Template says:</h1><h3 class='example'>You are now using jQuery, Backbone, Lodash, Require, Modernizr, and Jasmine! (Click Me)</h3>");
+                expect(_.keys(mainView.events).length).toEqual(4);
 
             });
 
-            it("should add a promptUser method to the view that extended the main view", function() {
-
-                expect(this.anotherView.promptUser).toBeDefined();
-
-            });
 
         }); // End of the Backbone Views test suite
 
@@ -40,29 +46,37 @@ define(['jquery','backbone','views/view','views/anotherView','models/model','jas
             // Runs before every Model spec
             beforeEach(function() {
 
-                // Creates a new Model instance
-                this.model = new Model();
-
                 // We are spying on the _validate method to see if it gets called
-                spyOn(Model.prototype, "_validate").andCallThrough();
+                spyOn(UserModel.prototype, "validate").andCallThrough();
 
             });
 
-            it("should create a message attribute", function() {
+            it("should be in a valid state", function() {
 
-                expect(this.model.get("message")).toBeDefined();
+                expect(user.isValid()).toBe(true);
 
-            });
+            })
 
             it("should call the validate method when setting a property", function() {
 
-            	this.model.set({ test: "test" });
+            	user.set({ firstname: "Greg" });
 
-                expect(Model.prototype._validate).toHaveBeenCalled();
+                expect(UserModel.prototype.validate).toHaveBeenCalled();
 
             });
 
-        }); // End of the Backbone Views test suite
+        }); // End of the Backbone Models test suite
+
+        // Backbone Collections Suite: contains all tests related to collections
+        describe("Backbone Collections", function() {
+
+            it("should have one model", function() {
+
+                expect(users.length).toEqual(1);
+
+            });
+
+        }); // End of the Backbone Collections test suite
 
     }); // End of the Backbone test suite
 

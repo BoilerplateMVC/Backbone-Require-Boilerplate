@@ -10,9 +10,10 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
    2. Download and install [Node.js](http://nodejs.org/#download) (this is used to run the Require.js Optimizer)
    3. Open index.html to view the demo page.
    4. Open SpecRunner.html to view the test suite page.
-   5. Enjoy using Backbone.js, Require.js, jQuery, Lodash, Modernizr, and Jasmine! (enjoyment optional)
+   5. Enjoy using Backbone.js, Require.js, jQuery, Lodash, Modernizr, Twitter Bootstrap, and Jasmine! (enjoyment optional)
 
 #Tour of the Boilerplate Files
+**Note**: The Boilerplate has been updated to provide a more useful example (Add/Remove Users)
 
 index.html
 ----------
@@ -20,9 +21,11 @@ index.html
 
    If a mobile browser is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `mobile` (this tells Require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `desktop` (this tells Require.js to look for a desktop.js file in the js folder).
 
-   This file also includes an Underscore.js (via Lodash) template. Templates are typically a useful way for you to update your View (the DOM) if a Model attribute changes.  Templates are also useful when you have a lot of HTML and JavaScript that you need to fit together, and instead of concatenating HTML strings inside of your JavaScript, templates provide a cleaner solution.  Look at Underscore's documentation to read more about the syntax of Underscore.js templates.
-
    **Note**: You do not need to use the mobile detection script for your application.  I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
+
+   This file also includes an Underscore.js (via Lodash) template.  The template is used with the project add/remove user example to iterate over all of the user models inside of the users collection, and display the models inside of an HTML table.
+
+   **Note**: Templates are typically a useful way for you to update your View (the DOM) if a Model attribute changes.  They are also useful when you have a lot of HTML and JavaScript that you need to fit together, and instead of concatenating HTML strings inside of your JavaScript, templates provide a cleaner solution.  Look at Underscore's documentation to read more about the syntax of Underscore.js templates.
 
 mobile.js
 ---------
@@ -59,17 +62,19 @@ mobileRouter.js
 
    The rest of the file is a pretty standard Backbone.js Router class:
 
-   There is currently only one route listed (which gets called if there is no hash tag on the url), but feel free to create more for your application.  The only code worth noting in here is view.js's `render` method being called and anotherView.js's `promptUser` method is being called.  The render method will put the "Your Template says: You are now using Backbone, Lodash, Require, Modernizr, and jQuery!" text on the screen.  To call the view's `render` method, view.js is listed as a dependency and included on the page.  The promptUser method of the `anotherView` class will issue a text prompt immediately to the user.  You will not find a promptUser method inside of the `anotherView` class, but the method call will still work because the `anotherView` class extends view.js (which does have a promptUser method).
+   There is currently only one route listed (which gets called if there is no hash tag on the url), but feel free to create more for your application.
 
-   **Note**: You must keep the `Backbone.history.start()` method call, since this is what triggers Backbone to start reacting to hashchange events
+   **Note**: You must keep the `Backbone.history.start()` method call, since this is what triggers Backbone to start reacting to hashchange events.
+
+   When your default route is invoked, a new user Model is created (Default values are pre-populated so that this user model is shown when the page is rendered).  A new users Collection is then created to hold all of the user Models and a new user View is created to handle all updates to the UI.  The user View's render method is called immediately to show all of the user Models inside of the users Collection.
 
 desktopRouter.js
 ----------------
    desktopRouter.js has the exact same code as *mobileRouter.js*.  The difference is this is where you can include desktop specific scripts that you do not want included in your mobile web application.
 
-view.js
--------
-   view.js will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, model.js, and main.html.
+UserView.js
+-----------
+   UserView.js will be used by both the mobile and desktop versions of your application.  It starts with a define method that lists all of its dependencies.
 
    The rest of the file is a pretty standard Backbone.js View class:
 		
@@ -83,15 +88,11 @@ view.js
 
    **Note**: You do not need to use Underscore.js templates.  In fact, you don't need to use templates at all.  I just included them so you would understand how to use them.
 
-   Finally, I am returning a View class.
+   Finally, I am returning the View class.
 
-anotherView.js
---------------
-   anotherView.js doesn't do much.  It is there to show you a pattern for extending Backbone View's.  anotherView.js extends view.js. 
-
-model.js
---------
-   model.js is used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery and backbone as dependencies.
+UserModel.js
+------------
+   UserModel.js is used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery and backbone as dependencies.
 
    The rest of the file is a pretty standard Backbone.js Model class (with pretty much everything left up to you to complete), except...
 
@@ -111,7 +112,7 @@ SpecRunner.html
 
 spec.js
 -------
-   This file contains all of your Jasmine unit tests.  Only four tests are provided, with two unit tests provided for Views and two unit tests provided for Models.  I'd write more, but why spoil your fun?
+   This file contains all of your Jasmine unit tests.  Only five tests are provided, with unit tests provided for Views, Models, and Collections.  I'd write more, but why spoil your fun?
 
    The entire file is wrapped in an AMD define method, with all external module (file) dependencies listed.  The Jasmine tests should be self explanatory (BDD tests are supposed to describe an app's functionality and make sense to non-techy folk as well), but if you have any questions, just file an issue and I'll respond as quickly as I can.
 
@@ -120,7 +121,7 @@ spec.js
 
 **What libraries have you included?**
 
-   -Backbone, Require, jQuery, Lodash, Modernizr, and Jasmine (w/the jasmine-jquery plugin)
+   -Backbone, Require, jQuery, Lodash, Modernizr, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
 
 **What Require.js plugins are you using?**
 
@@ -155,6 +156,12 @@ spec.js
    -Please do!  I am learning just like you.  If you want to contribute, please send pull requests to the dev branch.
 
 ##Change Log
+
+`0.9.0` - September 2, 2012
+
+- Complete rewrite of the Boilerplate example.  The example now illustrates how to make a simple add/remove user table with Backbone Collections, Models, and Views.
+
+- Upgraded to Lodash 0.6.1
 
 `0.8.0` - August 22, 2012
 
