@@ -14,7 +14,7 @@ define(['jquery', 'backbone','models/UserModel'], function($, Backbone, UserMode
             this.collection.on("add remove", this.render, this);
 
             // Twitter Bootstrap Modal Logic
-            $("#myModal").on("hidden", function () {
+            $("#myModal").on("hidden", function() {
   
                 // Reset's the form input fields
                 $("form#createUser input").val("");
