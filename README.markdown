@@ -96,13 +96,23 @@ UserModel.js
 ------------
    UserModel.js is used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery and backbone as dependencies.
 
-   The rest of the file is a pretty standard Backbone.js Model class (with pretty much everything left up to you to complete), except...
+   The rest of the file is a pretty standard Backbone.js Model class that is used to model user data.
 
-   A default property, `message` with the string "You are now using Backbone, Lodash, Require, Modernizr, and jQuery!".  This will eventually be printed to the `index.html` page.
+   Default first name, last name, email, and phone properties are listed.  All User Model's will eventually be printed to the `index.html` page.
 
-   Also, The Backbone.js `validate` method is provided for you.  This method is called any time an attribute of the model is set.  Keep in mind that all model attributes will be validated (once set), even if a different model attribute is being set/validated.  This does not make much sense to me, so feel free to create your own validation mechanism.
+   Common validators and RegEx pattern checking are also listed for convenience in the example.
+
+   Also, The Backbone.js `validate` method is provided for you.  This method is called any time an attribute of the model is set.  Keep in mind that all model attributes will be validated (once set), even if a different model attribute is being set/validated.  This does not make much sense to me, so if you prefer only the Model attributes that are currently being saved/set to be validated, then use the validateAll option provided by [Backbone.validateAll](https://github.com/gfranko/Backbone.validateAll).
 
    Finally, a new Model class is returned.
+
+UsersCollection.js
+------------------
+   UsersCollection.js is used by both the mobile and desktop versions of your application.  It starts with a define method that lists jquery, backbone, and UserModel.js as dependencies.
+
+   The rest of the file is a pretty standard Backbone.js Collection class that is used to store all of the User Models.  The Collection model property is set to the UserModel class.
+
+   Finally, a new Collection class is returned.
 
 app.build.js
 ------------
