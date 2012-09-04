@@ -177,6 +177,8 @@ spec.js
 
 - Upgraded to jQuery 1.8.1
 
+- Added [Backbone.validateAll](https://github.com/gfranko/Backbone.validateAll)
+
 `0.8.0` - August 22, 2012
 
 - Added Project Nickname: **BRB** - Seriously how did I not see that before.
