@@ -122,10 +122,10 @@ app.build.js
 
    Backbone-Require-Boilerplate sets you up to use Require.js in development and Almond.js in production.  By default, Backbone-Require-Boilerplate is in _development_ mode, so if you want to try out the production build, read the production instructions below.
 
-    ###Production Build Instructions
-    Navigate to within the **js** folder and then type **node app.build.js** and wait a few seconds.  Once the script has finished, you will see that both _desktop.min.js_ and _mobile.min.js_ have been updated.
+   ###Production Build Instructions
+   Navigate to within the **js** folder and then type **node app.build.js** and wait a few seconds.  Once the script has finished, you will see that both _desktop.min.js_ and _mobile.min.js_ have been updated.
 
-    Next, update index.html to now point to your minified desktop and mobile files instead of Require.js.  Look at the index.html file in this [gist](https://gist.github.com/3752005) for the correct _production_ setup.
+   Next, update index.html to now point to your minified desktop and mobile files instead of Require.js.  Look at the index.html file in this [gist](https://gist.github.com/3752005) for the correct _production_ setup.
 
     And that's it!  If you have any questions just create in an issue on Github.
 
