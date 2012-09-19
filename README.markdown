@@ -10,7 +10,7 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
    2. Download and install [Node.js](http://nodejs.org/#download) (this is used to run the Require.js Optimizer)
    3. Open index.html to view the demo page.
    4. Open SpecRunner.html to view the test suite page.
-   5. Enjoy using Backbone.js, Require.js, jQuery, Lodash, Modernizr, Twitter Bootstrap, and Jasmine! (enjoyment optional)
+   5. Enjoy using Backbone.js, Require.js, Almond.js, jQuery, Lodash, Modernizr, Twitter Bootstrap, and Jasmine! (enjoyment optional)
 
 #Tour of the Boilerplate Files
 **Note**: The Boilerplate has been updated to provide a more useful example (Add/Remove Users)
@@ -21,7 +21,7 @@ index.html
 
    If a mobile browser is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `mobile` (this tells Require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `desktop` (this tells Require.js to look for a desktop.js file in the js folder).
 
-   **Note**: You do not need to use the mobile detection script for your application.  I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
+   **Note**:  You do not need to use the mobile detection script for your application. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
 
    This file also includes an Underscore.js (via Lodash) template.  The template is used with the project add/remove user example to iterate over all of the user models inside of the users collection, and display the models inside of an HTML table.
 
@@ -116,7 +116,18 @@ UsersCollection.js
 
 app.build.js
 ------------
-   This file is ready made for you to have your entire project optimized using the Require.js Optimizer (r.js).  The file is commented with instructions on how to use it, so I am not going to list the directions here.  If you have any questions just ask.
+   This file is ready made for you to have your entire project optimized using Node.js, the [Require.js Optimizer](https://github.com/jrburke/r.js/) and [almond.js](https://github.com/jrburke/almond).
+
+   Almond.js a lightweight AMD shim library created by [James Burke](https://github.com/jrburke), the creator of Require.js.  Almond is meant for small to medium sized projects that use one concatenated/minified JavaScript file.  If you don't need some of the advanced features that Require.js provides (lazy loading, etc) then Almond.js is great for performance.
+
+   Backbone-Require-Boilerplate sets you up to use Require.js in development and Almond.js in production.  By default, Backbone-Require-Boilerplate is in _development_ mode, so if you want to try out the production build, read the production instructions below.
+
+    ###Production Build Instructions
+    Navigate to within the **js** folder and then type **node app.build.js** and wait a few seconds.  Once the script has finished, you will see that both _desktop.min.js_ and _mobile.min.js_ have been updated.
+
+    Next, update index.html to now point to your minified desktop and mobile files instead of Require.js.  Look at the index.html file in this [gist](https://gist.github.com/3752005) for the correct _production_ setup.
+
+    And that's it!  If you have any questions just create in an issue on Github.
 
 SpecRunner.html
 ---------------
@@ -133,7 +144,7 @@ spec.js
 
 **What libraries have you included?**
 
-   -Backbone, Require, jQuery, Lodash, Modernizr, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
+   -Backbone, Require, Almond, jQuery, Lodash, Modernizr, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
 
 **What Require.js plugins are you using?**
 
@@ -146,10 +157,6 @@ spec.js
 **Why are you no longer using the Require.js text plugin?**
 
    -I found that the text plugin was causing problems when I created my Jasmine unit tests, so I opted to use nested templates inside of my HTML file instead.
-
-**How do I use the Require.js Optimizer script for my project?**
-
-   -Make sure that you have node.js installed.  Next, navigate inside of the js folder and run the command "node r.js -o app.build.js".  After the Require.js Optimizer is done minifying and concatenating your Desktop and Mobile Projects, it will create a js-optimized folder at the same folder level as the js folder.  Navigate inside of the js-optimized folder and look at both desktop.js and mobile.js (these files contain your entire projects).  Finally, inside of index.html, update the `data-main` attribute on both of the script tags that includes Require.js and your desktop and mobile projects.  Make sure to reference the js-optimized folder instead of the js folder.  That's it!
 
 **You're not using Grunt for your build process?  Are you some sort of newb?**
 
@@ -168,6 +175,12 @@ spec.js
    -Please do!  I am learning just like you.  If you want to contribute, please send pull requests to the dev branch.
 
 ##Change Log
+
+`1.0.0` - September 19, 2012
+
+- Added Almond.js to the production build process.
+
+Thanks to [James Burke](https://github.com/jrburke) for helping with the updated build script!
 
 `0.9.0` - September 2, 2012
 
