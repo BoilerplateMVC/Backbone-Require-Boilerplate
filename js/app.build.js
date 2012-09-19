@@ -24,8 +24,7 @@ var baseConfig = {
  };
 
 //Create an array of build configs, the baseConfig will
-//be mixed in to each one of these below. Since each one needs to
-//stand on their own, they all include jquery and the noConflict.js file
+//be mixed into both the mobile and desktop builds below.
 
 var configs = [
     {
