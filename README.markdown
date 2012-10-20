@@ -177,6 +177,18 @@ spec.js
 
 ##Change Log
 
+`1.1.0` - October 19, 2012
+
+- Upgraded to Require.js 2.1.1
+
+- Upgraded to r.js 2.1.1
+
+- Upgraded to almond.js 0.2.0
+
+- Upgraded to Lodash 0.8.2
+
+- Upgraded to jQuery 1.8.2
+
 `1.0.0` - September 19, 2012
 
 - Added Almond.js to the production build process.
