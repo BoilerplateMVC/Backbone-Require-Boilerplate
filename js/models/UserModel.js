@@ -9,15 +9,10 @@ define(["jquery", "backbone"], function($, Backbone) {
 
         // Default values for all of the User Model attributes
         defaults: {
-
             firstname: "",
-
             lastname: "",
-
             email: "",
-
             phone: ""
-
         },
 
         // RegEx Patterns
