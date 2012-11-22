@@ -1,5 +1,5 @@
-define(["jquery","backbone","text","views/UserView","views/view","models/UserModel","collections/UsersCollection","jasminejquery"],
-        function($, Backbone, TextPlugin, UserView, view, UserModel, UsersCollection) {
+define(["jquery","backbone","text","views/UserView","models/UserModel","collections/UsersCollection","jasminejquery"],
+        function($, Backbone, TextPlugin, UserView, UserModel, UsersCollection) {
 
     describe("Backbone-Require-Boilerplate (BRB)", function() {
         // Runs before every View spec
@@ -13,9 +13,6 @@ define(["jquery","backbone","text","views/UserView","views/view","models/UserMod
             // Instantiating the mainView instance
             mainView = new UserView({
                 // Declares the View's collection instance property
-                collection: users
-            });
-            view2 = new view({
                 collection: users
             });
         });

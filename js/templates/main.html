@@ -1,2 +1,50 @@
-<h3>model.message is:</h3>
-<h4><%= model.message %></h4>
+<header class="navbar nav navbar-inner">
+    <h1>Backbone-Require-Boilerplate (BRB)</h1>
+</header>
+<div class="description">
+    <h4>You are now using jQuery, Backbone, Lodash, Require, Modernizr, Twitter Bootstrap, Less and Jasmine!</h4>
+</div>
+<section id="main" class="container">
+    <h4>Add/Remove Users Example</h4>
+    <table class="table table-bordered table-hover" id="model">
+        <thead>
+            <tr class="headers">
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+            </tr>
+            <tbody>
+            </tbody>
+        </thead>
+    </table>
+    <p><a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Create New User</a></p>
+    <div class="modal hide fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Create New User</h3>
+        </div>
+        <div class="modal-body">
+            <form id="createUser">
+                <label for="firstname">First Name</label>
+                <input type="text" id="firstname" name="firstname"><br />
+                <label for="lastname">Last Name</label>
+                <input type="text" id="lastname" name="lastname"><br />
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email"><br />
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" name="phone">
+                <br />
+                <span class="errors" style="color:red;"></span>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" id="close" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn btn-primary" id="create">Create New User</button>
+        </div>
+    </div>
+</section>
+
+<footer class="footer navbar navbar-fixed-bottom">
+    <p>Written by <a href="https://github.com/gfranko" target="_blank">Greg Franko</a></p>
+</footer>
