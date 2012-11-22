@@ -1,4 +1,7 @@
-define(['jquery','backbone','models/UserModel', 'views/UserView','collections/UsersCollection'], function($, Backbone, UserModel, UserView, UsersCollection){
+define(['jquery','backbone','models/UserModel', 'views/UserView','collections/UsersCollection'],
+        function($, Backbone, UserModel, UserView, UsersCollection){
+
+    $('#contentAttachPoint').html( template);
 
     var Router = Backbone.Router.extend({
 

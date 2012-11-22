@@ -7,19 +7,19 @@ var requirejs = require('./r.js');
 //common to all the requirejs.optimize() calls.
 var baseConfig = {
   
-  // Tells Require.js to look at desktop.js for all shim and path configurations
-  mainConfigFile: "desktop.js",
+  // Tells Require.js to look at desktopInit.js for all shim and path configurations
+  mainConfigFile: "../js/desktopInit.js",
 
   wrap: true,
     
   //All the built layers will use almond.
-  name: "almond",
+  name: "../deploy/almond",
 
   // Removes third-party license comments
   preserveLicenseComments: false,
 
   // Uses uglify.js for minification
-  optimize: "uglify",
+  optimize: "uglify"
  
  };
 
@@ -29,14 +29,13 @@ var baseConfig = {
 var configs = [
     {
         include: ["mobile"],
-        out: "mobile.min.js"
+        out: "../js/mobile.min.js"
     },
     {
         include: ["desktop"],
-        out: "desktop.min.js"
-    },
+        out: "../js/desktop.min.js"
+    }
 ]; 
-
 
 // Function used to mix in baseConfig to a new config target
 function mix(target) {

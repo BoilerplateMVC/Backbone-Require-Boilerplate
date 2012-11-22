@@ -1,20 +1,21 @@
-define(["jquery","backbone","models/UserModel", "views/UserView","collections/UsersCollection"], function($, Backbone, UserModel, UserView, UsersCollection){
+//  desktopRouter.js
+define(["jquery","backbone","models/UserModel", "views/UserView","collections/UsersCollection",'text!templates/main.html'],
+        function($, Backbone, UserModel, UserView, UsersCollection, template){
+
+    $('#contentAttachPoint').html( template);
 
     var Router = Backbone.Router.extend({
 
-        initialize: function(){
-        
+        initialize: function() {
+            console.log( 'desktopRouter initialize');
             // Tells Backbone to start watching for hashchange events
             Backbone.history.start();
-
         },
 
         // All of your Backbone Routes (add more)
         routes: {
-
             // When there is no hash bang on the url, the home method is called
             "": "home"
-
         },
 
         home: function() {
