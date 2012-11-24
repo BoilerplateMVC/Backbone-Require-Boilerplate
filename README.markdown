@@ -19,7 +19,7 @@ index.html
 ----------
    Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a JavaScript mobile browser detection script (inspired from [detectmobilebrowsers.com](http://detectmobilebrowsers.com/)) to determine if a user is using a mobile or desktop browser.
 
-   If a mobile browser is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `mobile` (this tells Require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `desktop` (this tells Require.js to look for a desktop.js file in the js folder).
+   If a mobile browser is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `mobile` (this tells Require.js to look for a mobile.js file in the js folder).  If a desktop device is found, then Require.js is included within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `desktop` (this tells Require.js to look for a desktopInit.js file in the js folder).
 
    **Note**:  You do not need to use the mobile detection script for your application. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
 
@@ -46,9 +46,9 @@ mobile.js
 
    **Note**: You don't need to instantiate a new router instance if you aren't using a Backbone Router class.
 
-desktop.js
+desktopInit.js
 ----------
-   desktop.js is only used if a desktop browser is detected.  This is where your desktop Require.js configurations will be.
+   desktopInit.js is only used if a desktop browser is detected.  This is where your desktop Require.js configurations will be.
 
    This file is the exact same as mobile.js, except it lists desktopRouter.js as a dependency instead of mobileRouter.js.
 
@@ -234,7 +234,7 @@ Thanks to [James Burke](https://github.com/jrburke) for helping with the updated
 
 - All modules now return a class instead of an instance
 - The self variable has been removed from all modules (scoping issue)
-- The Require.js Optimizer build file (app.build.js) has been simplified by adding a `mainConfigFile` option that points to the desktop main file.  Keep in mind that all of your mobile and desktop shims and paths need to be in desktop.js
+- The Require.js Optimizer build file (app.build.js) has been simplified by adding a `mainConfigFile` option that points to the desktop main file.  Keep in mind that all of your mobile and desktop shims and paths need to be in desktopInit.js
 
 `0.4.0` - June 1, 2012
 
