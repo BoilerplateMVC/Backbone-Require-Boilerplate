@@ -81,7 +81,7 @@ MobileInit.js
             // Disabling this will prevent jQuery Mobile from handling hash changes
             $.mobile.hashListeningEnabled = false;
 
-    Finally, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
+   Finally, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
 
    **Note**: You don't need to instantiate a new router instance if you aren't using a Backbone Router class.
 
