@@ -201,7 +201,7 @@ spec.js
 
 **What Require.js plugins are you using?**
 
-   -Just the Require.js text plugin, since it provides an easy way to keep templates in their own folders (instead of just embedding them in your html files.  I was previously using Use.js to load non-AMD compatible scripts, but Require.js 2.0 now provides this functionality.
+   -Just the Require.js text plugin, since it provides an easy way to keep templates in their own folders (instead of just embedding them in your html files).  I was previously using Use.js to load non-AMD compatible scripts, but Require.js 2.0 now provides this functionality.
 
 **Why are you not using the Require.js Internationalization plugin?**
 
@@ -217,7 +217,7 @@ spec.js
 
 **Do I need a web server to test the boilerplate?**
 
-   -Yep, because the Require.js text plugin, which dynamically pulls in template files via ajax.  Luckily for you I have provided an easy to use Node.js web server for convenience.
+   -Yep, because the Require.js text plugin dynamically pulls in template files via ajax (which is not allowed with the `File://` local extension.  Luckily for you I have provided an easy to use Node.js web server for convenience.
 
 **Can I contribute to this project?**
 
