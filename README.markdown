@@ -9,10 +9,10 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
    1. Download and install [Node.js](http://nodejs.org/#download)
    2. Clone this repository
    3. On the command line, navigate to inside of the **Backbone-Require-Boilerplate** folder and type `npm install`
-   4. Next, type `nodemon`
+   4. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful [nodemon](https://github.com/remy/nodemon) library)
    5. To view the demo page, go to `http://localhost:8001`
-   6. To view the Jasmine test suite page, go to `http://localhost:8001/specRunner.html`.
-   7. Enjoy using Backbone.js, Require.js, Almond.js, jQuery, Lodash, Modernizr, Twitter Bootstrap, and Jasmine! (enjoyment optional)
+   6. To view the Jasmine test suite page, go to `http://localhost:8001/specRunner.html`
+   7. Enjoy using Backbone, Require, Lodash, Almond, jQuery, jQuery Mobile, Twitter Bootstrap, and Jasmine (enjoyment optional)
 
 #Tour of the Boilerplate Files
 
@@ -186,7 +186,7 @@ spec.js
 
 **What libraries have you included?**
 
-   -Backbone, Require, Almond, jQuery, jQuery Mobile, Lodash, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
+   -Backbone, Require, Lodash, Almond, jQuery, jQuery Mobile, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
 
 **What Require.js plugins are you using?**
 
@@ -217,6 +217,8 @@ spec.js
 `1.2.0` - December 1, 2012
 
 Special thanks to [Mark Simon](https://github.com/msimonc) - This release would not have happened without him
+
+- Added jQuery Mobile support
 
 - Upgraded all libs to their latest versions
 
