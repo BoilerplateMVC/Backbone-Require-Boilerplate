@@ -23,8 +23,7 @@
     }
   ],
   "dependencies": {
-    "express": "3.x",
-    "nodemon": "0.6.x"
+    "express": "3.x"
   },
   "main": "./server/server",
   "keywords": ["Backbone.js", "Require.js", "Backbone and Require Boilerplate"]
