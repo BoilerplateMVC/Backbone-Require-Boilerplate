@@ -21,14 +21,16 @@ index.html
    Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a simple JavaScript mobile browser detection script to determine if a user is using a mobile or desktop browser.  The mobile detection script is within a **DOMContentLoaded** HTML5 JavaScript event handler (not supported in IE 6-8), which will trigger once the DOM is ready (the jQuery `ready()` event cannot be used because jQuery is loaded by Require.js and not yet included on the page).
 
    _Mobile Detection Script_
-   If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `mobile` (this tells Require.js to look for a mobile.js file in the js folder).  The jQuery Mobile CSS file is also included asynchronously.
 
-   If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `desktop` (this tells Require.js to look for a desktopInit.js file in the js folder).
+   If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/MobileInit` (this tells Require.js to look for a MobileInit.js file inside of the config folder).  The jQuery Mobile CSS file is also included asynchronously.
 
-   **Note**:  You do not need to use the mobile detection script for your application. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
+   If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/DesktopInit` (this tells Require.js to look for a DesktopInit.js file inside of the config folder).
+
+   **Note**:  You do not need to use the JavaScript mobile detection script for your application to use Backbone.js or Require.js. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
 
    _Loader Methods_
-   You will notice that the CSS files and the Require.js file are being included on the page via the `loadCss()` and `loadRequireJS()` methods.  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include any CSS file.
+
+   You will notice that the CSS files and the Require.js file are being included on the page via the `loadCss()` and `loadRequireJS()` methods.  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include any CSS file.  Loading CSS asynchronously also allows me the flexibilty/mechanism to load different CSS files if a user is on a mobile device.
 
    I included the `loadRequireJS` file, the Desktop and Mobile versions of the boilerplate point Require.js to two different files.  Including Require.js asynchronously within the `loadRequireJS` method allowed me the flexibility to do that. 
 
@@ -71,7 +73,15 @@ MobileInit.js
 
    After Require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (jQuery, Backbone, Lodash, mobileRouter, etc) into the page.
 
-   After all of those files are included on the page, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
+   After all of those files are included on the page, two internal jQuery Mobile properties are turned off to allow Backbone.js to handle all of the routing.
+
+            // Prevents all anchor click handling
+            $.mobile.linkBindingEnabled = false;
+
+            // Disabling this will prevent jQuery Mobile from handling hash changes
+            $.mobile.hashListeningEnabled = false;
+
+    Finally, a new router instance is instantiated to allow you to use Backbone's routing mechanism (keep reading below for more clarification).
 
    **Note**: You don't need to instantiate a new router instance if you aren't using a Backbone Router class.
 
@@ -79,7 +89,7 @@ DesktopInit.js
 --------------
    DesktopInit.js is only used if a desktop browser is detected.  This is where your desktop Require.js configurations will be.
 
-   This file is the exact same as MobileInit.js, except it has a few different dependencies (Twitter Bootstrap, etc)
+   This file is the exact same as MobileInit.js, except it has a few different dependencies (Twitter Bootstrap instead of jQuery Mobile, etc)
 
 MobileRouter.js
 ---------------
@@ -95,7 +105,7 @@ MobileRouter.js
 
    **Note**: You must keep the `Backbone.history.start()` method call, since this is what triggers Backbone to start reacting to hashchange events.
 
-   When your default route is invoked, a new View instance is created, which calls the render method immediately to append the header template (_Start using Backbone, Lodash, Require.js, jQuery, jQuery Mobile, Twitter Bootstrap, and Jasmine!_) to the page.
+   When your default route is invoked, a new View instance is created, which calls the render method immediately to append the header template to the page.
 
 DesktopRouter.js
 ----------------
