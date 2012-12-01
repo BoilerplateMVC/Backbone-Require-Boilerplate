@@ -178,9 +178,10 @@ app.build.js
 
 SpecRunner.html
 ---------------
-   This file includes Require.js and points it to **testInit.js**
+   This file is the starting point to your Jasmine test suite.  It includes Require.js and points it to **testInit.js**
 
 TestInit.js
+-----------
    This file includes all of the Require.js configurations for your Jasmine unit tests.  This file will look very similar to the **MobileInit.js** and **DesktopInit.js** files, but will also include Jasmine and the jasmine-jquery plugin as dependencies.
 
    You will also notice a _specs_ array that will allow you to add as many specs files as your application needs (Specs folders are where your unit tests are).  The boilerplate only includes one specs js file by default, so only one specs item is added to the array.  Finally, once the specs file is included by the `require()` call, Jasmine is initialized
