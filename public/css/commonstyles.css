@@ -7,16 +7,6 @@ a.createdby {
   color: maroon;
 }
 
-a.btn {
-  background: maroon;
-  color: white;
-}
-
-a.btn:hover {
-  background: darkred;
-  color: white;
-}
-
 header#pageheader a:active{
   text-decoration: none;
 }
