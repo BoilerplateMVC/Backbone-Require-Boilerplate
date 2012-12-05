@@ -1,4 +1,4 @@
-// desktopInit.js
+// TestInit.js
 require.config({
 
   // Sets the js folder as the base directory for all future relative paths

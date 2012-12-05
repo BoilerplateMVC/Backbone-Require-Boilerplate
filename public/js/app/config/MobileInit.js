@@ -23,8 +23,6 @@ require.config({
       // -------
       "backbone.validateAll": "libs/plugins/Backbone.validateAll",
 
-      "bootstrap": "libs/plugins/bootstrap",
-
       "text": "libs/plugins/text",
 
       // Application Folders
@@ -44,9 +42,6 @@ require.config({
   // Sets the dependency and shim configurations
   // - Helpful for including non-AMD compatible scripts and managing dependencies
   shim: {
-
-      // Twitter Bootstrap plugins depend on jQuery
-      "bootstrap": ["jquery"],
 
       // jQuery Mobile
       "jquerymobile": ["jquery"],
@@ -70,7 +65,7 @@ require.config({
 });
 
 // Include Desktop Specific JavaScript files here (or inside of your Desktop router)
-require(["jquery", "backbone", "routers/MobileRouter", "jquerymobile", "bootstrap", "backbone.validateAll"],
+require(["jquery", "backbone", "routers/MobileRouter", "jquerymobile", "backbone.validateAll"],
 
   function($, Backbone, MobileRouter) {
 
