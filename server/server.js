@@ -9,7 +9,7 @@ var express = require("express"),
 // ====================
 server.configure(function() {
 
-  server.use(express["static"](__dirname + "/../public"));
+  server.use(express["static"](__dirname + "/../"));
 
   server.use(express.errorHandler({
 
