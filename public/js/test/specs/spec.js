@@ -4,7 +4,7 @@ define(["jquery", "backbone", "text!templates/heading.html", "views/View","model
 
     function($, Backbone, headerText, View, Model, Collection, DesktopRouter, MobileRouter) {
 
-        // Test suite that includes all of the Jasmine unit tests
+        // Test suite that includes all of the Jasmine unit tests   
         describe("Backbone-Require-Boilerplate (BRB)", function() {
 
             // Backbone View Suite: contains all tests related to views
