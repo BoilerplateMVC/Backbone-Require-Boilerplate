@@ -56,6 +56,11 @@ header#pageheader:hover {
   animation-fill-mode: forwards;
 }
 
+.anchor-icon {
+  float: left;
+  clear: both;
+}
+
 .require-icon {
   animation-delay:.5s;
   -moz-animation-delay:.5s; /* Firefox */
