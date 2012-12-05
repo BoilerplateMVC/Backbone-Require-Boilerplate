@@ -70,8 +70,6 @@ define(["jquery", "backbone", "collections/FilesCollection"],
 
                 _.each(self.collection.githubFilePaths, function(file) {
 
-                    console.log(file);
-
                     var rule = {
 
                         name: file.name,
@@ -81,8 +79,6 @@ define(["jquery", "backbone", "collections/FilesCollection"],
                         end: file.end,
 
                         onStart: function(options) {
-
-                            console.log('test');
 
                             self.collection.fetch({ files: [file.name] });
 
