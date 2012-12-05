@@ -40,6 +40,8 @@ define(["jquery","backbone","models/FileModel"],
       // Sample JSON data that in a real app will most likely come from a REST web service
       githubFilePaths: [
 
+        { path: "", name: "", start: 1, end: 495 },
+
         { path: "public/index.html", name: "index.html", start: 495, end: 845 },
 
         { path: "public/js/app/config/MobileInit.js", name: "MobileInit.js", start: 845, end: 1187 },

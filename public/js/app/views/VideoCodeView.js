@@ -68,27 +68,9 @@ define(["jquery", "backbone", "collections/FilesCollection"],
 
                 self.popcorn = Popcorn.youtube("#video", "http://www.youtube.com/watch?v=5zCex8-ge-k");
 
-                self.popcorn.code({
-
-                    start: 1,
-
-                    end: 495,
-
-                    onStart: function(options) {
-
-                        videocode.hide();
-
-                    },
-
-                    onEnd: function(options) {
-
-                        videocode.hide();
-
-                    }
-
-                });
-
                 _.each(self.collection.githubFilePaths, function(file) {
+
+                    console.log(file);
 
                     var rule = {
 
@@ -99,6 +81,8 @@ define(["jquery", "backbone", "collections/FilesCollection"],
                         end: file.end,
 
                         onStart: function(options) {
+
+                            console.log('test');
 
                             self.collection.fetch({ files: [file.name] });
 
