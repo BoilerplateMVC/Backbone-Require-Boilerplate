@@ -1,0 +1,186 @@
+#video {
+  width: 600px;
+  height: 375px;
+}
+
+a.createdby {
+  color: maroon;
+}
+
+a.btn {
+  background: maroon;
+  color: white;
+}
+
+a.btn:hover {
+  background: darkred;
+  color: white;
+}
+
+header#pageheader a:active{
+  text-decoration: none;
+}
+
+header#pageheader:hover {
+  cursor: pointer;
+}
+
+.headeranchor:hover {
+  text-decoration: none;
+}
+
+.pageheadertext {
+  color: maroon;
+}
+
+.header {
+  color: maroon;
+}
+
+.video-header {
+  margin: 20px 0px;
+}
+
+.videocode {
+  display: none;
+}
+
+.videocodecontainer {
+  margin: 50px 0px;
+}
+
+.sub {
+  font-size: 15px;
+}
+
+.icon {
+  opacity: 0;
+  margin: 20px 0px 10px 0px;
+  -webkit-animation: loadIcon 1s; /* Safari 4+ */
+  -moz-animation:    loadIcon 1s; /* Fx 5+ */
+  -o-animation:      loadIcon 1s; /* Opera 12+ */
+  animation:         loadIcon 1s; /* IE 10+ */
+  -moz-animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.require-icon {
+  animation-delay:.5s;
+  -moz-animation-delay:.5s; /* Firefox */
+  -webkit-animation-delay:.5s; /* Safari and Chrome */
+  -o-animation-delay:.5s; /* Opera */
+}
+
+.jquery-icon {
+  animation-delay:1s;
+  -moz-animation-delay:1s; /* Firefox */
+  -webkit-animation-delay:1s; /* Safari and Chrome */
+  -o-animation-delay:1s; /* Opera */
+}
+
+.jquery-mobile-icon {
+  animation-delay:1.5s;
+  -moz-animation-delay:1.5s; /* Firefox */
+  -webkit-animation-delay:1.5s; /* Safari and Chrome */
+  -o-animation-delay:1.5s; /* Opera */
+}
+
+.bootstrap-icon {
+  animation-delay:2s;
+  -moz-animation-delay:2s; /* Firefox */
+  -webkit-animation-delay:2s; /* Safari and Chrome */
+  -o-animation-delay:2s; /* Opera */
+}
+
+.lodash-icon {
+  animation-delay:2.5s;
+  -moz-animation-delay:2.5s; /* Firefox */
+  -webkit-animation-delay:2.5s; /* Safari and Chrome */
+  -o-animation-delay:2.5s; /* Opera */
+}
+
+.jasmine-icon {
+  animation-delay:3s;
+  -moz-animation-delay:3s; /* Firefox */
+  -webkit-animation-delay:3s; /* Safari and Chrome */
+  -o-animation-delay:3s; /* Opera */
+}
+
+.nodejs-icon {
+  animation-delay:3.5s;
+  -moz-animation-delay:3.5s; /* Firefox */
+  -webkit-animation-delay:3.5s; /* Safari and Chrome */
+  -o-animation-delay:3.5s; /* Opera */
+}
+
+.popover {
+  min-width: 350px;
+}
+
+.popover-content {
+  color: #000;
+}
+
+.popover-title {
+  color: maroon;
+}
+
+.btn-group .btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.jump-to {
+  color: maroon;
+}
+
+@-webkit-keyframes loadIcon {
+    0% { opacity: 0; -webkit-transform: perspective(200px) scale(3) translateY(40px) rotateX(0deg); }
+    80% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+    100% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+}
+
+@-moz-keyframes loadIcon {
+    0% { opacity: 0; -webkit-transform: perspective(200px) scale(3) translateY(40px) rotateX(0deg); }
+    80% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+    100% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+}
+@-o-keyframes loadIcon {
+    0% { opacity: 0; -webkit-transform: perspective(200px) scale(3) translateY(40px) rotateX(0deg); }
+    80% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+    100% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+}
+@keyframes loadIcon {
+    0% { opacity: 0; -webkit-transform: perspective(200px) scale(3) translateY(40px) rotateX(0deg); }
+    80% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+    100% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
+}
+
+@media screen and (max-width: 980px) {
+  .icons-sidebar { display: none !important; }
+  .row-fluid .span9 { width: 95% !important; }
+}
+
+@media screen and (max-width: 740px) {
+  .row-fluid .span4 { width: 99% !important; }
+  .row-fluid [class*="span"] { margin-left: 0px !important;}
+}
+
+@media screen and (max-width: 640px) {
+  .hero-unit { padding: 20px !important;}
+  #video { width: 480px; height: 375px; }
+}
+
+@media screen and (max-width: 540px) {
+  #video { width: 420px; height: 275px; }
+}
+
+@media screen and (max-width: 480px) {
+  #video { width: 340px; height: 225px; }
+}
+
+.header-icon {
+  width: 40px;
+}
