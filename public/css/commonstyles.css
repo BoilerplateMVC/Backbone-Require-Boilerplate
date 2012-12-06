@@ -43,10 +43,13 @@ header#pageheader:hover {
   font-size: 15px;
 }
 
+.container {
+  padding: 20px 0px;
+}
+
 .icon {
   max-width: 200px;
   opacity: 0;
-  margin: 20px 0px 10px 0px;
   -webkit-animation: loadIcon 1s; /* Safari 4+ */
   -moz-animation:    loadIcon 1s; /* Fx 5+ */
   -o-animation:      loadIcon 1s; /* Opera 12+ */
@@ -55,11 +58,6 @@ header#pageheader:hover {
   -webkit-animation-fill-mode: forwards;
   -o-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-}
-
-.anchor-icon {
-  float: left;
-  clear: both;
 }
 
 .require-icon {
@@ -154,7 +152,7 @@ header#pageheader:hover {
     100% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
 }
 
-@media screen and (max-width: 1040px) {
+@media screen and (max-width: 104 0px) {
   .icons-sidebar { display: none !important; }
   .row-fluid .span9 { width: 95% !important; }
 }
