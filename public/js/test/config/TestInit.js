@@ -2,7 +2,7 @@
 require.config({
 
   // Sets the js folder as the base directory for all future relative paths
-  baseUrl: "../js",
+  baseUrl: "./js",
 
   // 3rd party script alias names (Easier to type "jquery" than "libs/jquery, etc")
   // probably a good idea to keep version numbers in the file names for updates checking
