@@ -50,8 +50,6 @@ require.config({
       // jQueryUI
       "jqueryui": ["jquery"],
 
-      "jquery.selectboxit": ["jqueryui"],
-
       // Backbone
       "backbone": {
 
