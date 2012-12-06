@@ -66,7 +66,7 @@ define(["jquery", "backbone", "collections/FilesCollection"],
 
                 var self = this, rule, videocode = $(".videocode");
 
-                self.popcorn = Popcorn.youtube("#video", "http://www.youtube.com/watch?v=5zCex8-ge-k");
+                self.popcorn = Popcorn.youtube("#video", "http://www.youtube.com/watch?v=L_kqGJmc1rY");
 
                 _.each(self.collection.githubFilePaths, function(file) {
 

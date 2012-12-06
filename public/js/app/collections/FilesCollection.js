@@ -40,33 +40,33 @@ define(["jquery","backbone","models/FileModel"],
       // Sample JSON data that in a real app will most likely come from a REST web service
       githubFilePaths: [
 
-        { path: "", name: "", start: 1, end: 495 },
+        { path: "", name: "", start: 1, end: 461 },
 
-        { path: "public/index.html", name: "index.html", start: 495, end: 845 },
+        { path: "public/index.html", name: "index.html", start: 461, end: 872 },
 
-        { path: "public/js/app/config/MobileInit.js", name: "MobileInit.js", start: 845, end: 1187 },
+        { path: "public/js/app/config/MobileInit.js", name: "MobileInit.js", start: 872, end: 1232 },
 
-        { path: "public/js/app/config/DesktopInit.js", name: "DesktopInit.js", start: 1554, end: 1579 },
+        { path: "public/js/app/config/DesktopInit.js", name: "DesktopInit.js", start: 1232, end: 1296 },
 
-        { path: "public/js/app/routers/MobileRouter.js", name: "MobileRouter.js", start: 0, end: 0 },
+        { path: "public/js/app/routers/MobileRouter.js", name: "MobileRouter.js", start: 1296, end: 1420 },
 
-        { path: "public/js/app/routers/DesktopRouter.js", name: "DesktopRouter.js", start: 1579, end: 1636 },
+        { path: "public/js/app/routers/DesktopRouter.js", name: "DesktopRouter.js", start: 1420, end: 1489 },
 
-        { path: "public/js/app/views/View.js", name: "View.js", start: 1187, end: 1397 },
+        { path: "public/js/app/views/View.js", name: "View.js", start: 1489, end: 1670 },
 
-        { path: "public/js/app/templates/heading.html", name: "heading.html", start: 1397, end: 1479 },
+        { path: "public/js/app/templates/heading.html", name: "heading.html", start: 1670, end: 1872 },
 
-        { path: "public/js/app/models/Model.js", name: "Model.js", start: 1636, end: 1680 },
+        { path: "public/js/app/models/Model.js", name: "Model.js", start: 1872, end: 1972 },
 
-        { path: "public/js/app/collections/Collection.js", name: "Collection.js", start: 1680, end: 1748 },
+        { path: "public/js/app/collections/Collection.js", name: "Collection.js", start: 1972, end: 2085 },
 
-        { path: "deploy/app.build.js", name: "app.build.js", start: 1748, end: 2008 },
+        { path: "deploy/app.build.js", name: "app.build.js", start: 2085, end: 2348 },
 
-        { path: "public/SpecRunner.html", name: "SpecRunner.html", start: 2008, end: 2089 },
+        { path: "public/SpecRunner.html", name: "SpecRunner.html", start: 2348, end: 2440 },
 
-        { path: "public/js/test/config/TestInit.js", name: "TestInit.js", start: 2089, end: 2179 },
+        { path: "public/js/test/config/TestInit.js", name: "TestInit.js", start: 2440, end: 2598 },
 
-        { path: "public/js/test/specs/spec.js", name: "spec.js", start: 2179, end: 2291 }
+        { path: "public/js/test/specs/spec.js", name: "spec.js", start: 2598, end: 2697 }
 
       ],
 
