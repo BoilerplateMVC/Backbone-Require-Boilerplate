@@ -152,7 +152,7 @@ header#pageheader:hover {
     100% { opacity: 1; -webkit-transform: perspective(200px) scale(1) rotateX(0deg) }
 }
 
-@media screen and (max-width: 104 0px) {
+@media screen and (max-width: 1040px) {
   .icons-sidebar { display: none !important; }
   .row-fluid .span9 { width: 95% !important; }
 }
