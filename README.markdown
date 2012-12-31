@@ -21,21 +21,40 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 
 index.html
 ----------
-   Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  You will notice there is a simple JavaScript mobile browser detection script to determine if a user is using a mobile or desktop browser.  The mobile detection script is within a **DOMContentLoaded** HTML5 JavaScript event handler (not supported in IE 6-8), which will trigger once the DOM is ready (the jQuery `ready()` event cannot be used because jQuery is loaded by Require.js and not yet included on the page).
+   Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  As you continue down the page to the first `<script>` tag, you will notice there is a `production` local JavaScript variable that is used to communicate to your application whether you would like to load production or development CSS and JavaScript files.
 
    _Mobile Detection Script_
 
+   There is also a simple JavaScript mobile browser detection script that stores different production/development CSS and JavaScript files within a local `config` object based on whether a user is using a mobile, tablet, or desktop browser.  Also, the mobile detection script is within a **DOMContentLoaded** HTML5 JavaScript event handler (not supported in IE 6-8), which will trigger once the DOM is ready (the jQuery `ready()` event cannot be used because jQuery is loaded by Require.js and not yet included on the page).
+
+
+   _Loading Files_
+
+   The `loadFiles()` method is then used to load all of the correct CSS and JavaScript files.  Below is what get's included:
+
+   _Mobile or Tablet Browser_
    If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/MobileInit` (this tells Require.js to look for a MobileInit.js file inside of the config folder).  The jQuery Mobile CSS file is also included asynchronously.
 
+   _Desktop Browser_
    If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/DesktopInit` (this tells Require.js to look for a DesktopInit.js file inside of the config folder).
 
    **Note**:  You do not need to use the JavaScript mobile detection script for your application to use Backbone.js or Require.js. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
 
+   _Production Mode_
+
+   In production mode, your app's single minified and concatenated JavaScript file is loaded using Almond.js instead of Require.js.  Your application's minfied common CSS file is also included.
+
+   _Development Mode_
+
+  In development mode, your app's non-minified JavaScript files are loaded using Require.js instead of Almond.js.  Your application's non-minified common CSS file is also included.
+
    _Loader Methods_
 
-   You will notice that the CSS files and the Require.js file are being included on the page via the `loadCss()` and `loadRequireJS()` methods.  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include any CSS file.  Loading CSS asynchronously also allows me the flexibilty/mechanism to load different CSS files if a user is on a mobile device.
+   You will notice that the CSS files and the Require.js file are being included on the page via the `loadFiles()` method (which uses the loadCss()` and `loadJS()` methods internally).  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include CSS files.  Loading CSS asynchronously also allows me the flexibilty/mechanism to load different CSS files if a user is on a mobile device.
 
-   I included the `loadRequireJS` file, the Desktop and Mobile versions of the boilerplate point Require.js to two different files.  Including Require.js asynchronously within the `loadRequireJS` method allowed me the flexibility to do that. 
+   I included the `loadJS()` method since the Desktop/Mobile and Production/Development versions of the boilerplate point Require.js to two different files.  Including Require.js asynchronously within the `loadJS` method allowed me the flexibility to do that.
+
+   **Note:** Feel free to use the `loadCSS()` and `loadJS()` methods to load any other dependencies your application may have that you do not want to use Require.js for
 
 MobileInit.js
 -------------
@@ -175,7 +194,7 @@ app.build.js
 
    Navigate to within the **deploy** folder and then type **node app.build.js** and wait a few seconds.  Once the script has finished, you will see that both _DesktopInit.min.js_ and _MobileInit.min.js_ will be updated.
 
-   Next, update the `loadRequireJS` method calls inside of **index.html** to now point to your minified desktop and mobile init files instead of the non-minified versions.  Look at the index.html file in this [gist](https://gist.github.com/3752005) for the correct _production_ setup.
+   Next, update the `production` local variable inside of **index.html** to be **true**.  Look at the index.html file in this [gist](https://gist.github.com/3752005) for the correct _production_ setup.
 
    And that's it!  If you have any questions just create in an issue on Github.
 
@@ -227,6 +246,20 @@ spec.js
    -Please do!  I am learning just like you.  If you want to contribute, please send pull requests to the dev branch.
 
 ##Change Log
+
+`1.3.0` - December 31, 2012
+
+- Updated the `loadCSS()` method to now support an array of arguments
+
+- Removed the `loadRequireJS()` method
+
+- Added the `loadJS()` method (supports an array of arguments)
+
+- Added a new **production** local variable inside of _index.html_ to easily turn on and off production/development mode
+
+- _Production_ mode no longer includes Require.js (This was accidentally being included along with Almond.js) [#14](https://github.com/gfranko/Backbone-Require-Boilerplate/issues/14)
+
+- The common CSS file is now being included after all libraries/application files have been loaded.  This allows you to easily override 3rd party CSS rules (Bootstrap, jQuery Mobile, etc) [#14](https://github.com/gfranko/Backbone-Require-Boilerplate/issues/14)
 
 `1.2.0` - December 1, 2012
 
