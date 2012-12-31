@@ -17,9 +17,6 @@
   <!-- Mobile viewport optimized: h5bp.com/viewport -->
   <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width"> 
 
-  <!-- Include your site specific stylesheets -->
-  <link rel="stylesheet" href="css/commonstyles.css">
-
   <!--Detect if the browser is a mobile browser or a desktop browser and conditionally include your JavaScript --> 
   <script>
 
@@ -34,12 +31,17 @@
 
             loadFiles({
 
-              "css": "css/libs/jquery.mobile.css",
+              "css": ["css/libs/jquery.mobile.css"],
 
               // Change this to "js/app/config/MobileInit.min" for production
               "data-main": "js/app/config/MobileInit",
 
               "requirejs": "js/libs/require.js"
+
+            }, function() {
+
+              // After both the mobile css and Require.js are loaded, the css file used for both mobile and desktop is loaded
+              loadCss(["css/commonstyles.css"]);
 
             });
 
@@ -50,28 +52,39 @@
 
             loadFiles({
 
-              "css": "css/libs/bootstrap.css",
+              "css": ["css/libs/bootstrap.css"],
 
               // Change this to "js/app/config/DesktopInit.min" for production
               "data-main": "js/app/config/DesktopInit",
 
               "requirejs": "js/libs/require.js"
 
+            }, function() {
+
+              // After both the desktop css and Require.js are loaded, the css file used for both mobile and desktop is loaded
+              loadCss(["css/commonstyles.css"]);
+
             });
 
           }
 
-          function loadCss(url, callback) {
+          function loadCss(urls, callback) {
 
-            var link = d.createElement("link");
+            var x, link;
+
+            for(x = 0; x <= urls.length - 1; x += 1) {
+
+              link = d.createElement("link");
           
-            link.type = "text/css";
+              link.type = "text/css";
     
-            link.rel = "stylesheet";
+              link.rel = "stylesheet";
 
-            link.href = url;
+              link.href = urls[x];
 
-            d.querySelector("head").appendChild(link);
+              d.querySelector("head").appendChild(link);
+
+            }
 
             if(callback) callback();
 
@@ -91,13 +104,15 @@
 
           }
 
-          function loadFiles(obj) {
+          function loadFiles(obj, callback) {
 
             // Loads the jQuery Mobile CSS file
-            loadCss(obj.css);
+            loadCss(obj.css, function() {
 
-            // Loads Require.js and tells Require.js to find the mobile intialization file
-            loadRequireJS({ "data-main": obj["data-main"], "src": obj.requirejs });
+              // Loads Require.js and tells Require.js to find the mobile intialization file
+              loadRequireJS({ "data-main": obj["data-main"], "src": obj.requirejs }, callback);
+
+            });
 
           }
 
