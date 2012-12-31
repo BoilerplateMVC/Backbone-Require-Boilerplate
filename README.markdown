@@ -33,9 +33,11 @@ index.html
    The `loadFiles()` method is then used to load all of the correct CSS and JavaScript files.  Below is what get's included:
 
    _Mobile or Tablet Browser_
+
    If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/MobileInit` (this tells Require.js to look for a MobileInit.js file inside of the config folder).  The jQuery Mobile CSS file is also included asynchronously.
 
    _Desktop Browser_
+   
    If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/DesktopInit` (this tells Require.js to look for a DesktopInit.js file inside of the config folder).
 
    **Note**:  You do not need to use the JavaScript mobile detection script for your application to use Backbone.js or Require.js. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
