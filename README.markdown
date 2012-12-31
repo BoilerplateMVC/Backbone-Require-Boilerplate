@@ -52,7 +52,7 @@ index.html
 
    _Loader Methods_
 
-   You will notice that the CSS files and the Require.js file are being included on the page via the `loadFiles()` method (which uses the loadCss()` and `loadJS()` methods internally).  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include CSS files.  Loading CSS asynchronously also allows me the flexibilty/mechanism to load different CSS files if a user is on a mobile device.
+   You will notice that the CSS files and the Require.js file are being included on the page via the `loadFiles()` method (which uses the `loadCss()` and `loadJS()` methods internally).  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include CSS files.  Loading CSS asynchronously also allows me the flexibilty/mechanism to load different CSS files if a user is on a mobile device.
 
    I included the `loadJS()` method since the Desktop/Mobile and Production/Development versions of the boilerplate point Require.js to two different files.  Including Require.js asynchronously within the `loadJS` method allowed me the flexibility to do that.
 
