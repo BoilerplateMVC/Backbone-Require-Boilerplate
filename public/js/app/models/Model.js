@@ -17,7 +17,7 @@ define(["jquery", "backbone"],
 
             },
 
-            // Get's called automatically by Backbone when the set and/or save methods are called (Add your own logic)
+            // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)
             validate: function(attrs) {
 
             }
