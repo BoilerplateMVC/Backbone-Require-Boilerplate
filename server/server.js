@@ -19,6 +19,8 @@ server.configure(function() {
 
   }));
 
+  server.use(express.bodyParser())
+
   server.use(server.router);
 
 });
