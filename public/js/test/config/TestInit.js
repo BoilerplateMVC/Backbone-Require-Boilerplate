@@ -10,15 +10,15 @@ require.config({
 
       // Core Libraries
       // --------------
-      "jquery": "libs/jquery",
+      "jquery": "libs/jquery/jquery",
 
-      "jquerymobile": "libs/jquery.mobile",
+      "jquerymobile": "libs/jquery-mobile/js/jquery.mobile",
 
-      "underscore": "libs/lodash",
+      "underscore": "libs/lodash/lodash",
 
-      "backbone": "libs/backbone",
+      "backbone": "libs/backbone/backbone",
 
-      "jasmine": "libs/jasmine",
+      "jasmine": "libs/jasmine/lib/jasmine-core/jasmine",
 
       "jasmine-html": "libs/jasmine-html",
 
