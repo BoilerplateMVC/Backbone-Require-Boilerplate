@@ -11,13 +11,13 @@ require.config({
 
       // Core Libraries
       // --------------
-      "jquery": "libs/jquery",
+      "jquery": "libs/jquery/jquery",
 
-      "jquerymobile": "libs/jquery.mobile",
+      "jquerymobile": "libs/jquery-mobile/js/jquery.mobile.js",
 
-      "underscore": "libs/lodash",
+      "underscore": "libs/lodash/lodash",
 
-      "backbone": "libs/backbone",
+      "backbone": "libs/backbone/backbone",
 
       // Plugins
       // -------
