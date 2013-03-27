@@ -25,7 +25,7 @@ var baseConfig = {
   wrap: true,
     
   // The optimized build file will use almond.js (AMD shim) instead of the larger Require.js
-  name: "libs/almond",
+  name: "libs/almond/almond",
 
   // Removes third-party license comments
   preserveLicenseComments: false,
