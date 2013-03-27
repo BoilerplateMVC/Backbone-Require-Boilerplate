@@ -115,7 +115,7 @@
 
           function loadJS(files, callback) {
 
-            var x, script, file, ref = d.getElementsByTagName("script")[0];
+            var x, script, file;
 
             for(x = 0; x <= files.length - 1; x += 1) {
 
@@ -139,7 +139,7 @@
 
               }
 
-              ref.parentNode.insertBefore(script, ref);
+              d.getElementsByTagName("head")[0].appendChild(script);
 
             }
 
