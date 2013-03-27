@@ -12,7 +12,7 @@ require.config({
       // --------------
       "jquery": "libs/jquery/jquery",
 
-      "jquerymobile": "libs/jquery-mobile/js/jquery.mobile",
+      "jquerymobile": "libs/jquery-mobile/compiled/jquery.mobile",
 
       "underscore": "libs/lodash/lodash",
 
