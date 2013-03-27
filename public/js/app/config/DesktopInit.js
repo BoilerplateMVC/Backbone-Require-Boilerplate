@@ -1,3 +1,4 @@
+//
 // DesktopInit.js
 // --------------
 require.config({
@@ -11,13 +12,13 @@ require.config({
 
       // Core Libraries
       // --------------
-      "jquery": "libs/jquery",
+      "jquery": "libs/jquery/jquery",
 
-      "jqueryui": "libs/jqueryui",
+      "jqueryui": "libs/jquery-ui/ui/jquery-ui.custom",
 
-      "underscore": "libs/lodash",
+      "underscore": "libs/lodash/lodash",
 
-      "backbone": "libs/backbone",
+      "backbone": "libs/backbone/backbone",
 
       // Plugins
       // -------
