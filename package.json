@@ -26,5 +26,19 @@
     "express": "3.x"
   },
   "main": "./server/server",
-  "keywords": ["Backbone.js", "Require.js", "Backbone and Require Boilerplate"]
+  "keywords": [
+    "Backbone.js",
+    "Require.js",
+    "Backbone and Require Boilerplate"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-watch": "~0.3.1",
+    "uglify-js": "~2.2.5",
+    "grunt-contrib-jasmine": "~0.4.1",
+    "phantomjs": "~1.9.0-0",
+    "grunt-lib-phantomjs": "~0.2.0"
+  }
 }

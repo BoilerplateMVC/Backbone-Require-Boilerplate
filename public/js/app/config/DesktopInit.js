@@ -1,3 +1,4 @@
+//
 // DesktopInit.js
 // --------------
 require.config({
