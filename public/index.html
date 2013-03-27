@@ -31,9 +31,6 @@
           // Configuration object that will contain the correct prod/dev CSS and JavaScript files to load
           config = {}
 
-        // Listen to the DOMContentLoaded Event (Supported in IE9+, Chrome Firefox, Safari)
-        w.addEventListener("DOMContentLoaded", function() {
-
           // Mobile/Tablet Logic
           if((/iPhone|iPod|iPad|Android|BlackBerry|Opera Mini|IEMobile/).test(ua)) {
 
@@ -108,7 +105,7 @@
 
               link.href = urls[x];
 
-              d.querySelector("head").appendChild(link);
+              d.getElementsByTagName("head")[0].appendChild(link);
 
             }
 
@@ -118,7 +115,7 @@
 
           function loadJS(files, callback) {
 
-            var x, script, file
+            var x, script, file, ref = d.getElementsByTagName('script')[0];
 
             for(x = 0; x <= files.length - 1; x += 1) {
 
@@ -130,6 +127,8 @@
 
                 script.setAttribute("data-main", file["data-main"]);
 
+                script.async = true;
+
                 script.src = file.src;
 
               }
@@ -139,8 +138,8 @@
                 script.src = file;
 
               }
-            
-              d.body.appendChild(script);
+
+              ref.parentNode.insertBefore(script, ref);
 
             }
 
@@ -186,8 +185,6 @@
             }
 
           }
-
-        }, false);
 
       })(navigator.userAgent || navigator.vendor || window.opera, window, window.document);
 
