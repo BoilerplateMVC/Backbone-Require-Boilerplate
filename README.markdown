@@ -233,7 +233,7 @@ spec.js
 
 **You're not using Grunt for your build process?  Are you some sort of newb?**
 
-   -No, but I am still debating whether or not I will include Grunt for this project.
+   -In the next release, I am going to integrate Grunt and Travis CI into this project. Stay tuned.
 
 **Do I have to use everything the boilerplate gives me?**
 
