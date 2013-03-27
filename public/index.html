@@ -115,13 +115,13 @@
 
           function loadJS(files, callback) {
 
-            var x, script, file, ref = d.getElementsByTagName('script')[0];
+            var x, script, file, ref = d.getElementsByTagName("script")[0];
 
             for(x = 0; x <= files.length - 1; x += 1) {
 
               file = files[x];
 
-              script = d.createElement('script');
+              script = d.createElement("script");
             
               if(((typeof file).toLowerCase()) === "object" && file["data-main"] !== undefined) {
 
