@@ -12,13 +12,13 @@ require.config({
 
       // Core Libraries
       // --------------
-      "jquery": "libs/jquery/jquery",
+      "jquery": "libs/jquery",
 
-      "jqueryui": "libs/jquery-ui/ui/jquery-ui.custom",
+      "jqueryui": "libs/jqueryui",
 
-      "underscore": "libs/lodash/lodash",
+      "underscore": "libs/lodash",
 
-      "backbone": "libs/backbone/backbone",
+      "backbone": "libs/backbone",
 
       // Plugins
       // -------

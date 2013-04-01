@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             "mobile": "app/config/MobileInit"
           },
           wrap: true,
-          name: "libs/almond/almond",
+          name: "libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
           mainConfigFile: "public/js/app/config/MobileInit.js",
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             "desktop": "app/config/DesktopInit"
           },
           wrap: true,
-          name: "libs/almond/almond",
+          name: "libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
           mainConfigFile: "public/js/app/config/DesktopInit.js",
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      files: ['Gruntfile.js', 'public/js/app/**/*.js'],
+      files: ['Gruntfile.js', 'public/js/app/**/*.js', '!public/js/app/**/*min.js'],
       options: {
         globals: {
           jQuery: true,
@@ -44,29 +44,14 @@ module.exports = function(grunt) {
           document: true
         }
       }
-    },
-    /*
-    // Still working on this
-    jasmine: {
-      src : 'public/js/app/*.js',
-      options : {
-        specs : 'js/test/specs/spec.js'
-      }
-    },*/
-    watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'requirejs:desktop', 'requirejs:mobile']
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  //grunt.loadNpmTasks('grunt-contrib-jasmine');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('test', [
-    'jshint', 
-    //'jasmine'
-    ]);
-  grunt.registerTask('build', ['jshint', 'requirejs:desktop', 'requirejs:mobile']);
+    'jshint'
+  ]);
+  grunt.registerTask('build', ['requirejs:desktop', 'requirejs:mobile']);
 
 };
