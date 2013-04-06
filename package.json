@@ -22,9 +22,6 @@
       "url": "https://github.com/gfranko/Backbone-Require-Boilerplate/blob/master/LICENSE-MIT"
     }
   ],
-  "dependencies": {
-    "express": "3.x"
-  },
   "main": "./server/server",
   "keywords": [
     "Backbone.js",
@@ -32,6 +29,7 @@
     "Backbone and Require Boilerplate"
   ],
   "devDependencies": {
+    "express": "3.x",
     "grunt": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.0",
     "grunt-contrib-jshint": "~0.3.0",

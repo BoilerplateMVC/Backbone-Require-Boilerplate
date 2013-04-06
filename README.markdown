@@ -11,12 +11,13 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
    1. Download and install [Node.js](http://nodejs.org/#download)
    2. Clone this repository
    3. On the command line, type `npm install nodemon -g` to install the [nodemon](https://github.com/remy/nodemon) library globally.  If it complains about user permissions type `sudo npm install nodemon -g`.
-   3.  If you have installed Grunt globally in the past, you will need to remove it first by typing `npm uninstall -g grunt`.  Next, install the latest version of Grunt by typing `npm install -g grunt-cli`. 
-   4. Navigate to inside of the **Backbone-Require-Boilerplate** folder and type `npm install`
-   5. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful **nodemon** library)
-   5. To view the demo page, go to `http://localhost:8001`
-   6. To view the Jasmine test suite page, go to `http://localhost:8001/specRunner.html`
-   7. Enjoy using Backbone, Require, Grunt, Lodash, Almond, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (enjoyment optional)
+   4.  If you have installed Grunt globally in the past, you will need to remove it first by typing `npm uninstall -g grunt`.  If it complains about user permissions, type `sudo npm uninstall -g grunt`.
+   5.  Next, install the latest version of Grunt by typing `npm install -g grunt-cli`.  Agai, it it complains about user permissions, type `sudo npm install -g grunt-cli`. 
+   6. Navigate to inside of the **Backbone-Require-Boilerplate** folder and type `npm install`
+   7. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful **nodemon** library)
+   8. To view the demo page, go to `http://localhost:8001`
+   9. To view the Jasmine test suite page, go to `http://localhost:8001/specRunner.html`
+   10. Enjoy using Backbone, Require, Grunt, Lodash, Almond, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (enjoyment optional)
 
 #Tour of the Boilerplate Files
 
@@ -26,7 +27,7 @@ index.html
 
    _Mobile Detection Script_
 
-   There is also a simple JavaScript mobile browser detection script that stores different production/development CSS and JavaScript files within a local `config` object based on whether a user is using a mobile, tablet, or desktop browser.
+   There is also a simple JavaScript mobile browser detection script that stores different production/development CSS and JavaScript files within a local `config` object based on whether a user is using a mobile or desktop browser.
 
 
    _Loading Files_
@@ -35,11 +36,11 @@ index.html
 
    _Mobile or Tablet Browser_
 
-   If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/MobileInit` (this tells Require.js to look for a MobileInit.js file inside of the config folder).  The jQuery Mobile CSS file and the common CSS file are also included asynchronously.
+   If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/MobileInit` (this tells Require.js to look for a MobileInit.js file inside of the config folder).  The combined jQuery Mobile and common CSS file are also included asynchronously.
 
    _Desktop Browser_
    
-   If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/DesktopInit` (this tells Require.js to look for a DesktopInit.js file inside of the config folder).  The Bootstrap CSS file and the common CSS file are also included asynchronously.
+   If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/DesktopInit` (this tells Require.js to look for a DesktopInit.js file inside of the config folder).  The combined Bootstrap and common CSS file are also included asynchronously.
 
    **Note**:  You do not need to use the JavaScript mobile detection script for your application to use Backbone.js or Require.js. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
 
@@ -248,6 +249,10 @@ spec.js
 
    - The boilerplate uses the **grunt-contrib-requirejs** to run the Require.js optimizer and the **grunt-contrib-jshint** plugin to automate JSHint code quality checking.  Both plugins are maintained by the core Grunt team.
 
+**What Grunt tasks can I use?**
+
+   - The boilerplate provides a `test` and `build` task.  The `test` task will only JSHint your code for quality.  You can run the `test` task by typing `grunt test`.  The `build` task will concatenate and minify your Desktop/Mobile JavaScript and CSS files using the Require.js optimizer.  You can run the `build` task by typing `grunt build`.
+
 **Do I have to use everything the boilerplate gives me?**
 
    -No!  Feel free to update the boilerplate to fit the needs of your application.  Certain things that you might not want/need include templates, mobile and desktop versions, jQuery Mobile, etc.
@@ -258,7 +263,7 @@ spec.js
 
 **Why did you not include a package manager such as Bower, Volo, or Jam?**
 
-   -I ultimately decided against including a package manager. I agree that using a package manager for this boilerplate is the ultimate solution, but the JS package management space is in a state of flux. Libraries, like jQuery Mobile, show that a browser package management solution has not been adopted by the community yet. Obviously, this may change.
+   -I ultimately decided against including a package manager. I agree that using a package manager for this boilerplate is the ultimate solution, but the JS package management space is in a state of flux. A browser package management solution has not been adopted by the community yet. Obviously, this may change.
 
 **Can I contribute to this project?**
 
