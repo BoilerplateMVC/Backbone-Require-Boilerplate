@@ -243,7 +243,7 @@ spec.js
 
 **Why are you using Grunt for the build?**
 
-   -Grunt comes jam packed with features and plugins to help improve project automation tasks.  Although the main job of Grunt (within Backbone-Require-Boilerplate) is to run the Require.js optimizer, it can also be used for other tasks such as JSHinting your code.
+   -Grunt comes jam packed with features and plugins to help improve project automation tasks.  Although the main job of Grunt (within Backbone-Require-Boilerplate) is to run the Require.js optimizer, it is also for other tasks such as JSHinting your code.
 
 **What Grunt plugins are you using?**
 
@@ -251,7 +251,7 @@ spec.js
 
 **What Grunt tasks can I use?**
 
-   - The boilerplate provides a `test`, `build`, and `default` task.
+   - The boilerplate provides `test`, `build`, and `default` tasks.
 
    - The `test` task will only JSHint your code for quality.  You can run the `test` task by typing `grunt test`.
 
