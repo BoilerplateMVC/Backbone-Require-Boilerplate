@@ -245,7 +245,8 @@ spec.js
    -Grunt comes jam packed with features and plugins to help improve project automation tasks.  Although the main job of Grunt (within Backbone-Require-Boilerplate) is to run the Require.js optimizer, it can also be used for other tasks such as JSHinting your code.
 
 **What Grunt plugins are you using?**
-The boilerplate uses the **grunt-contrib-requirejs** to run the Require.js optimizer and the **grunt-contrib-jshint** plugin to automate JSHint code quality checking.  Both plugins are maintained by the core Grunt team.
+
+   - The boilerplate uses the **grunt-contrib-requirejs** to run the Require.js optimizer and the **grunt-contrib-jshint** plugin to automate JSHint code quality checking.  Both plugins are maintained by the core Grunt team.
 
 **Do I have to use everything the boilerplate gives me?**
 
@@ -254,6 +255,10 @@ The boilerplate uses the **grunt-contrib-requirejs** to run the Require.js optim
 **Do I need a web server to test the boilerplate?**
 
    -Yep, because the Require.js text plugin dynamically pulls in template files via ajax (which is not allowed with the `File://` local extension.  Luckily for you I have provided an easy to use Node.js web server for convenience.
+
+**Why did you not include a package manager such as Bower, Volo, or Jam?**
+
+   -I ultimately decided against including a package manager. I agree that using a package manager for this boilerplate is the ultimate solution, but the JS package management space is in a state of flux. Libraries, like jQuery Mobile, show that a browser package management solution has not been adopted by the community yet. Obviously, this may change.
 
 **Can I contribute to this project?**
 
