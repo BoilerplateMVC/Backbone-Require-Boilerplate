@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     requirejs: {
-      mobile: {
+      mobileJS: {
         options: {
           baseUrl: "public/js/",
           paths: {
@@ -13,12 +13,20 @@ module.exports = function(grunt) {
           name: "libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
+          optimizeCss: "standard",
           mainConfigFile: "public/js/app/config/MobileInit.js",
           include: ["mobile"],
           out: "public/js/app/config/MobileInit.min.js"
         }
       },
-      desktop: {
+      mobileCSS: {
+        options: {
+          optimizeCss: "standard",
+          cssIn: "./public/css/mobile.css",
+          out: "./public/css/mobile.min.css"
+        }
+      },
+      desktopJS: {
         options: {
           baseUrl: "public/js/",
           paths: {
@@ -31,6 +39,13 @@ module.exports = function(grunt) {
           mainConfigFile: "public/js/app/config/DesktopInit.js",
           include: ["desktop"],
           out: "public/js/app/config/DesktopInit.min.js"
+        }
+      },
+      desktopCSS: {
+        options: {
+          optimizeCss: "standard",
+          cssIn: "./public/css/desktop.css",
+          out: "./public/css/desktop.min.css"
         }
       }
     },
@@ -49,9 +64,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.registerTask('test', [
-    'jshint'
-  ]);
-  grunt.registerTask('build', ['requirejs:desktop', 'requirejs:mobile']);
+  grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('build', ['requirejs:desktopJS', 'requirejs:mobileJS', 'requirejs:desktopCSS', 'requirejs:mobileCSS']);
+  grunt.registerTask('default', ['test', 'build']);
 
 };

@@ -1,6 +1,6 @@
 Backbone-Require-Boilerplate (BRB)
 ==================================
-![Example](http://backbonejs.org/docs/images/backbone.png) ![Example](http://requirejs.org/i/logo.png)
+![Example](http://3.bp.blogspot.com/-JFOJ-k6tLnA/TsiKgBYPvqI/AAAAAAAAAT8/dGXeu0LeuTE/s320/backbone-js-logo.png) ![Example](http://requirejs.org/i/logo.png)
 
 [Website](http://gregfranko.com/Backbone-Require-Boilerplate/)
 
@@ -11,11 +11,12 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
    1. Download and install [Node.js](http://nodejs.org/#download)
    2. Clone this repository
    3. On the command line, type `npm install nodemon -g` to install the [nodemon](https://github.com/remy/nodemon) library globally.  If it complains about user permissions type `sudo npm install nodemon -g`.
-   3. On the command line, navigate to inside of the **Backbone-Require-Boilerplate** folder and type `npm install`
-   4. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful  library)
+   3.  If you have installed Grunt globally in the past, you will need to remove it first by typing `npm uninstall -g grunt`.  Next, install the latest version of Grunt by typing `npm install -g grunt-cli`. 
+   4. Navigate to inside of the **Backbone-Require-Boilerplate** folder and type `npm install`
+   5. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful **nodemon** library)
    5. To view the demo page, go to `http://localhost:8001`
    6. To view the Jasmine test suite page, go to `http://localhost:8001/specRunner.html`
-   7. Enjoy using Backbone, Require, Lodash, Almond, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (enjoyment optional)
+   7. Enjoy using Backbone, Require, Grunt, Lodash, Almond, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (enjoyment optional)
 
 #Tour of the Boilerplate Files
 
@@ -25,7 +26,7 @@ index.html
 
    _Mobile Detection Script_
 
-   There is also a simple JavaScript mobile browser detection script that stores different production/development CSS and JavaScript files within a local `config` object based on whether a user is using a mobile, tablet, or desktop browser.  Also, the mobile detection script is within a **DOMContentLoaded** HTML5 JavaScript event handler (not supported in IE 6-8), which will trigger once the DOM is ready (the jQuery `ready()` event cannot be used because jQuery is loaded by Require.js and not yet included on the page).
+   There is also a simple JavaScript mobile browser detection script that stores different production/development CSS and JavaScript files within a local `config` object based on whether a user is using a mobile, tablet, or desktop browser.
 
 
    _Loading Files_
@@ -34,11 +35,11 @@ index.html
 
    _Mobile or Tablet Browser_
 
-   If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/MobileInit` (this tells Require.js to look for a MobileInit.js file inside of the config folder).  The jQuery Mobile CSS file is also included asynchronously.
+   If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/MobileInit` (this tells Require.js to look for a MobileInit.js file inside of the config folder).  The jQuery Mobile CSS file and the common CSS file are also included asynchronously.
 
    _Desktop Browser_
    
-   If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/DesktopInit` (this tells Require.js to look for a DesktopInit.js file inside of the config folder).
+   If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/DesktopInit` (this tells Require.js to look for a DesktopInit.js file inside of the config folder).  The Bootstrap CSS file and the common CSS file are also included asynchronously.
 
    **Note**:  You do not need to use the JavaScript mobile detection script for your application to use Backbone.js or Require.js. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
 
@@ -52,11 +53,11 @@ index.html
 
    _Loader Methods_
 
-   You will notice that the CSS files and the Require.js file are being included on the page via the `loadFiles()` method (which uses the `loadCss()` and `loadJS()` methods internally).  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include CSS files.  Loading CSS asynchronously also allows me the flexibilty/mechanism to load different CSS files if a user is on a mobile device.
+   You will notice that the CSS files and the Require.js file are being included on the page via the `loadFiles()` method (which uses the `loadCss()` and `loadJS()` methods internally).  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include CSS files.  Loading CSS asynchronously also allows the flexibilty/mechanism to load different CSS files if a user is on a mobile/desktop device.
 
-   I included the `loadJS()` method since the Desktop/Mobile versions of the boilerplate point Require.js to two different files.  Including Require.js asynchronously within the `loadJS` method allowed me the flexibility to do that.
+   I included the `loadJS()` method since the Desktop/Mobile versions of the boilerplate point Require.js to two different files.  Including Require.js asynchronously within the `loadJS` method provides the flexibility to do that.
 
-   **Note:** Feel free to use the `loadCSS()` and `loadJS()` methods to load any other dependencies your application may have that you do not want to use Require.js for
+   **Note:** Feel free to use the `loadCSS()` and `loadJS()` methods to load any other dependencies your application may have that you do not want to use Require.js for.
 
 MobileInit.js
 -------------
@@ -184,9 +185,13 @@ Collection.js
 
    Finally, a new Collection class is returned.
 
-app.build.js
+Gruntfile.js
 ------------
-   This file is ready made for you to have your entire project optimized using Node.js, the [Require.js Optimizer](https://github.com/jrburke/r.js/) and [almond.js](https://github.com/jrburke/almond).
+   This file is ready made for you to have your entire project optimized using Grunt.js, the [Require.js Optimizer](https://github.com/jrburke/r.js/) and [almond.js](https://github.com/jrburke/almond).
+
+   Grunt.js is a JavaScript command line task runner that allows you to easily automate common development tasks such as code linting, minification, and unit testing.
+
+   **Note:** Running the Jasmine Tasks with Grunt has not been implemented yet.
 
    Almond.js a lightweight AMD shim library created by [James Burke](https://github.com/jrburke), the creator of Require.js.  Almond is meant for small to medium sized projects that use one concatenated/minified JavaScript file.  If you don't need some of the advanced features that Require.js provides (lazy loading, etc) then Almond.js is great for performance.
 
@@ -194,15 +199,19 @@ app.build.js
 
    **Production Build Instructions**
 
-   Navigate to within the **deploy** folder and then type **node app.build.js** and wait a few seconds.  Once the script has finished, you will see that both _DesktopInit.min.js_ and _MobileInit.min.js_ will be updated.
+   Navigate to the root directory of the Backbone-Require-Boilerplate folder and type **grunt** and wait a few seconds for the build to complete.
 
-   Next, update the `production` local variable inside of **index.html** to be **true**.  Look at the index.html file in this [gist](https://gist.github.com/3752005) for the correct _production_ setup.
+   **Note:** If you are on a Windows machine, you will have to type `grunt.cmd`
+
+   Once the script has finished, you will see that both _DesktopInit.min.js_ and _MobileInit.min.js_, and the _mobile.min.css_ and _desktop.min.css_ files will be created/updated.
+
+   Next, update the `production` local variable inside of **index.html** to be **true**.
 
    And that's it!  If you have any questions just create in an issue on Github.
 
 SpecRunner.html
 ---------------
-   This file is the starting point to your Jasmine test suite.  It includes Require.js and points it to **testInit.js**
+   This file is the starting point to your Jasmine test suite and outputs the results of your Jasmine tests.  It includes Require.js and points it to **testInit.js** for all of the proper configurations.
 
 TestInit.js
 -----------
@@ -221,7 +230,7 @@ spec.js
 
 **What libraries have you included?**
 
-   -Backbone, Require, Lodash, Almond, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
+   -Backbone, Require, Grunt, Lodash, Almond, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
 
 **What Require.js plugins are you using?**
 
@@ -231,9 +240,12 @@ spec.js
 
    -I found that when I built using the Require.js Optimizer, only one lang-locale could be included per optimized file.  That would mean, that if you had to support 10 different langs/locales, you would need 20 different optimized builds (Desktop and Mobile).  If I am mistaken about this, please let me know, and I will update the Boilerplate with the Internationalization plugin.  A solution for including localized text is in the roadmap and will be included in a future release of the project.
 
-**You're not using Grunt for your build process?  Are you some sort of newb?**
+**Why are you using Grunt for the build?**
 
-   -No, but I am still debating whether or not I will include Grunt for this project.
+   -Grunt comes jam packed with features and plugins to help improve project automation tasks.  Although the main job of Grunt (within Backbone-Require-Boilerplate) is to run the Require.js optimizer, it can also be used for other tasks such as JSHinting your code.
+
+**What Grunt plugins are you using?**
+The boilerplate uses the **grunt-contrib-requirejs** to run the Require.js optimizer and the **grunt-contrib-jshint** plugin to automate JSHint code quality checking.  Both plugins are maintained by the core Grunt team.
 
 **Do I have to use everything the boilerplate gives me?**
 
@@ -248,6 +260,12 @@ spec.js
    -Please do!  I am learning just like you.  If you want to contribute, please send pull requests to the dev branch.
 
 ##Change Log
+
+`1.4.0` - April 6, 2013
+
+- Added Grunt.js support run the Require.js optimization build.
+- Updated the `loadJS()` and `loadCSS()` methods and removed the HTML5 **DOMContentLoaded** event
+- Updated all libraries to the latest versions.
 
 `1.3.0` - December 31, 2012
 

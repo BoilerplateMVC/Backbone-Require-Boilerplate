@@ -38,10 +38,10 @@
             config = {
 
               // CSS files that are loaded when in development mode
-              "dev-css": ["css/jquery.mobile.css"],
+              "dev-css": ["css/mobile.css"],
 
               // CSS files that are loaded when in production mode
-              "prod-css": ["css/jquery.mobile.min.css"],
+              "prod-css": ["css/mobile.min.css"],
 
               // JavaScript files that are loaded when in development mode
               "dev-js": [{ "data-main": "js/app/config/MobileInit.js", "src": "js/libs/require.js" }],
@@ -56,14 +56,14 @@
           // Desktop Logic
           else {
 
-            // Desktop CSS and JavaScript files to load
+            // Desktop files to load
             config = {
 
               // Loaded when not in production mode
-              "dev-css": ["css/bootstrap.css"],
+              "dev-css": ["css/desktop.css"],
 
               // Loaded when in production mode
-              "prod-css": ["css/bootstrap.min.css"],
+              "prod-css": ["css/desktop.min.css"],
 
               // Loaded when not in production mode
               "dev-js": [{ "data-main": "js/app/config/DesktopInit.js", "src": "js/libs/require.js" }],
@@ -76,20 +76,7 @@
           }
 
           // Loads the correct CSS and JavaScript files
-          loadFiles(config, function() {
-
-              // After both the mobile css and Require.js are loaded, the css file used for both mobile and desktop is loaded
-              loadFiles({
-
-                // Loaded when not in production mode
-                "dev-css": ["css/commonstyles.css"],
-
-                // Loaded when in production mode
-                "prod-css": ["css/commonstyles.min.css"]
-
-              });
-
-          });
+          loadFiles(config);
 
           function loadCSS(urls, callback) {
 

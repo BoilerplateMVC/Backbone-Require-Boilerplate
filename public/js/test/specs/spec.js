@@ -56,7 +56,7 @@ define(["jquery", "backbone", "text!templates/heading.html", "views/View","model
 
                 it("should call the validate method when setting a property", function() {
 
-                    this.model.set({ example: "test" });
+                    this.model.set({ example: "test" }, { validate: true });
 
                     expect(Model.prototype.validate).toHaveBeenCalled();
 

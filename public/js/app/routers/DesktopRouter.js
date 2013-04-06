@@ -1,7 +1,7 @@
 // DesktopRouter.js
 // ----------------
 define(["jquery", "backbone", "models/Model", "views/View", "collections/Collection"],
-        
+
     function($, Backbone, Model, View, Collection) {
 
         var DesktopRouter = Backbone.Router.extend({
@@ -15,7 +15,7 @@ define(["jquery", "backbone", "models/Model", "views/View", "collections/Collect
 
             // All of your Backbone Routes (add more)
             routes: {
-                
+
                 // When there is no hash on the url, the home method is called
                 "": "index"
 
@@ -27,7 +27,7 @@ define(["jquery", "backbone", "models/Model", "views/View", "collections/Collect
                 new View();
 
             }
-    
+
         });
 
         // Returns the DesktopRouter class
