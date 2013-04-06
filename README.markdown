@@ -11,8 +11,8 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
    1. Download and install [Node.js](http://nodejs.org/#download)
    2. Clone this repository
    3. On the command line, type `npm install nodemon -g` to install the [nodemon](https://github.com/remy/nodemon) library globally.  If it complains about user permissions type `sudo npm install nodemon -g`.
-   4.  If you have installed Grunt globally in the past, you will need to remove it first by typing `npm uninstall -g grunt`.  If it complains about user permissions, type `sudo npm uninstall -g grunt`.
-   5.  Next, install the latest version of Grunt by typing `npm install -g grunt-cli`.  Agai, it it complains about user permissions, type `sudo npm install -g grunt-cli`. 
+   4.  If you have installed [Grunt](http://gruntjs.com/) globally in the past, you will need to remove it first by typing `npm uninstall -g grunt`.  If it complains about user permissions, type `sudo npm uninstall -g grunt`.
+   5.  Next, install the latest version of [Grunt](http://gruntjs.com/) by typing `npm install -g grunt-cli`.  If it complains about user permissions, type `sudo npm install -g grunt-cli`. 
    6. Navigate to inside of the **Backbone-Require-Boilerplate** folder and type `npm install`
    7. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful **nodemon** library)
    8. To view the demo page, go to `http://localhost:8001`
@@ -247,11 +247,17 @@ spec.js
 
 **What Grunt plugins are you using?**
 
-   - The boilerplate uses the **grunt-contrib-requirejs** to run the Require.js optimizer and the **grunt-contrib-jshint** plugin to automate JSHint code quality checking.  Both plugins are maintained by the core Grunt team.
+   - The boilerplate uses the **grunt-contrib-requirejs** plugin to run the Require.js optimizer and the **grunt-contrib-jshint** plugin to automate JSHint code quality checking.  Both plugins are maintained by the core Grunt team.
 
 **What Grunt tasks can I use?**
 
-   - The boilerplate provides a `test` and `build` task.  The `test` task will only JSHint your code for quality.  You can run the `test` task by typing `grunt test`.  The `build` task will concatenate and minify your Desktop/Mobile JavaScript and CSS files using the Require.js optimizer.  You can run the `build` task by typing `grunt build`.
+   - The boilerplate provides a `test`, `build`, and `default` task.
+
+   - The `test` task will only JSHint your code for quality.  You can run the `test` task by typing `grunt test`.
+
+   - The `build` task will concatenate and minify your Desktop/Mobile JavaScript and CSS files using the Require.js optimizer.  You can run the `build` task by typing `grunt build`.
+
+   - The `default` task will run both the `test` and `build` tasks.  You can run the `default` task by typing `grunt`.
 
 **Do I have to use everything the boilerplate gives me?**
 
