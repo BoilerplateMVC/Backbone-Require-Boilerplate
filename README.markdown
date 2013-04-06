@@ -268,6 +268,8 @@ spec.js
 
 `1.4.0` - April 6, 2013
 
+**A huge thank you to [Nick Pack](https://github.com/nickpack) for helping to implement Grunt in this release**
+
 - Added Grunt.js support run the Require.js optimization build.
 - Updated the `loadJS()` and `loadCSS()` methods and removed the HTML5 **DOMContentLoaded** event
 - Updated all libraries to the latest versions.
@@ -387,7 +389,7 @@ Thanks to [James Burke](https://github.com/jrburke) for helping with the updated
 - Initial Backbone-Require-Boilerplate release.  Added source code and documentation.
 
 ##Contributors
-Greg Franko
+[Greg Franko](https://github.com/gfranko), [Nick Pack](https://github.com/nickpack), [Brett Jones](https://github.com/brettjonesdev)
 
 ## License
 Copyright (c) 2012 Greg Franko  
