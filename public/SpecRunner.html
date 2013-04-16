@@ -3,8 +3,17 @@
 <head>
   <title>Jasmine Spec Runner</title>
   <link rel="stylesheet" type="text/css" href="css/jasmine.css">
+  <script src="js/libs/jasmine.js"></script>
+  <script src="js/libs/jasmine-html.js"></script>
   <script src="js/libs/require.js" data-main="js/test/config/TestInit"></script>
 </head>
 <body>
+    <script>
+        // Add your Jasmine spec files here
+        require(["../specs/spec"], function(spec) {
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().execute();
+        });
+    </script>
 </body>
 </html>

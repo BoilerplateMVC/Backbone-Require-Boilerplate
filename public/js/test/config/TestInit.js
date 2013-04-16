@@ -8,114 +8,66 @@ require.config({
   // probably a good idea to keep version numbers in the file names for updates checking
   paths: {
 
-      // Core Libraries
-      // --------------
-      "jquery": "libs/jquery",
+    // Core Libraries
+    // --------------
+    "jquery": "libs/jquery",
 
-      "jquerymobile": "libs/jquery.mobile",
+    "jquerymobile": "libs/jquery.mobile",
 
-      "underscore": "libs/lodash",
+    "underscore": "libs/lodash",
 
-      "backbone": "libs/backbone",
+    "backbone": "libs/backbone",
 
-      "jasmine": "libs/jasmine",
+    // Plugins
+    // -------
+    "backbone.validateAll": "libs/plugins/Backbone.validateAll",
 
-      "jasmine-html": "libs/jasmine-html",
+    "bootstrap": "libs/plugins/bootstrap",
 
-      // Plugins
-      // -------
-      "backbone.validateAll": "libs/plugins/Backbone.validateAll",
+    "text": "libs/plugins/text",
 
-      "bootstrap": "libs/plugins/bootstrap",
+    "jasminejquery": "libs/plugins/jasmine-jquery",
 
-      "text": "libs/plugins/text",
+    // Application Folders
+    // -------------------
+    "collections": "app/collections",
 
-      "jasminejquery": "libs/plugins/jasmine-jquery",
+    "models": "app/models",
 
-      // Application Folders
-      // -------------------
-      "collections": "app/collections",
+    "routers": "app/routers",
 
-      "models": "app/models",
+    "templates": "app/templates",
 
-      "routers": "app/routers",
-
-      "templates": "app/templates",
-
-      "views": "app/views"
+    "views": "app/views"
 
   },
 
   // Sets the configuration for your third party scripts that are not AMD compatible
   shim: {
 
-      // Twitter Bootstrap jQuery plugins
-      "bootstrap": ["jquery"],
+    // Twitter Bootstrap jQuery plugins
+    "bootstrap": ["jquery"],
 
-      // Jasmine-jQuery plugin
-      "jasminejquery": ["jquery"],
+    // Jasmine-jQuery plugin
+    "jasminejquery": ["jquery"],
 
-      // jQuery Mobile
-      "jquerymobile": ["jquery"],
+    // jQuery Mobile
+    "jquerymobile": ["jquery"],
 
-      // Backbone
-      "backbone": {
+    // Backbone
+    "backbone": {
 
-          // Lists jQuery and Underscore as dependencies
-          "deps": ["underscore", "jquery"],
+      // Lists jQuery and Underscore as dependencies
+      "deps": ["underscore", "jquery"],
 
-          // Exports the global 'window.Backbone' object
-          "exports": "Backbone"
+      // Exports the global 'window.Backbone' object
+      "exports": "Backbone"
 
-      },
+    },
 
-      // Backbone.validateAll depends on Backbone
-      "backbone.validateAll": ["backbone"],
-
-      // Jasmine Unit Testing
-      "jasmine": {
-
-        // Exports the global 'window.jasmine' object
-        "exports": "jasmine"
-
-      },
-
-      // Jasmine Unit Testing helper
-      "jasmine-html": {
-
-        "deps": ["jasmine"],
-
-        "exports": "jasmine"
-
-      }
+    // Backbone.validateAll depends on Backbone
+    "backbone.validateAll": ["backbone"]
 
   }
 
 });
-
-// Include Desktop Specific JavaScript files here (or inside of your Desktop router)
-require(["jquery", "backbone", "jasmine-html", "jquerymobile", "bootstrap", "backbone.validateAll"],
-
-  function($, Backbone, jasmine) {
-
-    specs = [];
- 
-    specs.push('test/specs/spec');
- 
- 
-    $(function() {
-    
-      require(specs, function() {
-
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-
-        jasmine.getEnv().execute();
-
-    
-      });
-
-    });
-
-  }
-
-);
