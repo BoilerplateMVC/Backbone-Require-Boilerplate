@@ -1,5 +1,5 @@
-// MobileInit.js
-// -------------
+// Require.js Configurations
+// -------------------------
 require.config({
 
   // Sets the js folder as the base directory for all future relative paths
@@ -13,6 +13,8 @@ require.config({
       // --------------
       "jquery": "libs/jquery",
 
+      "jqueryui": "libs/jqueryui",
+
       "jquerymobile": "libs/jquery.mobile",
 
       "underscore": "libs/lodash",
@@ -23,7 +25,11 @@ require.config({
       // -------
       "backbone.validateAll": "libs/plugins/Backbone.validateAll",
 
+      "bootstrap": "libs/plugins/bootstrap",
+
       "text": "libs/plugins/text",
+
+      "jasminejquery": "libs/plugins/jasmine-jquery",
 
       // Application Folders
       // -------------------
@@ -39,12 +45,17 @@ require.config({
 
   },
 
-  // Sets the dependency and shim configurations
-  // - Helpful for including non-AMD compatible scripts and managing dependencies
+  // Sets the configuration for your third party scripts that are not AMD compatible
   shim: {
 
       // jQuery Mobile
       "jquerymobile": ["jquery"],
+
+      // Twitter Bootstrap jQuery plugins
+      "bootstrap": ["jquery"],
+
+      // jQueryUI
+      "jqueryui": ["jquery"],
 
       // Backbone
       "backbone": {
@@ -58,26 +69,11 @@ require.config({
       },
 
       // Backbone.validateAll plugin that depends on Backbone
-      "backbone.validateAll": ["backbone"]
+      "backbone.validateAll": ["backbone"],
+
+      // Jasmine-jQuery plugin
+      "jasminejquery": ["jquery"]
 
   }
 
 });
-
-// Include Desktop Specific JavaScript files here (or inside of your Desktop router)
-require(["jquery", "backbone", "routers/MobileRouter", "jquerymobile", "backbone.validateAll"],
-
-  function($, Backbone, MobileRouter) {
-
-    // Prevents all anchor click handling
-    $.mobile.linkBindingEnabled = false;
-
-    // Disabling this will prevent jQuery Mobile from handling hash changes
-    $.mobile.hashListeningEnabled = false;
-
-    // Instantiates a new Mobile Router instance
-    new MobileRouter();
-
-  }
-
-);

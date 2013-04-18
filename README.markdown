@@ -17,32 +17,39 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
    7. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful **nodemon** library)
    8. To view the demo page, go to `http://localhost:8001`
    9. To view the Jasmine test suite page, go to `http://localhost:8001/specRunner.html`
-   10. Enjoy using Backbone, Require, Grunt, Lodash, Almond, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (enjoyment optional)
+   10. Enjoy using Backbone, Lodash, Require.js, Almond.js, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, Jasmine, and Grunt (enjoyment optional)
 
 #Tour of the Boilerplate Files
 
 index.html
 ----------
-   Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.  As you continue down the page to the first `<script>` tag, you will notice there is a `production` local JavaScript variable that is used to communicate to your application whether you would like to load production or development CSS and JavaScript files.
+
+   _HTML5 Boilerplate_
+   Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.
+
+   _Environment_
+   As you continue down the page to the first `<script>` tag, you will notice there is a local JavaScript variable, called `production`, that is used to communicate to your application whether you would like to load production or development CSS and JavaScript files.
+
+   _BoilerplateMVC Helper Methods_
+   To load our production/development CSS and JavaScript files, you can use the handy BoilerplateMVC helper methods included directly in our HTML page.  Below are the available helper methods:
+
+   *loadCSS(url, callback)* - Asynchronously includes a CSS file to a page
+
+   *loadJS(file, callback)* - Asynchronously includes a JavaScript file to the page
+
+   *loadFiles(production, obj, callback)* - Calls the `loadCSS()` and `loadJS()` methods internally to asynchronously include our CSS and JavaScript files 
+
+   **Note:** Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why we included the `loadCSS()` method to asynchronously include our CSS files.
+
+   Loading files asynchronously prevents our application files from blocking the loading of the UI and allows us the flexibilty to load different CSS/JavaScript files if a user is on a mobile/desktop device.
+
+   Since the Desktop/Mobile versions of the boilerplate point Require.js to two different files, including Require.js asynchronously with the `loadJS` method provides the flexibility to do that.
 
    _Mobile Detection Script_
 
-   There is also a simple JavaScript mobile browser detection script that stores different production/development CSS and JavaScript files within a local `config` object based on whether a user is using a mobile or desktop browser.
+   There is a simple JavaScript mobile browser detection script that stores different production/development CSS and JavaScript files within a local `config` object based on whether a user is using a mobile or desktop browser.
 
-
-   _Loading Files_
-
-   The `loadFiles()` method is then used to load all of the correct CSS and JavaScript files.  Below is what get's included:
-
-   _Mobile or Tablet Browser_
-
-   If a mobile browser is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/MobileInit` (this tells Require.js to look for a MobileInit.js file inside of the config folder).  The combined jQuery Mobile and common CSS file are also included asynchronously.
-
-   _Desktop Browser_
-   
-   If a desktop device is found, then Require.js is included asynchronously within the HTML page, and the Require.js script tag HTML5 data attribute, `data-main`, is set to `js/app/config/DesktopInit` (this tells Require.js to look for a DesktopInit.js file inside of the config folder).  The combined Bootstrap and common CSS file are also included asynchronously.
-
-   **Note**:  You do not need to use the JavaScript mobile detection script for your application to use Backbone.js or Require.js. I just put it in so that you could see an example of how to separate your Mobile and Desktop JavaScript logic.
+   **Note**:  You do not need to use the provided JavaScript mobile detection script for your application. We provided it for convenience so that you could see an example of how to separate your Mobile and Desktop JavaScript logic using Require.js.
 
    _Production Mode_
 
@@ -52,52 +59,48 @@ index.html
 
   In development mode, your app's non-minified JavaScript files are loaded using Require.js instead of Almond.js.  Your application's non-minified common CSS file is also included.
 
-   _Loader Methods_
+Config.js
+---------
 
-   You will notice that the CSS files and the Require.js file are being included on the page via the `loadFiles()` method (which uses the `loadCss()` and `loadJS()` methods internally).  Require.js does not officially support [loading CSS files](http://requirejs.org/docs/faq-advanced.html#css), which is why I included the `loadCSS()` method to asynchronously include CSS files.  Loading CSS asynchronously also allows the flexibilty/mechanism to load different CSS files if a user is on a mobile/desktop device.
+This file includes your mobile **AND** desktop Require.js configurations.
 
-   I included the `loadJS()` method since the Desktop/Mobile versions of the boilerplate point Require.js to two different files.  Including Require.js asynchronously within the `loadJS` method provides the flexibility to do that.
+If we look at our App's Require.js configurations, we will see the first thing being configured are the module paths.  Setting paths allow you to define an alias name and file path for any module that you like.
 
-   **Note:** Feel free to use the `loadCSS()` and `loadJS()` methods to load any other dependencies your application may have that you do not want to use Require.js for.
+Typically, you want to set a path for any module that will be listed as a dependency in more than one other module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Shim configuration (Added in Require.js 2.0).
+   
+The Shim configuration allows you to easily include non-AMD compatible JavaScript files with Require.js (a separate library such as [Use.js](https://github.com/tbranyen/use.js/) was previously needed for this).  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  This configuration is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.  Require.js creator [James Burke](http://tagneto.blogspot.com/) previously maintained AMD compatible forks of both Backbone.js and Underscore.js because of this exact reason.
+
+      shim: {
+
+         // Backbone
+         "backbone": {
+
+            // Depends on underscore/lodash and jQuery
+            "deps": ["underscore", "jquery"],
+
+            // Exports the global window.Backbone object
+            "exports": "Backbone"
+
+         },
+
+      }
+
+      The Shim configuration also takes the place for the old Require.js `order` plugin.  Within the Shim configuration, you can list files and their dependency tree.  An example is jQuery plugins being dependent on jQuery:
+
+      shim: {
+
+         // Twitter Bootstrap plugins depend on jQuery
+         "bootstrap": ["jquery"]
+
+      }
+
+   **Note**: You do not need a shim configuration for [jQuery](http://www.jquery.com) or [lodash](https://github.com/bestiejs/lodash) because they do not have any dependencies.
 
 MobileInit.js
 -------------
-   MobileInit.js is only used if a mobile browser is detected.  This file includes your mobile Require.js configurations.
+   MobileInit.js is only used if a mobile browser is detected.
 
-   If we look at the mobile Require.js configurations, we will see the first thing being configured are the paths.  Setting paths allow you to define an alias name and file path for any file that you like.
-
-   Typically, you want to set a path for any file that will be listed as a dependency in more than one module (eq. jQuery, Backbone).  This saves you some typing, since you just have to list the alias name, and not the entire file path, when listing dependencies.  After all of the file paths are set, you will find the Shim configuration (Added in Require.js 2.0).
-   
-
-   The Shim configuration allows you to easily include non-AMD compatible JavaScript files with Require.js (a separate library such as [Use.js](https://github.com/tbranyen/use.js/) was previously needed for this).  This is very important, because Backbone versions > 0.5.3 no longer support AMD (meaning you will get an error if you try to use both Require.js and the latest version of Backbone).  This configuration is a much better solution than manually editing non-AMD compatible JavaScript files to make sure the code is wrapped in a `define` method.  Require.js creator [James Burke](http://tagneto.blogspot.com/) previously maintained AMD compatible forks of both Backbone.js and Underscore.js because of this exact reason.
-
-         shim: {
-
-            // Backbone
-            "backbone": {
-
-               // Depends on underscore/lodash and jQuery
-               "deps": ["underscore", "jquery"],
-
-              // Exports the global window.Backbone object
-              "exports": "Backbone"
-
-            },
-
-         }
-
-   The Shim configuration also takes the place for the old Require.js `order` plugin.  Within the Shim configuration, you can list files and their dependency tree.  An example is jQuery plugins being dependent on jQuery:
-
-         shim: {
-
-            // Twitter Bootstrap plugins depend on jQuery
-            "bootstrap": ["jquery"]
-
-         }
-
-   **Note**: You do not need a shim configuration for [jQuery](http://www.jquery.com) or [lodash](https://github.com/bestiejs/lodash) because they are both AMD compatible.
-
-   After Require.js is configured, you will notice the `require` method is called.  The `require` method is asynchronously including all of the files/dependencies passed into the first parameter (jQuery, Backbone, Lodash, mobileRouter, etc) into the page.
+   The `require` method is used to asynchronously include all of the files/dependencies passed into the first parameter (jQuery, Backbone, Lodash, mobileRouter, etc) into the page.
 
    After all of those files are included on the page, two internal jQuery Mobile properties are turned off to allow Backbone.js to handle all of the routing.
 
@@ -113,7 +116,7 @@ MobileInit.js
 
 DesktopInit.js
 --------------
-   DesktopInit.js is only used if a desktop browser is detected.  This is where your desktop Require.js configurations will be.
+   DesktopInit.js is only used if a desktop browser is detected.
 
    This file is the exact same as MobileInit.js, except it has a few different dependencies (Twitter Bootstrap instead of jQuery Mobile, etc)
 
@@ -212,20 +215,13 @@ Gruntfile.js
 
 SpecRunner.html
 ---------------
-   This file is the starting point to your Jasmine test suite and outputs the results of your Jasmine tests.  It includes Require.js and points it to **testInit.js** for all of the proper configurations.
-
-TestInit.js
------------
-   This file includes all of the Require.js configurations for your Jasmine unit tests.  This file will look very similar to the **MobileInit.js** and **DesktopInit.js** files, but will also include Jasmine and the jasmine-jquery plugin as dependencies.
-
-   You will also notice a _specs_ array that will allow you to add as many specs files as your application needs (Specs folders are where your unit tests are).  The boilerplate only includes one specs js file by default, so only one specs item is added to the array.  Finally, once the specs file is included by the `require()` call, Jasmine is initialized
+   This file is the starting point to your Jasmine test suite and outputs the results of your Jasmine tests.
 
 spec.js
 -------
    This file contains all of your Jasmine unit tests.  Only seven tests are provided, with unit tests provided for Views, Models, Collections, and Routers (Mobile and Desktop).  I'd write more, but why spoil your fun?  Read through the tests and use them as examples to write your own.
 
    The entire file is wrapped in an AMD define method, with all external module (file) dependencies listed.  The Jasmine tests should be self explanatory (BDD tests are supposed to describe an app's functionality and make sense to non-techy folk as well), but if you have any questions, just file an issue and I'll respond as quickly as I can.
-
 
 #FAQ
 
@@ -259,9 +255,17 @@ spec.js
 
    - The `default` task will run both the `test` and `build` tasks.  You can run the `default` task by typing `grunt`.
 
+**Why are you using the @import tag to include CSS files within desktop.css and mobile.css?**
+
+   - When creating production builds, Require.js inlines all of the CSS files included via `@import` tags.  This means that we can easily include all of our CSS files within one file and not have any performance concerns when our app get's released to the production.  In development mode, we aren't as concerned with performance.
+
+**Do I have to manage different Require.js configuration settings for the Grunt build, Jasmine tests, and Mobile/Desktop applications?**
+
+   - No!  All of the Require.js configurations are in one place (config.js) and are reused in the different portions of our app that require it.
+
 **Do I have to use everything the boilerplate gives me?**
 
-   -No!  Feel free to update the boilerplate to fit the needs of your application.  Certain things that you might not want/need include templates, mobile and desktop versions, jQuery Mobile, etc.
+   -No!  Feel free to update the boilerplate to fit the needs of your application.  Certain things that you might not want/need include templates, mobile and desktop versions, jQuery Mobile, etc.  Also check out other boilerplate projects within the BoilerplateMVC project that may fit your needs better (i.e. BRB Lite).
 
 **Do I need a web server to test the boilerplate?**
 
@@ -276,6 +280,11 @@ spec.js
    -Please do!  I am learning just like you.  If you want to contribute, please send pull requests to the dev branch.
 
 ##Change Log
+
+`1.5.0` - April 17, 2013
+
+- All Require.js configurations are now stored in one place (config.js) instead of three.  This removes the pain of managing different desktop, mobile, and jasmine configurations.  You can see the improved logic inside of `index.html`, `specRunner.html`, and the Grunt build.
+- The Jasmine Test Runner logic was simplified by removing `testInit.js` and all `shim` configuration settings for Jasmine.  The Jasmine library is now being included directly before Require.js, which guarantees that it will be on the page before any specs are run.
 
 `1.4.0` - April 6, 2013
 

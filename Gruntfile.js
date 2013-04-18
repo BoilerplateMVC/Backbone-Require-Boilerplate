@@ -7,16 +7,16 @@ module.exports = function(grunt) {
         options: {
           baseUrl: "public/js/",
           paths: {
-            "mobile": "app/config/MobileInit"
+            "mobile": "app/init/MobileInit"
           },
           wrap: true,
           name: "libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
           optimizeCss: "standard",
-          mainConfigFile: "public/js/app/config/MobileInit.js",
+          mainConfigFile: "public/js/app/config/config.js",
           include: ["mobile"],
-          out: "public/js/app/config/MobileInit.min.js"
+          out: "public/js/app/init/MobileInit.min.js"
         }
       },
       mobileCSS: {
@@ -30,15 +30,15 @@ module.exports = function(grunt) {
         options: {
           baseUrl: "public/js/",
           paths: {
-            "desktop": "app/config/DesktopInit"
+            "desktop": "app/init/DesktopInit"
           },
           wrap: true,
           name: "libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
-          mainConfigFile: "public/js/app/config/DesktopInit.js",
+          mainConfigFile: "public/js/app/config/config.js",
           include: ["desktop"],
-          out: "public/js/app/config/DesktopInit.min.js"
+          out: "public/js/app/init/DesktopInit.min.js"
         }
       },
       desktopCSS: {

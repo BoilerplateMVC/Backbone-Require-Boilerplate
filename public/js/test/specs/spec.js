@@ -110,7 +110,7 @@ define(["jquery", "backbone", "text!templates/heading.html", "views/View","model
 
                 // Navigates to the default route
                 this.router.navigate("", { trigger: true });
-    
+
                 // Expects the Jasmine spy to have been called
                 expect(this.routeSpy).toHaveBeenCalled();
 
@@ -145,7 +145,7 @@ define(["jquery", "backbone", "text!templates/heading.html", "views/View","model
 
                 // Navigates to the default route
                 this.router.navigate("", { trigger: true });
-    
+
                 // Expects the Jasmine spy to have been called
                 expect(this.routeSpy).toHaveBeenCalled();
 
