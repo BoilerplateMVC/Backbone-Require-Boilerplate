@@ -24,13 +24,16 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
 index.html
 ----------
 
-   _HTML5 Boilerplate_
+   ###HTML5 Boilerplate
+
    Uses a large portion of the [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate) HTML and CSS.
 
-   _Environment_
+   ###Environment
+
    As you continue down the page to the first `<script>` tag, you will notice there is a local JavaScript variable, called `production`, that is used to communicate to your application whether you would like to load production or development CSS and JavaScript files.
 
-   _BoilerplateMVC Helper Methods_
+   ###BoilerplateMVC Helper Methods
+
    To load our production/development CSS and JavaScript files, you can use the handy BoilerplateMVC helper methods included directly in our HTML page.  Below are the available helper methods:
 
    *loadCSS(url, callback)* - Asynchronously includes a CSS file to a page
@@ -45,19 +48,19 @@ index.html
 
    Since the Desktop/Mobile versions of the boilerplate point Require.js to two different files, including Require.js asynchronously with the `loadJS` method provides the flexibility to do that.
 
-   _Mobile Detection Script_
+   ###Mobile Detection Script
 
    There is a simple JavaScript mobile browser detection script that stores different production/development CSS and JavaScript files within a local `config` object based on whether a user is using a mobile or desktop browser.
 
    **Note**:  You do not need to use the provided JavaScript mobile detection script for your application. We provided it for convenience so that you could see an example of how to separate your Mobile and Desktop JavaScript logic using Require.js.
 
-   _Production Mode_
+   ###Production Mode
 
    In production mode, your app's single minified and concatenated JavaScript file is loaded using Almond.js instead of Require.js.  Your application's minfied common CSS file is also included.
 
-   _Development Mode_
+   ###Development Mode
 
-  In development mode, your app's non-minified JavaScript files are loaded using Require.js instead of Almond.js.  Your application's non-minified common CSS file is also included.
+   In development mode, your app's non-minified JavaScript files are loaded using Require.js instead of Almond.js.  Your application's non-minified common CSS file is also included.
 
 Config.js
 ---------
