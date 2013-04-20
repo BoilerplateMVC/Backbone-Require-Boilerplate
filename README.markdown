@@ -15,8 +15,8 @@ A Backbone.js and Require.js Boilerplate that promotes decoupling your JavaScrip
    5.  Next, install the latest version of [Grunt](http://gruntjs.com/) by typing `npm install -g grunt-cli`.  If it complains about user permissions, type `sudo npm install -g grunt-cli`. 
    6. Navigate to inside of the **Backbone-Require-Boilerplate** folder and type `npm install`
    7. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful **nodemon** library)
-   8. To view the demo page, go to `http://localhost:8001`
-   9. To view the Jasmine test suite page, go to `http://localhost:8001/SpecRunner.html`
+   8. To view the demo page, go to [http://localhost:8001](http://localhost:8001)
+   9. To view the Jasmine test suite page, go to [http://localhost:8001/specRunner.html](http://localhost:8001/specRunner.html)
    10. Enjoy using Backbone, Lodash, Require.js, Almond.js, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, Jasmine, and Grunt (enjoyment optional)
 
 #Tour of the Boilerplate Files
