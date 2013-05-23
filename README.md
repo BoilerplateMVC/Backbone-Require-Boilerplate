@@ -289,6 +289,11 @@ The entire file is wrapped in an AMD define method, with all external module (fi
 
 ##Change Log
 
+`1.6.0` - May 22, 2013
+
+- Changed Require configuration in both `config.js` and `Gruntfile.js` to use `baseUrl: 'js/app'` instead of `baseUrl: 'js'`.  
+- This eliminates the need to create shortcuts to folders in `app` directory, and aligns BRB more properly with [MRB](https://github.com/BoilerplateMVC/Marionette-Require-Boilerplate).
+
 `1.5.0` - April 17, 2013
 
 - All Require.js configurations are now stored in one place (config.js) instead of three.  This removes the pain of managing different desktop, mobile, and jasmine configurations.  You can see the improved logic inside of `index.html`, `specRunner.html`, and the Grunt build.
