@@ -5,12 +5,12 @@ module.exports = function(grunt) {
     requirejs: {
       mobileJS: {
         options: {
-          baseUrl: "public/js/",
+          baseUrl: "public/js/app",
           paths: {
-            "mobile": "app/init/MobileInit"
+            "mobile": "init/MobileInit"
           },
           wrap: true,
-          name: "libs/almond",
+          name: "../libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
           optimizeCss: "standard",
@@ -28,12 +28,12 @@ module.exports = function(grunt) {
       },
       desktopJS: {
         options: {
-          baseUrl: "public/js/",
+          baseUrl: "public/js/app",
           paths: {
-            "desktop": "app/init/DesktopInit"
+            "desktop": "init/DesktopInit"
           },
           wrap: true,
-          name: "libs/almond",
+          name: "../libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
           mainConfigFile: "public/js/app/config/config.js",

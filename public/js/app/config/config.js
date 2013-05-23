@@ -3,7 +3,7 @@
 require.config({
 
   // Sets the js folder as the base directory for all future relative paths
-  baseUrl: "./js",
+  baseUrl: "./js/app",
 
   // 3rd party script alias names (Easier to type "jquery" than "libs/jquery, etc")
   // probably a good idea to keep version numbers in the file names for updates checking
@@ -11,37 +11,25 @@ require.config({
 
       // Core Libraries
       // --------------
-      "jquery": "libs/jquery",
+      "jquery": "../libs/jquery",
 
-      "jqueryui": "libs/jqueryui",
+      "jqueryui": "../libs/jqueryui",
 
-      "jquerymobile": "libs/jquery.mobile",
+      "jquerymobile": "../libs/jquery.mobile",
 
-      "underscore": "libs/lodash",
+      "underscore": "../libs/lodash",
 
-      "backbone": "libs/backbone",
+      "backbone": "../libs/backbone",
 
       // Plugins
       // -------
-      "backbone.validateAll": "libs/plugins/Backbone.validateAll",
+      "backbone.validateAll": "../libs/plugins/Backbone.validateAll",
 
-      "bootstrap": "libs/plugins/bootstrap",
+      "bootstrap": "../libs/plugins/bootstrap",
 
-      "text": "libs/plugins/text",
+      "text": "../libs/plugins/text",
 
-      "jasminejquery": "libs/plugins/jasmine-jquery",
-
-      // Application Folders
-      // -------------------
-      "collections": "app/collections",
-
-      "models": "app/models",
-
-      "routers": "app/routers",
-
-      "templates": "app/templates",
-
-      "views": "app/views"
+      "jasminejquery": "../libs/plugins/jasmine-jquery"
 
   },
 
