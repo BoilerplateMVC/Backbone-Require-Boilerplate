@@ -10,6 +10,7 @@ module.exports = function(grunt) {
             "mobile": "init/MobileInit"
           },
           wrap: true,
+          // Don't use almond if your project needs to load modules dynamically
           name: "../libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
