@@ -60,13 +60,48 @@ module.exports = function(grunt) {
           document: true
         }
       }
+    },
+    cucumberjs: {
+        files: 'features',
+        options: {
+            steps: "features/step_definitions"
+        }
+    },    
+    karma: {
+        unit: {
+            configFile: 'karma.conf.js'
+        }
+    },  
+    plato: {
+      your_task: {
+        options : {
+            exclude: /\.min\.js$/    // excludes source files finishing with ".min.js"
+        },
+        files: {
+            'reports': ['public/js/app/**/*.js']
+        }
+      }
     }
+             
   });
 
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-cucumber');
+  grunt.loadNpmTasks('grunt-plato');
+   
   grunt.registerTask('test', ['jshint']);
   grunt.registerTask('build', ['requirejs:desktopJS', 'requirejs:mobileJS', 'requirejs:desktopCSS', 'requirejs:mobileCSS']);
+  
+  grunt.registerTask('unit:test', 'karma');
+  grunt.registerTask('acceptance:test', 'cucumberjs');
+  grunt.registerTask('complexity:report', 'plato');
+  
   grunt.registerTask('default', ['test', 'build']);
+  
+  
 
 };
