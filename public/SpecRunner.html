@@ -10,8 +10,8 @@
 <body>
     <script>
       // Add your Jasmine spec files here
-      require(["../../test/specs/spec"], function(spec) {
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+      require(["../../test/specs/spec.spec"], function(spec) {
+        jasmine.getEnv().addReporter(new jasmine.HtmlReporter());
         jasmine.getEnv().execute();
       });
     </script>
