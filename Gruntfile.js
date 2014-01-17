@@ -11,7 +11,7 @@ module.exports = function(grunt) {
           },
           wrap: true,
           // Don't use almond if your project needs to load modules dynamically
-          name: "../libs/almond",
+          // name: "../libs/almond",
           preserveLicenseComments: false,
           optimize: "uglify",
           optimizeCss: "standard",
@@ -34,12 +34,21 @@ module.exports = function(grunt) {
             "desktop": "init/DesktopInit"
           },
           wrap: true,
-          name: "../libs/almond",
+          // name: "../libs/almond",
           preserveLicenseComments: false,
-          optimize: "uglify",
+          optimize: "none",
           mainConfigFile: "public/js/app/config/config.js",
           include: ["desktop"],
           out: "public/js/app/init/DesktopInit.min.js"
+          // onModuleBundleComplete: function (data) {
+          //   var fs = require('fs'),
+          //     amdclean = require('amdclean'),
+          //     outputFile = data.path;
+          //   fs.writeFileSync(outputFile, amdclean.clean({
+          //     'code': fs.readFileSync(outputFile),
+          //     'globalObject': true
+          //   }));
+          // }
         }
       },
       desktopCSS: {
