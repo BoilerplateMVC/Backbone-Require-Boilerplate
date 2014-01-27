@@ -29,8 +29,7 @@ require.config({
 
       "text": "../libs/plugins/text",
 
-      "jasminejquery": "../libs/plugins/jasmine-jquery",
-      "datamap": "../libs/plugins/datamap"
+      "jasminejquery": "../libs/plugins/jasmine-jquery"
 
   },
 

@@ -43,6 +43,7 @@
     "grunt-karma": "~0.6.1",
     "karma-coverage": "~0.1.0",
     "webdriverjs": "~0.7.9",
-    "amdclean": "~0.4.0"
+    "amdclean": "~0.6.0",
+    "grunt-contrib-uglify": "~0.3.2"
   }
 }

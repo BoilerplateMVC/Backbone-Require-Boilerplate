@@ -16,7 +16,8 @@ Backbone-Require-Boilerplate (BRB)
    7. Next, type `nodemon` (this will start your Node.js web server and restart the server any time you make a file change thanks to the wonderful **nodemon** library)
    8. To view the demo page, go to [http://localhost:8001](http://localhost:8001)
    9. To view the Jasmine test suite page, go to [http://localhost:8001/specRunner.html](http://localhost:8001/specRunner.html)
-   10. Enjoy using Backbone, Lodash, Require.js, Almond.js, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, Jasmine, and Grunt (enjoyment optional)
+   10. To view the Plato complexity report, go to [http://localhost:8001/reports/](http://localhost:8001/reports/)
+   11. Enjoy using Backbone, Lodash, Require.js, AMDClean.js, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, Jasmine, and Grunt (enjoyment optional)
 
 ## Tour of the Boilerplate Files
 
@@ -55,11 +56,11 @@ There is a simple JavaScript mobile browser detection script that stores differe
 
 ### Production Mode
 
-In production mode, your app's single minified and concatenated JavaScript file is loaded using Almond.js instead of Require.js.  Your application's minfied common CSS file is also included.
+In production mode, your app's single minified and concatenated JavaScript file is loaded without Require.js using AMDClean.js.  Your application's minfied common CSS file is also included.
 
 ### Development Mode
 
-In development mode, your app's non-minified JavaScript files are loaded using Require.js instead of Almond.js.  Your application's non-minified common CSS file is also included.
+In development mode, your app's non-minified JavaScript files are loaded using Require.js instead of AMDClean.js.  Your application's non-minified common CSS file is also included.
 
 Config.js
 ---------
@@ -199,15 +200,15 @@ Finally, a new Collection class is returned.
 
 Gruntfile.js
 ------------
-This file is ready made for you to have your entire project optimized using Grunt.js, the [Require.js Optimizer](https://github.com/jrburke/r.js/) and [almond.js](https://github.com/jrburke/almond).
+This file is ready made for you to have your entire project optimized using Grunt.js, the [Require.js Optimizer](https://github.com/jrburke/r.js/) and [AMDClean.js](https://github.com/gfranko/amdclean).
 
 Grunt.js is a JavaScript command line task runner that allows you to easily automate common development tasks such as code linting, minification, and unit testing.
 
 > Running the Jasmine Tasks with Grunt has not been implemented yet.
 
-Almond.js a lightweight AMD shim library created by [James Burke](https://github.com/jrburke), the creator of Require.js.  Almond is meant for small to medium sized projects that use one concatenated/minified JavaScript file.  If you don't need some of the advanced features that Require.js provides (lazy loading, etc) then Almond.js is great for performance.
+AMDClean.js a build tool, created by [Greg Franko](https://github.com/gfranko), that converts AMD code to standard JavaScript.  AMDClean is meant for small to medium sized projects that use one concatenated/minified JavaScript file.  If you don't need some of the advanced features that Require.js provides (lazy loading, etc) then AMDClean.js will greatly reduces your applications file size.
 
-Backbone-Require-Boilerplate sets you up to use Require.js in development and Almond.js in production.  By default, Backbone-Require-Boilerplate is in _development_ mode, so if you want to try out the production build, read the production instructions below.
+Backbone-Require-Boilerplate sets you up to use Require.js in development and AMDClean.js in production.  By default, Backbone-Require-Boilerplate is in _development_ mode, so if you want to try out the production build, read the production instructions below.
 
 **Production Build Instructions**
 
@@ -288,6 +289,12 @@ The entire file is wrapped in an AMD define method, with all external module (fi
    -Please do!  I am learning just like you.  If you want to contribute, please send pull requests to the dev branch.
 
 ##Change Log
+
+`1.7.0` - January 26, 2014
+
+- Replaced Almond.js with AMDClean.js.  
+- Added Plato code complexity support
+- Updated to Twitter Bootstrap 3, jQuery Mobile 1.4, Require.js 2.1.10, Backbone.js 1.1.0, and Lodash 2.4.1
 
 `1.6.0` - May 22, 2013
 
