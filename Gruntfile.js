@@ -1,13 +1,21 @@
 module.exports = function(grunt) {
   var amdclean = require('amdclean'),
     fs = require('fs'),
-    amdclean_logic = function (data) {
+    amdcleanLogic = function (data) {
       var outputFile = data.path;
       fs.writeFileSync(outputFile, amdclean.clean({
         'code': fs.readFileSync(outputFile),
         'globalObject': true,
-        'globalObjectName': 'backbone_require_boilerplate',
-        'rememberGlobalObject': false
+        'globalObjectName': 'BRB',
+        'rememberGlobalObject': false,
+        'removeModules': ['text'],
+        'prefixTransform': function(moduleName) {
+          return moduleName.substring(moduleName.lastIndexOf('_') + 1, moduleName.length);
+        },
+        'wrap': {
+          'start': '(function() {\n',
+          'end': '\n}());'
+        }
       }));
     };
   grunt.initConfig({
@@ -20,13 +28,14 @@ module.exports = function(grunt) {
             'mobile': 'init/MobileInit'
           },
           wrap: true,
+          // name: "../libs/almond",
+          onModuleBundleComplete: amdcleanLogic,
           preserveLicenseComments: false,
-          optimize: 'none',
+          optimize: 'uglify',
           optimizeCss: 'standard',
           mainConfigFile: 'public/js/app/config/config.js',
           include: ['mobile'],
-          out: 'public/js/app/init/MobileInit.min.js',
-          onModuleBundleComplete: amdclean_logic
+          out: 'public/js/app/init/MobileInit.min.js'
         }
       },
       mobileCSS: {
@@ -43,12 +52,13 @@ module.exports = function(grunt) {
             'desktop': 'init/DesktopInit'
           },
           wrap: true,
+          // name: "../libs/almond",
+          onModuleBundleComplete: amdcleanLogic,
           preserveLicenseComments: false,
-          optimize: 'none',
+          optimize: 'uglify',
           mainConfigFile: 'public/js/app/config/config.js',
           include: ['desktop'],
-          out: 'public/js/app/init/DesktopInit.min.js',
-          onModuleBundleComplete: amdclean_logic
+          out: 'public/js/app/init/DesktopInit.min.js'
         }
       },
       desktopCSS: {
@@ -79,36 +89,23 @@ module.exports = function(grunt) {
             'public/reports': ['public/js/app/**/*.js']
         }
       }
-    },
-    uglify: {
-      desktopJS: {
-        files: {
-          'public/js/app/init/DesktopInit.min.js': ['public/js/app/init/DesktopInit.min.js']
-        }
-      },
-      mobileJS: {
-        files: {
-          'public/js/app/init/MobileInit.min.js': ['public/js/app/init/MobileInit.min.js']
-        }
-      }
     }
   });
 
   grunt.registerTask('desktopBuild', function() {
-    grunt.task.run(['requirejs:desktopJS', 'uglify:desktopJS', 'requirejs:desktopCSS']);
+    grunt.task.run(['requirejs:desktopJS', 'requirejs:desktopCSS']);
   });
 
   grunt.registerTask('mobileBuild', function() {
-    grunt.task.run(['requirejs:mobileJS', 'uglify:mobileJS', 'requirejs:mobileCSS']);
+    grunt.task.run(['requirejs:mobileJS', 'requirejs:mobileCSS']);
   });
 
   grunt.loadNpmTasks('grunt-contrib-requirejs');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-plato');
    
   grunt.registerTask('test', ['jshint']);
-  grunt.registerTask('minify', ['uglify']);
+  grunt.registerTask('minify', ['requirejs:desktopJS', 'requirejs:mobileJS']);
   grunt.registerTask('complexity:report', 'plato');
   grunt.registerTask('build', ['desktopBuild', 'mobileBuild']);
   grunt.registerTask('default', ['test', 'build', 'complexity:report']);

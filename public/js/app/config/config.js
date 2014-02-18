@@ -45,17 +45,6 @@ require.config({
       // jQueryUI
       "jqueryui": ["jquery"],
 
-      // Backbone
-      "backbone": {
-
-        // Depends on underscore/lodash and jQuery
-        "deps": ["underscore", "jquery"],
-
-        // Exports the global window.Backbone object
-        "exports": "Backbone"
-
-      },
-
       // Backbone.validateAll plugin that depends on Backbone
       "backbone.validateAll": ["backbone"],
 
