@@ -8,7 +8,7 @@ Backbone-Require-Boilerplate (BRB)
 
 ## Getting Started
    1. Download and install [Node.js](http://nodejs.org/#download)
-   2. Clone this repository
+   2. Clone this repository using [Git](http://git-scm.com/): `git clone https://github.com/BoilerplateMVC/Backbone-Require-Boilerplate.git`
    3. On the command line, type `npm install nodemon -g` to install the [nodemon](https://github.com/remy/nodemon) library globally.  If it complains about user permissions type `sudo npm install nodemon -g`.
    4.  If you have installed [Grunt](http://gruntjs.com/) globally in the past, you will need to remove it first by typing `npm uninstall -g grunt`.  If it complains about user permissions, type `sudo npm uninstall -g grunt`.
    5.  Next, install the latest version of [Grunt](http://gruntjs.com/) by typing `npm install -g grunt-cli`.  If it complains about user permissions, type `sudo npm install -g grunt-cli`. 
