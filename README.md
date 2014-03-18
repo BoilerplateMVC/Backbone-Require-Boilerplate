@@ -236,7 +236,7 @@ The entire file is wrapped in an AMD define method, with all external module (fi
 
 **What libraries have you included?**
 
-   - Backbone, Require, Grunt, Lodash, Almond, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
+   - Backbone, Require, Grunt, Lodash, AMDClean, jQuery, jQueryUI, jQuery Mobile, Twitter Bootstrap, and Jasmine (w/the jasmine-jquery plugin)
 
 **What Require.js plugins are you using?**
 
