@@ -232,7 +232,7 @@ This file contains all of your Jasmine unit tests.  Only seven tests are provide
 
 The entire file is wrapped in an AMD define method, with all external module (file) dependencies listed.  The Jasmine tests should be self explanatory (BDD tests are supposed to describe an app's functionality and make sense to non-techy folk as well), but if you have any questions, just file an issue and I'll respond as quickly as I can.
 
-#FAQ
+# FAQ
 
 **What libraries have you included?**
 
@@ -288,7 +288,7 @@ The entire file is wrapped in an AMD define method, with all external module (fi
 
    -Please do!  I am learning just like you.  If you want to contribute, please send pull requests to the dev branch.
 
-##Change Log
+## Change Log
 
 `1.7.0` - January 26, 2014
 
@@ -428,7 +428,7 @@ Thanks to [James Burke](https://github.com/jrburke) for helping with the updated
 
 - Initial Backbone-Require-Boilerplate release.  Added source code and documentation.
 
-##Contributors
+## Contributors
 * [Greg Franko](https://github.com/gfranko) 
 * [Nick Pack](https://github.com/nickpack)
 * [Brett Jones](https://github.com/brettjonesdev)
